@@ -1,28 +1,20 @@
 
-# Arduino STM8 Core and platform.
+# Arduino STM8S/L Core and platform.
 # ------------------------------
 #
 # Part of the sduino project: https://github.com/tenbaht/sduino
 # For more info on this file:
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
-name=STM8S Boards
-version=0.4.0-pre1
+name=STM8S/L Boards
+version=1.8.5
 
 # General folder structure variables
 # ----------------------------------
 # For Board Manager installs these variables are already predefined and will
 # not be overwritten. This assignment is done only for manual installs.
-#
-# Apparently, this trick only works for compiler settings, not for the
-# upload process. The upload process is not handled by arduino-build, but
-# the IDE itself and behaves slightly differently.
-# Problem is in Arduino/arduino-core/src/processing/app/BaseNoGui.java
-# function createToolPreferences():
-# 	PreferencesData.removeAllKeysWithPrefix(prefix);
-# FIXME: find a solution to allow for uploads with manual installations.
 runtime.tools.sdcc.path={runtime.hardware.path}/tools/sdcc
-runtime.tools.STM8Tools.path={runtime.hardware.path}/tools
+runtime.tools.STM8Tools.path={runtime.hardware.path}/tools/STM8Tools
 
 
 # STM8 compile variables
@@ -42,6 +34,7 @@ compiler.tools.path={runtime.tools.avr-gcc.path}/bin
 
 compiler.c.cmd=sdcc
 compiler.c.wrapper=sdcc.sh
+#compiler.c.flags=-MMD -c -Ddouble=float -D__PROG_TYPES_COMPAT__ --opt-code-size {compiler.warning_flags}
 compiler.c.flags=-MMD -c -Ddouble=float -D__PROG_TYPES_COMPAT__ {compiler.warning_flags}
 compiler.c.elf.flags=--code-size {upload.maximum_size} --iram-size {upload.maximum_data_size}
 
@@ -66,7 +59,7 @@ compiler.elf2hex.flags=-O ihex -R DATA -R INITIALIZED -R SSEG
 
 compiler.syslibs.stdlib.path={runtime.tools.sdcc.path}/share/sdcc
 compiler.syslibs.stdlib.path.windows={runtime.tools.sdcc.path}
-compiler.syslibs.spl.path={runtime.platform.path}/STM8S_StdPeriph_Driver
+compiler.syslibs.spl.path={runtime.platform.path}/{build.stdlibpre}_StdPeriph_Driver
 
 compiler.ldflags=
 
@@ -90,13 +83,13 @@ compiler.elf2hex.extra_flags=
 # --------------------
 
 ## Compile c files (re1)
-recipe.c.o.pattern="{compiler.wrapper.path}/{compiler.c.wrapper}" "{compiler.path}/{compiler.c.cmd}" "{source_file}" "{object_file}" re1 {compiler.c.flags} -mstm8 -D{build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {includes} {compiler.systemincludes}
+recipe.c.o.pattern="{compiler.wrapper.path}/{compiler.c.wrapper}" "{compiler.path}/{compiler.c.cmd}" "{source_file}" "{object_file}" re1 {compiler.c.flags} -mstm8 -D{build.mcu} -D{build.stdlibpre} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {includes} {compiler.systemincludes}
 
 ## Compile c++ files (re2)
-recipe.cpp.o.pattern="{compiler.wrapper.path}/{compiler.cpp.wrapper}" "{compiler.path}/{compiler.cpp.cmd}" "{source_file}" "{object_file}" re2 {compiler.cpp.flags} -mstm8 -D{build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} {compiler.systemincludes}
+recipe.cpp.o.pattern="{compiler.wrapper.path}/{compiler.cpp.wrapper}" "{compiler.path}/{compiler.cpp.cmd}" "{source_file}" "{object_file}" re2 {compiler.cpp.flags} -mstm8 -D{build.mcu} -D{build.stdlibpre} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} {compiler.systemincludes}
 
 ##FIXME Compile S files (re3)
-recipe.S.o.pattern="{compiler.path}/{compiler.c.cmd}" re3 {compiler.S.flags} -mstm8 -D{build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}/{compiler.c.cmd}" re3 {compiler.S.flags} -mstm8 -D{build.mcu} -D{build.stdlibpre} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
 
 ## Create archives (re4)
 # archive_file_path is needed for backwards compatibility with IDE 1.6.5 or older, IDE 1.6.6 or newer overrides this value
@@ -133,33 +126,12 @@ recipe.preproc.macros="{compiler.wrapper.path}/{compiler.cpp.cmd}.sh" "{compiler
 # ------------------
 
 tools.stm8flash.cmd=stm8flash
-tools.stm8flash.path={runtime.tools.STM8Tools.path}/linux
-tools.stm8flash.path.windows={runtime.tools.STM8Tools.path}/win
-tools.stm8flash.path.macosx={runtime.tools.STM8Tools.path}/macosx
+tools.stm8flash.path={runtime.hardware.path}/tools/STM8Tools/linux
+tools.stm8flash.path.windows={runtime.hardware.path}/tools/STM8Tools/win
+tools.stm8flash.path.macosx={runtime.hardware.path}/tools/STM8Tools/macosx
 #tools.stm8flash.path.linux64={runtime.hardware.path}/tools/linux64
 
 #tools.stm8flash.upload.params.verify=
 tools.stm8flash.upload.params.verbose=
 tools.stm8flash.upload.params.quiet=
 tools.stm8flash.upload.pattern="{path}/{cmd}" -c{upload.protocol} -p{upload.mcu} -s flash -w "{build.path}/{build.project_name}.hex"
-
-
-# Serial upload using the builtin bootloader
-# ------------------------------------------
-
-tools.stm8gal.cmd=stm8gal
-tools.stm8gal.path={runtime.tools.STM8Tools.path}/linux
-#tools.stm8gal.path={runtime.hardware.path}/tools/linux
-tools.stm8gal.path.windows={runtime.tools.STM8Tools.path}/win
-tools.stm8gal.path.macosx={runtime.tools.STM8Tools.path}/macosx
-#tools.stm8gal.path.linux64={runtime.hardware.path}/tools/linux64
-
-#tools.stm8gal.upload.params.verify=
-tools.stm8gal.upload.params.noverify=-v
-tools.stm8gal.upload.params.verbose=-V
-tools.stm8gal.upload.params.quiet=
-tools.stm8gal.upload.pattern="{path}/{cmd}" -p "{serial.port}" {upload.verbose} {upload.verify} -R 1 -u 2 -Q -w "{build.path}/{build.project_name}.hex"
-
-#tools.stm8gal.erase.params.verbose=-V
-#tools.stm8gal.erase.params.quiet=
-#tools.stm8gal.erase.pattern="{path}/{cmd}" "-p{serial.port}" {erase.verbose} -R1 -u2 -Q -e

@@ -18,6 +18,8 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
+
+  Modified 2 February 2018 for STM8L by huaweiwx 
 */
 
 #ifndef Pins_Arduino_h
@@ -30,32 +32,31 @@
 #endif
 
 
-#define NUM_DIGITAL_PINS            16
-#define NUM_ANALOG_INPUTS           5
-
-
 /* on the STM8S the logical pin numbers are really confusing instead
  * of beeing helpful. So maybe it is better to use these Portpin-Names
  * instead?
  */
 enum portpin {
-	PA1, /* 0 */
-	PA2,
-	PA3,
-	PB5, /* 3 */
-	PB4,
-	PC3, /* 5 */
-	PC4,
-	PC5,
-	PC6,
-	PC7,
-	PD1, /* 10 */
-	PD2,
-	PD3,
-	PD4,
-	PD5,
-	PD6  /* 15 */
+	PA1, /*0  PA1*/
+	PA2, /*1  PA2*/
+	PA3, /*2  PA3*/
+	PB5, /*3  PB5*/
+	PB4, /*4  PB4*/
+	PC3, /*5  PC3*/
+	PC4, /*6  PC4*/
+	PC5, /*7  PC5*/
+	PC6, /*8  PC6*/
+	PC7, /*9  PC7*/
+	PD1, /*10 PD1*/
+	PD2, /*11 PD2*/
+	PD3, /*12 PD3*/
+	PD4, /*13 PD4*/
+	PD5, /*14 PD5*/
+	PD6, /*15 PD6*/
+	NUM_DIGITAL_PINS,
 };
+
+#define NUM_ANALOG_INPUTS     5
 
 
 
@@ -159,7 +160,7 @@ extern const uint8_t digitalPinToAnalogChannelMap[];
 
 #ifdef ARDUINO_MAIN
 
-// STM8S103F3 breakout board
+// STM8S103F3P6 breakout board
 //
 //                       +-\/-+
 // PWM      (D 13) PD4  1|    |20  PD3 (D 12, AI 2) PWM
@@ -223,41 +224,41 @@ const uint16_t PROGMEM port_to_input_PGM[] = {
 };
 
 const uint8_t PROGMEM digital_pin_to_port_PGM[] = {
-	PA, /* 0 */
-	PA,
-	PA,
-	PB, /* 3 */
-	PB,
-	PC, /* 5 */
-	PC,
-	PC,
-	PC,
-	PC,
-	PD, /* 10 */
-	PD,
-	PD,
-	PD,
-	PD,
-	PD, /* 15 */
+	PA, /*0  PA1*/
+	PA, /*1  PA2*/
+	PA, /*2  PA3*/
+	PB, /*3  PB5*/
+	PB, /*4  PB4*/
+	PC, /*5  PC3*/
+	PC, /*6  PC4*/
+	PC, /*7  PC5*/
+	PC, /*8  PC6*/
+	PC, /*9  PC7*/
+	PD, /*10 PD1*/
+	PD, /*11 PD2*/
+	PD, /*12 PD3*/
+	PD, /*13 PD4*/
+	PD, /*14 PD5*/
+	PD, /*15 PD6*/
 };
 
 const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[] = {
-	_BV(1), /* 0, port A */
-	_BV(2),
-	_BV(3),
-	_BV(5), /* 3, port B */
-	_BV(4),
-	_BV(3), /* 5, port C */
-	_BV(4),
-	_BV(5),
-	_BV(6),
-	_BV(7),
-	_BV(1), /* 10, port D */
-	_BV(2),
-	_BV(3),
-	_BV(4),
-	_BV(5),
-	_BV(6),
+	_BV(1), /*0  PA1*/
+	_BV(2), /*1  PA2*/
+	_BV(3), /*2  PA3*/
+	_BV(5), /*3  PB5*/
+	_BV(4), /*4  PB4*/
+	_BV(3), /*5  PC3*/
+	_BV(4), /*6  PC4*/
+	_BV(5), /*7  PC5*/
+	_BV(6), /*8  PC6*/
+	_BV(7), /*9  PC7*/
+	_BV(1), /*10 PD1*/
+	_BV(2), /*11 PD2*/
+	_BV(3), /*12 PD3*/
+	_BV(4), /*13 PD4*/
+	_BV(5), /*14 PD5*/
+	_BV(6), /*15 PD6*/
 };
 
 const uint8_t PROGMEM digital_pin_to_timer_PGM[] = {
@@ -302,7 +303,6 @@ const uint8_t digitalPinToAnalogChannelMap[] = {
 
 #endif /* ARDUINO_MAIN */
 
-#define NEED_TIMER_23
 #ifdef SUPPORT_ALTERNATE_MAPPINGS
 # define NEED_TIMER_11_12
 #endif

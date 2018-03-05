@@ -1,0 +1,59 @@
+#######################################
+# Syntax Coloring Map For Ultrasound
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+#######################################
+# Methods and Functions (KEYWORD2)
+Serial_begin	KEYWORD2
+Serial_Write	KEYWORD2
+Serial_Read	KEYWORD2
+Serial_flush	KEYWORD2
+
+Serial_println_s	KEYWORD2
+Serial_println_sn	KEYWORD2
+Serial_println_u	KEYWORD2
+Serial_println_i	KEYWORD2
+Serial_println_ub	KEYWORD2
+Serial_println_ib	KEYWORD2
+Serial_println_f	KEYWORD2
+Serial_println_fd	KEYWORD2
+Serial_print_s	KEYWORD2
+Serial_print_sn	KEYWORD2
+Serial_print_u	KEYWORD2
+Serial_print_i	KEYWORD2
+Serial_print_ub	KEYWORD2
+Serial_print_ib	KEYWORD2
+Serial_print_f	KEYWORD2
+Serial_print_fd	KEYWORD2
+
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+_BV	LITERAL1
+
+# boarddef
+LED1_BUILTIN	LITERAL1
+LED2_BUILTIN	LITERAL1
+LED3_BUILTIN	LITERAL1
+LED4_BUILTIN	LITERAL1
+LED5_BUILTIN	LITERAL1
+LED6_BUILTIN	LITERAL1
+LED7_BUILTIN	LITERAL1
+LED_BUILTIN_MASK	LITERAL1
+
+KEY_BOTTON	LITERAL1
+KEY_BOTTON1	LITERAL1
+KEY_BOTTON2	LITERAL1
+KEY_BOTTON3	LITERAL1
+KEY_BOTTON4	LITERAL1
+KEY_BOTTON5	LITERAL1
+KEY_BOTTON6	LITERAL1
+KEY_BOTTON7	LITERAL1
+KEY_BOTTON_MASK	LITERAL1
+#######################################
+
