@@ -18,6 +18,8 @@
   Public License along with this library; if not, write to the
   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
   Boston, MA  02111-1307  USA
+
+  Modified 2 February 2018 for STM8L by huaweiwx 
 */
 
 #include "wiring_private.h"
@@ -78,7 +80,11 @@ static unsigned char timer4_fract;// = 0;
 
 //void TIM4_UPD_OVF_IRQHandler(void) __interrupt(ITC_IRQ_TIM4_OVF) /* TIM4 UPD/OVF */
 //void TIM4_UPD_OVF_IRQHandler(void) __interrupt(5)//FIXME
+#ifdef __STM8S_IT_H
 INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, ITC_IRQ_TIM4_OVF) /* TIM4 UPD/OVF */
+#elif defined(__STM8L15x_ITC_H) /*huaweiwx*/
+INTERRUPT_HANDLER(TIM4_UPD_OVF_TRG_IRQHandler, TIM4_UPD_OVF_TRG_IRQn) /* TIM4 UPD/OVF */
+#endif
 {
 	// copy these to local variables so they can be stored in registers
 	// (volatile variables must be read from memory on every access)
@@ -221,7 +227,7 @@ void delayMicroseconds(unsigned int us)
 	us <<= 1;	// adjust loop counter for low clock rates
 # define LOG_CLOCK (F_CPU*2)
 #else
-#warning "else"
+//#warning "else"
 # define LOG_CLOCK (F_CPU * 1)
 //# define LOG_CLOCK 16000000UL
 #endif
@@ -466,12 +472,15 @@ void init()
 	GPIO_DeInit(GPIOI);
 #endif
 
-#if defined(UART1)
-	UART1_DeInit();
+#if  (STM8L)
+	USART_DeInit(USART1);
 #else
+  #if defined(UART1)
+	UART1_DeInit();
+  #else
 	UART2_DeInit();
+  #endif
 #endif
-
 	// set timer 4 prescale factor and period (typ. @16MHz: 64*250=1ms)
 	TIM4_DeInit();
 #ifdef USE_SPL
@@ -571,7 +580,11 @@ void init()
 
 #ifdef TIM2
 	TIM2_DeInit();
+#ifdef STM8S
 	TIM2_TimeBaseInit(TIM2_PRESCALER_64, 255);
+#else
+	TIM2_TimeBaseInit(TIM2_PRESCALER_64, TIM2_CounterMode_Up, 255);
+#endif
 
 #ifdef USE_SPL
 	TIM2_OC1Init(
@@ -600,11 +613,16 @@ void init()
 	TIM2_Cmd(ENABLE);	// TIM2->CR1 |= (uint8_t)TIM2_CR1_CEN;
 #else
 	TIM2->CCER1 = 0;	// channel 1 and 2 disabled
+
+#ifdef STM8S
 	TIM2->CCER2 = 0;	// channel 3 and 4 disabled
+#endif
 
 	TIM2->CCMR1 = TIM2_OCMODE_PWM1 | TIM2_CCMR_OCxPE;
+#ifdef STM8S
 	TIM2->CCMR2 = TIM2_OCMODE_PWM1 | TIM2_CCMR_OCxPE;
 	TIM2->CCMR3 = TIM2_OCMODE_PWM1 | TIM2_CCMR_OCxPE;
+#endif
 
 	TIM2->CR1 = TIM2_CR1_CEN;	// TIM1_Cmd(ENABLE);
 #endif
@@ -612,7 +630,12 @@ void init()
 
 #ifdef TIM3
 	TIM3_DeInit();
+
+#ifdef STM8S
 	TIM3_TimeBaseInit(TIM3_PRESCALER_64, 255);
+#else
+	TIM3_TimeBaseInit(TIM3_PRESCALER_64, TIM3_CounterMode_Up, 255);
+#endif
 
 #ifdef USE_SPL
 	TIM3_OC1Init(
@@ -646,7 +669,11 @@ void init()
 
 #ifndef NO_ANALOG_IN
 	/* De-Init ADC peripheral, sets prescaler to 2 */
+#if (STM8L)	
+	ADC_DeInit(ADC1);
+#else
 	ADC1_DeInit();
+#endif
 	// optional:
 	// set a2d prescaler so we are inside a range of 1-2 MHz
 	#if F_CPU >= 18000000 // 18 MHz / 18 = 1000 KHz

@@ -15,6 +15,8 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+  Modified 2 February 2018 for STM8L by huaweiwx 
 */
 
 #ifndef Arduino_h
@@ -29,7 +31,7 @@
 //#include <avr/pgmspace.h>
 //#include <avr/io.h>
 //#include <avr/interrupt.h>
-#include <stm8s.h>
+#include "stm8.h" /* huaweiwx*/
 
 #include "binary.h"
 
@@ -263,9 +265,7 @@ enum {
     TIMER14,
     TIMER21,
     TIMER22,
-#ifdef NEED_TIMER_23
     TIMER23,
-#endif
 #ifdef NEED_TIMER_31_32
     TIMER31,
     TIMER32,
@@ -302,6 +302,7 @@ inline unsigned int makeWord(unsigned char h, unsigned char l) { return (h << 8)
  * The new interrupt numbers are a combination of the position in the
  * internal jump table (value in LSB) and the real STM8S-Interrupt number (MSB)
  */
+#ifdef  STM8S /*huaweiwx*/
 #define INT_PORTA		( 0| (uint16_t)(ITC_IRQ_PORTA << 8))
 #define INT_PORTB		( 1| (uint16_t)(ITC_IRQ_PORTB << 8))
 #define INT_PORTC		( 2| (uint16_t)(ITC_IRQ_PORTC << 8))
@@ -312,6 +313,42 @@ inline unsigned int makeWord(unsigned char h, unsigned char l) { return (h << 8)
 #define INT_TIM2_CAPCOM		( 7| (uint16_t)(ITC_IRQ_TIM2_CAPCOM << 8))
 #define INT_TIM2_OVF		( 8| (uint16_t)(ITC_IRQ_TIM2_OVF << 8))
 
-
-
+#else
+  #define INT_PORTA0		( 0| (uint16_t)(EXTI0_IRQn << 8))
+  #define INT_PORTA1		( 0| (uint16_t)(EXTI1_IRQn << 8))
+  #define INT_PORTA2		( 0| (uint16_t)(EXTI2_IRQn << 8))
+  #define INT_PORTA3		( 0| (uint16_t)(EXTI3_IRQn << 8))
+  #define INT_PORTA4		( 0| (uint16_t)(EXTI4_IRQn << 8))
+  #define INT_PORTA5		( 0| (uint16_t)(EXTI5_IRQn << 8))
+  #define INT_PORTA6		( 0| (uint16_t)(EXTI6_IRQn << 8))
+  #define INT_PORTA7		( 0| (uint16_t)(EXTI7_IRQn << 8))
+  #define INT_PORTE		    ( 4| (uint16_t)(EXTIE_F_PVD_IRQn << 8))
+# if defined(STM8L15X_MD) || defined (STM8L05X_MD_VL) || defined (STM8AL31_L_MD)
+    #define INT_PORTB		( 1| (uint16_t)(EXTIB_IRQn << 8))
+    #define INT_PORTD		( 3| (uint16_t)(EXTID_IRQn << 8))
+	#define INT_TIM1_CAPCOM		( 5| (uint16_t)(TIM1_CC_IRQn << 8))
+	#define INT_TIM1_OVF		( 6| (uint16_t)(TIM1_UPD_OVF_TRG_IRQn << 8))
+    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_IRQn << 8))
+    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_IRQn << 8))
+    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_IRQn << 8))
+    #define INT_TIM3_OVF		(10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_IRQn << 8))
+# elif defined (STM8L15X_LD) || defined (STM8L05X_LD_VL)
+    #define INT_PORTB		( 1| (uint16_t)(EXTIB_IRQn << 8))
+    #define INT_PORTD		( 3| (uint16_t)(EXTID_IRQn << 8))
+    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_IRQn << 8))
+    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_IRQn << 8))
+    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_IRQn << 8))
+    #define INT_TIM3_OVF		( 10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_IRQn << 8))
+# elif defined (STM8L15X_HD) || defined (STM8L15X_MDP) || defined (STM8L05X_HD_VL)
+    #define INT_PORTB		( 1| (uint16_t)(EXTIB_G_IRQn << 8))
+    #define INT_PORTD		( 3| (uint16_t)(EXTID_H_IRQn << 8))
+	#define INT_TIM1_CAPCOM		( 5| (uint16_t)(TIM1_CC_IRQn << 8))
+	#define INT_TIM1_OVF		( 6| (uint16_t)(TIM1_UPD_OVF_TRG_IRQn << 8))
+    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_USART2_RX_IRQn << 8))
+    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_USART2_TX_IRQn << 8))
+    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_USART3_RX_IRQn << 8))
+    #define INT_TIM3_OVF		( 10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_USART3_TX_IRQn << 8))
+# endif //STM8S
 #endif
+
+#endif //Arduino_h

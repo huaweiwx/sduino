@@ -23,10 +23,12 @@
   Modified 28 September 2010 by Mark Sproul
   Modified 14 August 2012 by Alarus
   Modified 15 December 2016 by Michael Mayer
+
+  Modified 2 February 2018 for STM8L by huaweiwx 
 */
 
 
-#include"stm8s.h"
+//#include"stm8.h"
 
 #include "Arduino.h"
 #include "HardwareSerial.h"
@@ -102,6 +104,20 @@
 #  define UARTx_Parity_TypeDef	UART2_Parity_TypeDef
 #  define UARTx_WordLength_TypeDef	UART2_WordLength_TypeDef
 # endif
+#elif defined(USART1)
+#warning "using usart1 for HardwareSerial"
+# define UARTx			USART1
+# define UARTx_RX_IRQHandler	USART1_RX_IRQHandler
+# define ITC_IRQ_UARTx_RX	   USART1_RX_TIM5_CC_IRQn
+# define UARTx_TX_IRQHandler	USART1_TX_IRQHandler
+# define ITC_IRQ_UARTx_TX	USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQn
+# define UARTx_CR2_TIEN		USART_CR2_TIEN
+# define UARTx_CR2_RIEN		USART_CR2_RIEN
+# define UARTx_CR2_TEN		USART_CR2_TEN
+# define UARTx_CR2_REN		USART_CR2_REN
+# define UARTx_FLAG_PE		USART_FLAG_PE
+# define UARTx_FLAG_TC		USART_FLAG_TC
+# define UARTx_DeInit()		USART_DeInit(USART1)
 #else
 # error "no UART definition found."
 #endif
@@ -291,7 +307,6 @@ void HardwareSerial_end(void)
     ;
 
   UARTx_DeInit();
-  
   // clear any received data
   rx_buffer.head = rx_buffer.tail;
   initialized = 0;

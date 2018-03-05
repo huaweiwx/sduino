@@ -20,6 +20,8 @@
   Boston, MA  02111-1307  USA
 
   Modified 28 September 2010 by Mark Sproul
+
+  Modified 2 February 2018 for STM8L by huaweiwx 
 */
 
 #define ARDUINO_MAIN
@@ -45,9 +47,10 @@ const uc_p ccmrx[NUM_TIMERS]={
 	TIM1->CCMR4,	/* for TIMER14 */
 	TIM2->CCMR1,	/* for TIMER21 */
 	TIM2->CCMR2,	/* for TIMER22 */
-#ifdef NEED_TIMER_23
+#ifdef STM8	
 	TIM2->CCMR3,	/* for TIMER23 */
 #endif
+	
 #ifdef NEED_TIMER_31_32
 	TIM3->CCMR1,	/* for TIMER31 */
 	TIM3->CCMR2	/* for TIMER32 */

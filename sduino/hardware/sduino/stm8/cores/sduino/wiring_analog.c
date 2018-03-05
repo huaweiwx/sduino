@@ -22,6 +22,8 @@
 
   Modified 28 September 2010 by Mark Sproul
   Modified 17 December 2016 by Michael Mayer
+
+  Modified 2 February 2018 for STM8L by huaweiwx 
 */
 
 #include "wiring_private.h"
@@ -195,7 +197,9 @@ void analogWrite(uint8_t pin, int val)
 				// write MSB first, DO NOT USE ldw instruction!
 //				tmp = TIM1->CCER2 & (uint8_t)(~(TIM1_CCER2_CC3E | TIM1_CCER2_CC3P));
 //				TIM1->CCER2 = tmp | TIM2_CCER2_CC3E;
+#ifdef STM8S
 				TIM1->CCER2 |= TIM2_CCER2_CC3E;
+#endif
 				TIM1->CCMR3 = TIM1_OCMODE_PWM1 | TIM1_CCMR_OCxPE;
 				TIM1->CCR3H = 0;
 				TIM1->CCR3L = (uint8_t)(val);
@@ -257,7 +261,6 @@ void analogWrite(uint8_t pin, int val)
 				TIM2->CCR2L = (uint8_t)(val);
 #endif
 				break;
-#ifdef NEED_TIMER_23
 			case TIMER23:
 				// connect pwm to pin on timer 2, channel 3
 #ifdef USE_SPL
@@ -269,6 +272,7 @@ void analogWrite(uint8_t pin, int val)
 				);
 #else
 				// write MSB first, DO NOT USE ldw instruction!
+#ifdef STM8S			
 				tmp = TIM2->CCER2 & (uint8_t)(~(TIM2_CCER2_CC3E | TIM2_CCER2_CC3P));
 				TIM2->CCER2 = tmp | TIM2_CCER2_CC3E;
 //				TIM2->CCER2 |= TIM2_CCER2_CC3E;
@@ -276,8 +280,9 @@ void analogWrite(uint8_t pin, int val)
 				TIM2->CCR3H = 0;
 				TIM2->CCR3L = (uint8_t)(val);
 #endif
+
+#endif
 				break;
-#endif // ifdef NEED_TIMER_23
 #ifdef NEED_TIMER_31_32
 			case TIMER31:
 				// connect pwm to pin on timer 3, channel 1
