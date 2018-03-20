@@ -9,6 +9,6 @@
  * other unrelated definitions.
  */
 
-// Weak empty variant initialization function.
-// May be redefined by variant files.
-void initVariant() {}
+// Declared weak in Arduino.h to allow user redefinitions.
+int atexit(void (*func)()) { return 0; }
+void initVariant() {} /*move here from file:weak_initVariant.c*/

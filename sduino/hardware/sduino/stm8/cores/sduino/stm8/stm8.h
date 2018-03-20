@@ -24,20 +24,18 @@
 
 //for SDUINO 
 
-#if defined(STM8S003)||defined(STM8S103)||defined(STM8S105)
+#if defined(STM8S)
 #include <stm8s.h>
 
 #else  /*STM8L*/
 
-#define STM8L 1
-
 #include <stm8l15x.h>
 
-#define SPI SPI1
-#define SPI_BaseAddress  SPI1_BASE
-#define SPI_FIRSTBIT_MSB SPI_FirstBit_MSB
-#define SPI_FIRSTBIT_LSB SPI_FirstBit_LSB
-#define ICR  CR3
+#define SPI 				SPI1
+#define SPI_BaseAddress  	SPI1_BASE
+#define SPI_FIRSTBIT_MSB 	SPI_FirstBit_MSB
+#define SPI_FIRSTBIT_LSB 	SPI_FirstBit_LSB
+#define ICR  				CR3
 
 //TIM1
 #define  TIM1_OCMODE_TIMING    TIM1_OCMode_Timing   
@@ -252,7 +250,71 @@
 #define ADC1_FLAG_AWD   ADC_FLAG_AWD
 #define ADC1_FLAG_OVR   ADC_FLAG_OVER
 
+//GPIO
+#define GPIOA_BaseAddress GPIOA_BASE
+#define GPIOB_BaseAddress GPIOB_BASE
+#define GPIOC_BaseAddress GPIOC_BASE
+#define GPIOD_BaseAddress GPIOD_BASE
+#define GPIOE_BaseAddress GPIOE_BASE
+#define GPIOF_BaseAddress GPIOF_BASE
+#define GPIOG_BaseAddress GPIOG_BASE
+#define GPIOH_BaseAddress GPIOH_BASE
+#define GPIOI_BaseAddress GPIOI_BASE
 
+#endif
+
+
+/*
+ * The new interrupt numbers are a combination of the position in the
+ * internal jump table (value in LSB) and the real STM8S-Interrupt number (MSB)
+ */
+#ifdef  STM8S /*huaweiwx*/
+#define INT_PORTA		 	( 0| (uint16_t)(ITC_IRQ_PORTA << 8))
+#define INT_PORTB			( 1| (uint16_t)(ITC_IRQ_PORTB << 8))
+#define INT_PORTC			( 2| (uint16_t)(ITC_IRQ_PORTC << 8))
+#define INT_PORTD			( 3| (uint16_t)(ITC_IRQ_PORTD << 8))
+#define INT_PORTE			( 4| (uint16_t)(ITC_IRQ_PORTE << 8))
+#define INT_TIM1_CAPCOM		( 5| (uint16_t)(ITC_IRQ_TIM1_CAPCOM << 8))
+#define INT_TIM1_OVF		( 6| (uint16_t)(ITC_IRQ_TIM1_OVF << 8))
+#define INT_TIM2_CAPCOM		( 7| (uint16_t)(ITC_IRQ_TIM2_CAPCOM << 8))
+#define INT_TIM2_OVF		( 8| (uint16_t)(ITC_IRQ_TIM2_OVF << 8))
+
+#else /*STM8L*/
+  #define INT_PORTA0		( 0| (uint16_t)(EXTI0_IRQn << 8))
+  #define INT_PORTA1		( 0| (uint16_t)(EXTI1_IRQn << 8))
+  #define INT_PORTA2		( 0| (uint16_t)(EXTI2_IRQn << 8))
+  #define INT_PORTA3		( 0| (uint16_t)(EXTI3_IRQn << 8))
+  #define INT_PORTA4		( 0| (uint16_t)(EXTI4_IRQn << 8))
+  #define INT_PORTA5		( 0| (uint16_t)(EXTI5_IRQn << 8))
+  #define INT_PORTA6		( 0| (uint16_t)(EXTI6_IRQn << 8))
+  #define INT_PORTA7		( 0| (uint16_t)(EXTI7_IRQn << 8))
+  #define INT_PORTE		    ( 4| (uint16_t)(EXTIE_F_PVD_IRQn << 8))
+# if defined(STM8L15X_MD) || defined (STM8L05X_MD_VL) || defined (STM8AL31_L_MD)
+    #define INT_PORTB		( 1| (uint16_t)(EXTIB_IRQn << 8))
+    #define INT_PORTD		( 3| (uint16_t)(EXTID_IRQn << 8))
+	#define INT_TIM1_CAPCOM		( 5| (uint16_t)(TIM1_CC_IRQn << 8))
+	#define INT_TIM1_OVF		( 6| (uint16_t)(TIM1_UPD_OVF_TRG_IRQn << 8))
+    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_IRQn << 8))
+    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_IRQn << 8))
+    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_IRQn << 8))
+    #define INT_TIM3_OVF		(10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_IRQn << 8))
+# elif defined (STM8L15X_LD) || defined (STM8L05X_LD_VL)
+    #define INT_PORTB		( 1| (uint16_t)(EXTIB_IRQn << 8))
+    #define INT_PORTD		( 3| (uint16_t)(EXTID_IRQn << 8))
+    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_IRQn << 8))
+    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_IRQn << 8))
+    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_IRQn << 8))
+    #define INT_TIM3_OVF		( 10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_IRQn << 8))
+# elif defined (STM8L15X_HD) || defined (STM8L15X_MDP) || defined (STM8L05X_HD_VL)
+    #define INT_PORTB		( 1| (uint16_t)(EXTIB_G_IRQn << 8))
+    #define INT_PORTD		( 3| (uint16_t)(EXTID_H_IRQn << 8))
+	#define INT_TIM1_CAPCOM		( 5| (uint16_t)(TIM1_CC_IRQn << 8))
+	#define INT_TIM1_OVF		( 6| (uint16_t)(TIM1_UPD_OVF_TRG_IRQn << 8))
+    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_USART2_RX_IRQn << 8))
+    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_USART2_TX_IRQn << 8))
+    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_USART3_RX_IRQn << 8))
+    #define INT_TIM3_OVF		( 10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_USART3_TX_IRQn << 8))
+# endif //STM8S
 #endif
 
 #endif

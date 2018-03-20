@@ -26,8 +26,6 @@
 
 #define ARDUINO_MAIN
 #include "wiring_private.h"
-#include "pins_arduino.h"
-
 
 
 /* this typedef is a SDCC wordaround.
@@ -47,7 +45,7 @@ const uc_p ccmrx[NUM_TIMERS]={
 	TIM1->CCMR4,	/* for TIMER14 */
 	TIM2->CCMR1,	/* for TIMER21 */
 	TIM2->CCMR2,	/* for TIMER22 */
-#ifdef STM8	
+#ifdef NEED_TIMER_23  /*STM8L TIM2 not CCMR3*/
 	TIM2->CCMR3,	/* for TIMER23 */
 #endif
 	
@@ -57,123 +55,50 @@ const uc_p ccmrx[NUM_TIMERS]={
 #endif
 };
 
-
-
-/* arduino-style pinMode
 void pinMode(uint8_t pin, uint8_t mode)
 {
-	uint8_t bit = digitalPinToBitMask(pin);
-	uint8_t port = digitalPinToPort(pin);
-	volatile uint8_t *reg, *out;
-
-	if (port == NOT_A_PIN) return;
-
-	reg = portModeRegister(port);
-	out = portOutputRegister(port);
-
-	if (mode == INPUT) { 
-		BEGIN_CRITICAL
-		*reg &= ~bit;
-		*out &= ~bit;
-		END_CRITICAL
-	} else if (mode == INPUT_PULLUP) {
-		BEGIN_CRITICAL
-		*reg &= ~bit;
-		*out |= bit;
-		END_CRITICAL
-	} else {
-		BEGIN_CRITICAL
-		*reg |= bit;
-		END_CRITICAL
-	}
-}
-*/
-
-void pinMode(uint8_t pin, uint8_t mode)
-{
-	uint8_t bit = digitalPinToBitMask(pin);
+#ifndef SDUINOPINS_DEF
+	uint8_t bit =  (1 << (pin & 0x07));
+	volatile GPIO_TypeDef *gpio;
+	gpio = (GPIO_TypeDef *) ((uint16_t)(GPIOA_BaseAddress+ (pin>>3)*5));
+#else
+	uint8_t bit =  digitalPinToBitMask(pin);
 	uint8_t port = digitalPinToPort(pin);
 	volatile GPIO_TypeDef *gpio;
-
-	if (port == NOT_A_PIN) return;
-
+    if(pin >= NUM_DIGITAL_PINS)	return;  
+//	if (port == NOT_A_PORT) return;
 	gpio = (GPIO_TypeDef *) portOutputRegister(port);
+#endif
 
+	BEGIN_CRITICAL
 	if (mode == INPUT) {
-		BEGIN_CRITICAL
 		gpio->CR2 &= ~bit;	// first: deactivate interrupt
 		gpio->CR1 &= ~bit;	// release top side
 		gpio->DDR &= ~bit;	// now set direction
-		END_CRITICAL
 	} else if (mode == INPUT_PULLUP) {
-		BEGIN_CRITICAL
 		gpio->CR2 &= ~bit;	// first: deactivate interrupt
 		gpio->DDR &= ~bit;	// set direction before
 		gpio->CR1 |=  bit;	// activating the pull up
-		END_CRITICAL
 	} else if (mode == OUTPUT_FAST) {// output push-pull, fast
-		BEGIN_CRITICAL
 		gpio->CR1 |=  bit;
 		gpio->DDR |=  bit;	// direction before setting CR2 to
 		gpio->CR2 |=  bit;	// avoid accidental interrupt
-		END_CRITICAL
 	} else if (mode == OUTPUT_OD_FAST) {	// output open drain, fast
-		BEGIN_CRITICAL
 		gpio->CR1 &= ~bit;
 		gpio->DDR |=  bit;	// direction before setting CR2 to
 		gpio->CR2 |=  bit;	// avoid accidental interrupt
-		END_CRITICAL
 	} else if (mode == OUTPUT_OD) {	// output open drain, slow
-		BEGIN_CRITICAL
 		gpio->CR1 &= ~bit;
 		gpio->CR2 &= ~bit;
 		gpio->DDR |=  bit;
-		END_CRITICAL
 	} else {			// output push-pull, slow
-		BEGIN_CRITICAL
 		gpio->CR1 |=  bit;
 		gpio->CR2 &= ~bit;
 		gpio->DDR |=  bit;
-		END_CRITICAL
 	}
+	END_CRITICAL
 }
 
-/* using an array of pointers compiles way more efficient than doing simple
- * pointer arithmetics like
- *
-	if (timer<TIMER21) {
-		*(&TIM1->CCMR1 + (timer-TIMER11)) &= 0x8f;
-	} else {
-		*(&TIM2->CCMR1 + (timer-TIMER21)) &= 0x8f;
-	}
- *
- * or a simple switch/case statement like
- *
-	switch (timer)
-	{
-		case TIMER11:   TIM1->CCMR1 &= 0x8f;    break;
-		case TIMER12:   TIM1->CCMR2 &= 0x8f;    break;
-		case TIMER13:   TIM1->CCMR3 &= 0x8f;    break;
-		case TIMER14:   TIM1->CCMR4 &= 0x8f;    break;
-		case TIMER21:   TIM2->CCMR1 &= 0x8f;    break;
-		case TIMER22:   TIM2->CCMR2 &= 0x8f;    break;
-		case TIMER23:   TIM2->CCMR3 &= 0x8f;    break;
-	}
- *
- * The most efficient way is this:
- *
-#define T1_BASE 0x5258
-#define T2_BASE 0x5307
-	uint8_t *reg = T1_BASE-1;
-	if (timer>4) reg+= (T2_BASE - T1_BASE);
-	reg[timer] &= ~TIM1_CCMR_OCM;
- *
- * Unfortunatly, SDCC can't figure out the values TIM1->CCMR1 und TIM->CCMR2
- * early enough in the compile process, so the adresses have to be hardcoded
- * into the code.
- *
- * SDCC is really, really not good in optimizing its code.
- */
 static void turnOffPWM(uint8_t timer)
 {
 	*((unsigned char *) ccmrx[timer-1]) &= ~TIM1_CCMR_OCM;
@@ -182,42 +107,73 @@ static void turnOffPWM(uint8_t timer)
 
 void digitalWrite(uint8_t pin, uint8_t val)
 {
-	uint8_t timer = digitalPinToTimer(pin);
-	uint8_t bit = digitalPinToBitMask(pin);
-	uint8_t port = digitalPinToPort(pin);
 	volatile uint8_t *out;
+	
+#ifndef SDUINOPINS_DEF
+	uint8_t bit =  (1 << (pin & 0x07));
+	out = (volatile uint8_t *) ((uint16_t)(GPIOA_BaseAddress+ (pin>>3)*5));
+#else
+	uint8_t timer = digitalPinToTimer(pin);
+	uint8_t bit =  digitalPinToBitMask(pin);
+	uint8_t port = digitalPinToPort(pin);
 
-	if (port == NOT_A_PIN) return;
-
+    if(pin >= NUM_DIGITAL_PINS)	return;  
 	// If the pin that support PWM output, we need to turn it off
 	// before doing a digital write.
-	if (timer != NOT_ON_TIMER) turnOffPWM(timer);
-
+	if (timer != NOT_ON_TIMER) {
+		turnOffPWM(timer);
+	}
 	out = portOutputRegister(port);
+#endif
 
 	BEGIN_CRITICAL
-
 	if (val == LOW) {
 		*out &= ~bit;
 	} else {
 		*out |= bit;
 	}
-
 	END_CRITICAL
+}
+
+void digitalToggle(uint8_t pin)
+{
+	volatile uint8_t *out;
+	
+#ifndef SDUINOPINS_DEF
+	uint8_t bit =  (1 << (pin & 0x07));
+	out = (volatile uint8_t *) ((uint16_t)(GPIOA_BaseAddress+ (pin>>3)*5));
+#else
+	uint8_t bit =  digitalPinToBitMask(pin);
+	uint8_t port = digitalPinToPort(pin);
+    if(pin >= NUM_DIGITAL_PINS)	return;  
+
+	out = portOutputRegister(port);
+#endif
+
+ 	*out ^= bit;
 }
 
 int digitalRead(uint8_t pin)
 {
+	volatile uint8_t *in;
+	
+#ifndef SDUINOPINS_DEF
+	uint8_t bit =  (1 << (pin & 0x07));
+	in = (volatile uint8_t *) ((uint16_t)(GPIOA_BaseAddress+1+ (pin>>3)*5));
+#else
 	uint8_t timer = digitalPinToTimer(pin);
-	uint8_t bit = digitalPinToBitMask(pin);
+	uint8_t bit =  digitalPinToBitMask(pin);
 	uint8_t port = digitalPinToPort(pin);
 
-	if (port == NOT_A_PIN) return LOW;
-
+    if(pin >= NUM_DIGITAL_PINS)	return;  
 	// If the pin that support PWM output, we need to turn it off
-	// before getting a digital reading.
-	if (timer != NOT_ON_TIMER) turnOffPWM(timer);
+	// before doing a digital write.
+	if (timer != NOT_ON_TIMER) {
+		turnOffPWM(timer);
+	}
+	in = portInputRegister(port);
+#endif
 
-	if (*portInputRegister(port) & bit) return HIGH;
+	if (*in & bit) return HIGH;
 	return LOW;
 }

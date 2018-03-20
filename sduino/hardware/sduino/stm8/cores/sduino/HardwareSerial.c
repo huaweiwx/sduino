@@ -107,10 +107,23 @@
 #elif defined(USART1)
 #warning "using usart1 for HardwareSerial"
 # define UARTx			USART1
+
+ #if defined(STM8L15X_HD)||defined(STM8L15X_MDP)||defined (STM8L05X_HD_VL)  /*huaweiwx*/
 # define UARTx_RX_IRQHandler	USART1_RX_IRQHandler
-# define ITC_IRQ_UARTx_RX	   USART1_RX_TIM5_CC_IRQn
+# define ITC_IRQ_UARTx_RX	    USART1_RX_TIM5_CC_IRQn
 # define UARTx_TX_IRQHandler	USART1_TX_IRQHandler
-# define ITC_IRQ_UARTx_TX	USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQn
+# define ITC_IRQ_UARTx_TX	    USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQn
+#elif defined(STM8L15X_MD)||defined (STM8L05X_MD_VL)||defined (STM8AL31_L_MD)
+# define UARTx_RX_IRQHandler	USART1_RX_IRQHandler
+# define ITC_IRQ_UARTx_RX	    USART1_RX_IRQn
+# define UARTx_TX_IRQHandler	USART1_TX_IRQHandler
+# define ITC_IRQ_UARTx_TX		USART1_TX_IRQn
+#elif defined (STM8L15X_LD) || defined (STM8L05X_LD_VL)
+# define UARTx_RX_IRQHandler	USART1_RX_IRQHandler
+# define ITC_IRQ_UARTx_RX	    USART1_RX_IRQn
+# define UARTx_TX_IRQHandler	USART1_TX_IRQHandler
+# define ITC_IRQ_UARTx_TX		USART1_TX_IRQn
+#endif
 # define UARTx_CR2_TIEN		USART_CR2_TIEN
 # define UARTx_CR2_RIEN		USART_CR2_RIEN
 # define UARTx_CR2_TEN		USART_CR2_TEN
@@ -230,15 +243,22 @@ uint8_t HardwareSerial(void)
 
 void HardwareSerial_begin(unsigned long baud)
 {
-#ifdef USE_SPL
-  //set the data bits, parity, and stop bits
-  UARTx_Init(baud,
-      UARTx_WORDLENGTH_8D, UARTx_STOPBITS_1, UARTx_PARITY_NO,
-      UARTx_SYNCMODE_CLOCK_DISABLE, UARTx_MODE_TXRX_ENABLE);
 
-  UARTx_ITConfig(UARTx_IT_RXNE, ENABLE);	// enable RXNE interrupt
+#ifdef USE_SPL
+  //move from wiring.c to here
+	UARTx_DeInit();
+	
+  //set the data bits, parity, and stop bits
+    UARTx_Init(baud,
+       UARTx_WORDLENGTH_8D, UARTx_STOPBITS_1, UARTx_PARITY_NO,
+       UARTx_SYNCMODE_CLOCK_DISABLE, UARTx_MODE_TXRX_ENABLE);
+
+    UARTx_ITConfig(UARTx_IT_RXNE, ENABLE);	// enable RXNE interrupt
 #else
 	uint16_t divider;
+
+  //move from wiring.c to here
+	UARTx_DeInit();
 
 	/* Set the UARTx BaudRates in BRR1 and BRR2 registers according to UARTx_BaudRate value */
 	divider = (uint16_t) ((uint32_t)CLK_GetClockFreq() / (uint32_t) baud);
@@ -385,3 +405,6 @@ size_t HardwareSerial_write(uint8_t c)
 }
 
 #endif // ifdef NO_SERIAL
+
+/*weak function. move here from file:weak_initVariant.c*/
+void serialEvent(void) {} 

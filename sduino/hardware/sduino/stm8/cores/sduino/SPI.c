@@ -11,7 +11,7 @@
  * published by the Free Software Foundation.
  */
 
-//#include "pins_arduino.h"
+#include "Arduino.h"
 #include "SPI.h"
 
 static uint8_t SPI_initialized;// = 0;

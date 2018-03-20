@@ -26,18 +26,16 @@
 #include <stdbool.h>
 #include <string.h>
 #include <math.h>
-//#include <stdint.h>
-
-//#include <avr/pgmspace.h>
-//#include <avr/io.h>
-//#include <avr/interrupt.h>
-#include "stm8.h" /* huaweiwx*/
 
 #include "binary.h"
+
+#include "stm8/stm8.h" /* huaweiwx*/
+
 
 // FIXME: workarounds for missing features or unimplemented functions
 // cancel out the PROGMEM attribute - used only for atmel CPUs
 #define PROGMEM
+
 void yield(void);
 
 // we use pre-defined IRQ function the way wiring does
@@ -48,12 +46,12 @@ void yield(void);
 #define HIGH 0x1
 #define LOW  0x0
 
-#define INPUT 0x0
-#define OUTPUT 0x1
-#define INPUT_PULLUP 0x2
-#define	OUTPUT_OD 0x03
-#define OUTPUT_FAST 0x05
-#define OUTPUT_OD_FAST 0x07
+#define INPUT  			0x0
+#define OUTPUT 			0x1
+#define INPUT_PULLUP 	0x2
+#define	OUTPUT_OD 		0x03
+#define OUTPUT_FAST 	0x05
+#define OUTPUT_OD_FAST 	0x07
 
 // undefine mathlib's pi if encountered
 #ifdef PI
@@ -83,31 +81,6 @@ void yield(void);
 #define FALLING 2
 #define RISING 3
 
-/*
-#if defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
-  #define DEFAULT 0
-  #define EXTERNAL 1
-  #define INTERNAL1V1 2
-  #define INTERNAL INTERNAL1V1
-#elif defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
-  #define DEFAULT 0
-  #define EXTERNAL 4
-  #define INTERNAL1V1 8
-  #define INTERNAL INTERNAL1V1
-  #define INTERNAL2V56 9
-  #define INTERNAL2V56_EXTCAP 13
-#else  
-#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
-#define INTERNAL1V1 2
-#define INTERNAL2V56 3
-#else
-#define INTERNAL 3
-#endif
-#define DEFAULT 1
-#define EXTERNAL 0
-#endif
-*/
-
 // undefine stdlib's abs if encountered
 #ifdef abs
 #undef abs
@@ -133,8 +106,6 @@ void yield(void);
 #define lowByte(w) ((uint8_t) ((w) & 0xff))
 #define highByte(w) ((uint8_t) ((w) >> 8))
 
-//#define bitSet(value, bit) (__asm__("bset\t"))
-//#define bitClear(value, bit) (__asm__("bres\t"))
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
@@ -143,11 +114,10 @@ void yield(void);
 #define maskSet(value, mask) ((value) |= (mask))
 #define maskClear(value, mask) ((value) &= ~(mask))
 
-
-// avr-libc defines _NOP() since 1.6.2
 #ifndef _NOP
 #define _NOP() do { __asm__ volatile ("nop"); } while (0)
 #endif
+
 
 /* for SDCC this is supposed to be "__critical{" and "}", but up to
  * sdcc version 3.6.4 it is wrongly implemented. */
@@ -161,7 +131,6 @@ void yield(void);
 #define BEGIN_CRITICAL
 #define END_CRITICAL
 */
-
 
 
 typedef unsigned int word;
@@ -181,14 +150,19 @@ extern unsigned char runSerialEvent;
 
 void pinMode(uint8_t pin, uint8_t mode);
 void digitalWrite(uint8_t pin, uint8_t val);
-int digitalRead(uint8_t pin);
-int analogRead(uint8_t pin);
+void digitalToggle(uint8_t pin);
+int  digitalRead(uint8_t pin);
+int  analogRead(uint8_t pin);
 void analogReference(uint8_t mode);
 void analogWrite(uint8_t pin, int val);
 
+#ifdef STM8S
 unsigned long millis(void);
 unsigned long micros(void);
 void delay(unsigned long ms);
+#else
+void delay(uint16_t ms);
+#endif
 void delayMicroseconds(unsigned int us);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
 unsigned long pulseInLong(uint8_t pin, uint8_t state, unsigned long timeout);
@@ -209,12 +183,13 @@ void loop(void);
 
 // On the ATmega1280, the addresses of some of the port registers are
 // greater than 255, so we can't store them in uint8_t's.
-extern const uint16_t port_to_mode_PGM[];
-extern const uint16_t PROGMEM port_to_input_PGM[];
+
+//extern const uint16_t port_to_mode_PGM[];
+//extern const uint16_t PROGMEM port_to_input_PGM[];
 extern const uint16_t PROGMEM port_to_output_PGM[];
 
 extern const uint8_t PROGMEM digital_pin_to_port_PGM[];
-// extern const uint8_t PROGMEM digital_pin_to_bit_PGM[];
+extern const uint8_t PROGMEM digital_pin_to_bit_PGM[];
 extern const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[];
 extern const uint8_t PROGMEM digital_pin_to_timer_PGM[];
 
@@ -223,55 +198,34 @@ extern const uint8_t PROGMEM digital_pin_to_timer_PGM[];
 void alternateFunction(uint8_t val);
 #endif
 
+#include "stm8/pins_arduino.h"
+
 // Get the bit location within the hardware port of the given virtual pin.
 // This comes from the pins_*.c file for the active board configuration.
-// 
-#define digitalPinToPort(P) ( digital_pin_to_port_PGM[(P)] )
-#define digitalPinToBitMask(P) ( digital_pin_to_bit_mask_PGM[(P)] )
-#define digitalPinToTimer(P) ( digital_pin_to_timer_PGM[(P)] )
-#define analogInPinToBit(P) (P)
-#define portOutputRegister(P) ( (volatile uint8_t *)( port_to_output_PGM[(P)]) )
-#define portInputRegister(P) ( (volatile uint8_t *)( port_to_input_PGM[(P)]) )
-#define portModeRegister(P) ( (volatile uint8_t *)( port_to_mode_PGM[(P)]) )
+//
 
-#define NOT_A_PIN 0
-#define NOT_A_PORT 0
-
-#define NOT_AN_INTERRUPT -1
-
-#ifdef ARDUINO_MAIN
-#define PA 1
-#define PB 2
-#define PC 3
-#define PD 4
-#define PE 5
-#define PF 6
-#define PG 7
-#define PH 8
-#define PJ 10
-#define PK 11
-#define PL 12
+#ifdef  SDUINOPINS_DEF 
+#define digitalPinToPort(P)    (digital_pin_to_port_PGM[(P)])
+#define digitalPinToBitMask(P) (digital_pin_to_bit_mask_PGM[(P)])
+#define digitalPinToTimer(P)   (digital_pin_to_timer_PGM[(P)])
+#define getPinBase(P)          (port_to_output_PGM[(P)])
+#define analogInPinToBit(P)    (P)
+#else
+///*sduino pins genterc define: port: bit 6543 pin: bit 210 for save memorys */
+#define digitalPinToPort(P)    ((uint8_t)(((P)>>3) & 0xf))
+#define digitalPinToPin(P)     ((uint8_t)((P)&0x07))
+#define digitalPinToBitMask(P) (1<<(digitalPinToPin(P)))
+#define digitalPinToTimer(P)   (digital_pin_to_timer_PGM[(P)])
+#define analogInPinToBit(P)    (P)
+#define getPinBase(P)          (uint16_t)(GPIOA_BaseAddress+digitalPinToPort(P)*5)
 #endif
 
-#include "pins_arduino.h"
+#define portOutputRegister(P)  ((volatile uint8_t *)(getPinBase(P)))
+#define portInputRegister(P)   ((volatile uint8_t *)(getPinBase(P)+1))
+#define portModeRegister(P)    ((volatile uint8_t *)(getPinBase(P)+2))
+#define portCR1Register(P)     ((volatile uint8_t *)(getPinBase(P)+3))
+#define portCR2Register(P)     ((volatile uint8_t *)(getPinBase(P)+4))
 
-enum {
-    NOT_ON_TIMER = 0,
-#ifdef NEED_TIMER_11_12
-    TIMER11,
-    TIMER12,
-#endif
-    TIMER13,
-    TIMER14,
-    TIMER21,
-    TIMER22,
-    TIMER23,
-#ifdef NEED_TIMER_31_32
-    TIMER31,
-    TIMER32,
-#endif
-    NUM_TIMERS
-};
 
 
 //FIXME#include "WCharacter.h"
@@ -297,58 +251,5 @@ long map(long x, long in_min, long in_max, long out_min, long out_max);
 
 inline unsigned int makeWord(unsigned char h, unsigned char l) { return (h << 8) | l; }
 
-
-/*
- * The new interrupt numbers are a combination of the position in the
- * internal jump table (value in LSB) and the real STM8S-Interrupt number (MSB)
- */
-#ifdef  STM8S /*huaweiwx*/
-#define INT_PORTA		( 0| (uint16_t)(ITC_IRQ_PORTA << 8))
-#define INT_PORTB		( 1| (uint16_t)(ITC_IRQ_PORTB << 8))
-#define INT_PORTC		( 2| (uint16_t)(ITC_IRQ_PORTC << 8))
-#define INT_PORTD		( 3| (uint16_t)(ITC_IRQ_PORTD << 8))
-#define INT_PORTE		( 4| (uint16_t)(ITC_IRQ_PORTE << 8))
-#define INT_TIM1_CAPCOM		( 5| (uint16_t)(ITC_IRQ_TIM1_CAPCOM << 8))
-#define INT_TIM1_OVF		( 6| (uint16_t)(ITC_IRQ_TIM1_OVF << 8))
-#define INT_TIM2_CAPCOM		( 7| (uint16_t)(ITC_IRQ_TIM2_CAPCOM << 8))
-#define INT_TIM2_OVF		( 8| (uint16_t)(ITC_IRQ_TIM2_OVF << 8))
-
-#else
-  #define INT_PORTA0		( 0| (uint16_t)(EXTI0_IRQn << 8))
-  #define INT_PORTA1		( 0| (uint16_t)(EXTI1_IRQn << 8))
-  #define INT_PORTA2		( 0| (uint16_t)(EXTI2_IRQn << 8))
-  #define INT_PORTA3		( 0| (uint16_t)(EXTI3_IRQn << 8))
-  #define INT_PORTA4		( 0| (uint16_t)(EXTI4_IRQn << 8))
-  #define INT_PORTA5		( 0| (uint16_t)(EXTI5_IRQn << 8))
-  #define INT_PORTA6		( 0| (uint16_t)(EXTI6_IRQn << 8))
-  #define INT_PORTA7		( 0| (uint16_t)(EXTI7_IRQn << 8))
-  #define INT_PORTE		    ( 4| (uint16_t)(EXTIE_F_PVD_IRQn << 8))
-# if defined(STM8L15X_MD) || defined (STM8L05X_MD_VL) || defined (STM8AL31_L_MD)
-    #define INT_PORTB		( 1| (uint16_t)(EXTIB_IRQn << 8))
-    #define INT_PORTD		( 3| (uint16_t)(EXTID_IRQn << 8))
-	#define INT_TIM1_CAPCOM		( 5| (uint16_t)(TIM1_CC_IRQn << 8))
-	#define INT_TIM1_OVF		( 6| (uint16_t)(TIM1_UPD_OVF_TRG_IRQn << 8))
-    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_IRQn << 8))
-    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_IRQn << 8))
-    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_IRQn << 8))
-    #define INT_TIM3_OVF		(10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_IRQn << 8))
-# elif defined (STM8L15X_LD) || defined (STM8L05X_LD_VL)
-    #define INT_PORTB		( 1| (uint16_t)(EXTIB_IRQn << 8))
-    #define INT_PORTD		( 3| (uint16_t)(EXTID_IRQn << 8))
-    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_IRQn << 8))
-    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_IRQn << 8))
-    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_IRQn << 8))
-    #define INT_TIM3_OVF		( 10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_IRQn << 8))
-# elif defined (STM8L15X_HD) || defined (STM8L15X_MDP) || defined (STM8L05X_HD_VL)
-    #define INT_PORTB		( 1| (uint16_t)(EXTIB_G_IRQn << 8))
-    #define INT_PORTD		( 3| (uint16_t)(EXTID_H_IRQn << 8))
-	#define INT_TIM1_CAPCOM		( 5| (uint16_t)(TIM1_CC_IRQn << 8))
-	#define INT_TIM1_OVF		( 6| (uint16_t)(TIM1_UPD_OVF_TRG_IRQn << 8))
-    #define INT_TIM2_CAPCOM		( 7| (uint16_t)(TIM2_CC_USART2_RX_IRQn << 8))
-    #define INT_TIM2_OVF		( 8| (uint16_t)(TIM2_UPD_OVF_TRG_BRK_USART2_TX_IRQn << 8))
-    #define INT_TIM3_CAPCOM		( 9| (uint16_t)(TIM3_CC_USART3_RX_IRQn << 8))
-    #define INT_TIM3_OVF		( 10| (uint16_t)(TIM3_UPD_OVF_TRG_BRK_USART3_TX_IRQn << 8))
-# endif //STM8S
-#endif
 
 #endif //Arduino_h

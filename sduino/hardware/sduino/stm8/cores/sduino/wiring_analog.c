@@ -25,10 +25,8 @@
 
   Modified 2 February 2018 for STM8L by huaweiwx 
 */
-
+#include "Arduino.h"
 #include "wiring_private.h"
-#include "pins_arduino.h"
-
 
 #ifndef NO_ANALOG_IN
 /*
