@@ -23,7 +23,7 @@ void delay(uint16_t ms)
 {
 #ifdef DELAY_COUNT
   uint16_t i;
-  if ((CLK_GetSYSCLKSource() != CLK_SYSCLKSource_LSE) || (CLK_GetSYSCLKSource() != CLK_SYSCLKSource_LSI)){
+  if ((CLK_GetSYSCLKSource() == CLK_SYSCLKSource_LSE) || (CLK_GetSYSCLKSource() == CLK_SYSCLKSource_LSI)){
 	 for(;ms>0;ms--)
        __asm__("nop\n");
  

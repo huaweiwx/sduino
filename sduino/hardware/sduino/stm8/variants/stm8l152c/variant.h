@@ -26,7 +26,7 @@
 #define _VARINAT_H_
 
 #ifndef LED_BUILTIN
-#	define LED_BUILTIN (PD0)	// pin for the buildin LED
+#	define LED_BUILTIN (PA7)	//board UD2 LED PA7 for the buildin LED 
 #endif
 
 #define NEED_TIMER_11_12

@@ -95,32 +95,32 @@
 
 //default define can be overloader by variat.h
 #ifndef SS1
-#define SS1	    (PB5)
+#define SS1	    (PB4)
 #endif
 
 #ifndef MOSI1
-#define	MOSI1 (PC6)
+#define	MOSI1 (PB6)
 #endif
 #ifndef MISO1
-#define	MISO1 (PC7)
+#define	MISO1 (PB7)
 #endif
 #ifndef SCK1
-#define	SCK1	 (PC5)
+#define	SCK1	 (PB5)
 #endif
 
 #ifndef SDA1
-#define	SDA1	(PB5)
+#define	SDA1	(PC0)
 #endif
 #ifndef SCL1
-#define	SCL1	(PB4)
+#define	SCL1	(PC1)
 #endif
 
 #ifndef TX1
-#define TX1	(PD5)
+#define TX1	(PC3)
 #endif
 
 #ifndef RX1
-#define RX1	(PD6)
+#define RX1	(PC2)
 #endif
 
 #ifndef SS
