@@ -1,5 +1,5 @@
 /*
-  pins_arduino.h - Pin definition functions for Arduino
+  vardiant.h - Pin definition functions for Arduino
   Part of Arduino - http://www.arduino.cc/
 
   Copyright (c) 2007 David A. Mellis
@@ -20,17 +20,8 @@
   Boston, MA  02111-1307  USA
 */
 
-#ifndef Pins_Arduino_h
-#define Pins_Arduino_h
-
-#ifndef _BV
-#define _BV(X) (1<<(X))
-#endif
-
-
-#define NUM_DIGITAL_PINS            23
-#define NUM_ANALOG_INPUTS           9  // skipping A6 and A7, AREF is A8
-#define analogInputToDigitalPin(p)  ((p < 9) ? (p) + 14 : -1)
+#ifndef _VARINAT_H_
+#define _VARINAT_H_
 
 
 /* functional pin mapping for the STM8S105 used on the sduino-uno board.
@@ -38,32 +29,46 @@
  * This pin mapping tries to reassemble the original Arduino Uno mapping
  * for the ATmega328 as closely as possible.
  */
-enum portpin {
-	PD6,	/* IO0/RX	PD6/UART2_RX		*/
-	PD5,	/* IO1/TX 	PD5/UART2_TX		*/
-	PD7,	/* IO2 		PD7/TLI [TIM1_CH4]	*/
-	PD2,	/* IO3~		PD2 (HS)/TIM3_CH1 [TIM2_CH3] */
-	PD0,	/* IO4~		PD0 (HS)/TIM3_CH2 [TIM1_BKIN]/[CLK_COO] */
-	PD4,	/* IO5~		PD4 (HS)/TIM2_CH1 [BEEP] */
-	PD3,	/* IO6~		PD3 (HS)/TIM2_CH2/ADC_ETR */
-	PD1,	/* IO7 		PD1 (HS)/SWIM		*/
-	PC1,	/* IO8~		PC1 (HS)/TIM1_CH1/UART2_CK */
-	PC3,	/* IO9~		PC3 (HS)/TIM1_CH3	*/
-	PC4,	/* IO10~ 	PC4 (HS)/TIM1_CH4	*/
-	PC6,	/* IO11/MOSI 	PC6 (HS)/SPI_MOSI	*/
-	PC7,	/* IO12/MISO 	PC7 (HS)/SPI_MISO	*/
-	PC5,	/* IO13/SCK 	PC5 (HS)/SPI_SCK	*/
-	PB0,	/* AD0 		PB0/AIN0 [TIM1_CH1N]	*/
-	PB1,	/* AD1 		PB1/AIN1 [TIM1_CH2N]	*/
-	PB2,	/* AD2 		PB2/AIN2 [TIM1_CH3N]	*/
-	PB3,	/* AD3 		PB3/AIN3 [TIM1_ETR]	*/
-	PB5,	/* AD4/SDA 	PB5/AIN5 [I2C_SDA]	*/
-	PB4,	/* AD5/SCL 	PB4/AIN4 [I2C_SCL]	*/
-	PF4=22,	/* AREF		PF4/AIN12		*/
-	PC2,	/* IO23~ 	PC2 (HS)/TIM1_CH2	*/
-	PE5,	/* IO24/SS 	PE5/SPI_NSS		*/
-};
+ 
+ #define VARIANT_PIN_LIST \
+             PIN(A,1),PIN(A,2),\
+	PIN(B,0),PIN(B,1),PIN(B,2),PIN(B,3),PIN(B,4),PIN(B,5),PIN(B,6),PIN(B,7),\
+	         PIN(C,1),PIN(C,2),PIN(C,3),PIN(C,4),PIN(C,5),PIN(C,6),PIN(C,7),\
+	PIN(D,0),PIN(D,1),PIN(D,2),PIN(D,3),PIN(D,4),PIN(D,5),PIN(D,6),PIN(D,7),\
+	PIN(F,4),\
+    PIN(E,5),\
 
+#define	PA1 0 	/* AD1 		PA1 	*/
+#define	PA2 1	/* AD2 		PA2 	*/
+#define	PB0 2 	/* AD0 		PB0/AIN0 [TIM1_CH1N]	*/
+#define	PB1 3 	/* AD1 		PB1/AIN1 [TIM1_CH2N]	*/
+#define	PB2 4	/* AD2 		PB2/AIN2 [TIM1_CH3N]	*/
+#define	PB3 5 	/* AD3 		PB3/AIN3 [TIM1_ETR]	*/
+#define	PB4 6	/* AD5/SCL 	PB4/AIN4 [I2C_SCL]	*/
+#define	PB5 7	/* AD4/SDA 	PB5/AIN5 [I2C_SDA]	*/
+#define	PB6 8 	/*          PB6 dumm*/
+#define	PB7 9	/*          PB7 dumm*/
+#define	PC1 10	/* IO8~		PC1 (HS)/TIM1_CH1/UART2_CK */
+#define	PC2 11	/* IO23~ 	PC2 (HS)/TIM1_CH2	*/
+#define	PC3 12	/* IO9~		PC3 (HS)/TIM1_CH3	*/
+#define	PC4 13	/* IO10~ 	PC4 (HS)/TIM1_CH4	*/
+#define	PC5 14	/* IO13/SCK 	PC5 (HS)/SPI_SCK	*/
+#define	PC6 15	/* IO11/MOSI 	PC6 (HS)/SPI_MOSI	*/
+#define	PC7 16	/* IO12/MISO 	PC7 (HS)/SPI_MISO	*/
+#define	PD0 17	/* IO4~		PD0 (HS)/TIM3_CH2 [TIM1_BKIN]/[CLK_COO] */
+#define	PD1 18	/* IO7 		PD1 (HS)/SWIM		*/
+#define	PD2 19	/* IO3~		PD2 (HS)/TIM3_CH1 [TIM2_CH3] */
+#define	PD3 20	/* IO6~		PD3 (HS)/TIM2_CH2/ADC_ETR */
+#define	PD4 21	/* IO5~		PD4 (HS)/TIM2_CH1 [BEEP] */
+#define	PD5 22	/* IO1/TX 	PD5/UART2_TX		*/
+#define	PD6 23	/* IO0/RX	PD6/UART2_RX		*/
+#define	PD7 24	/* IO2 		PD7/TLI [TIM1_CH4]	*/
+#define	PE5 25  /* IO24/SS 	PE5/SPI_NSS		*/
+#define	PF4 26  /* AREF		PF4/AIN12		*/
+#define NUM_DIGITAL_PINS            27
+
+#define NUM_ANALOG_INPUTS           9  // skipping A6 and A7, AREF is A8
+#define analogInputToDigitalPin(p)  ((p < 9) ? (p) + 14 : -1)
 
 
 // PWM on pins 3-6, 8-10, 14
@@ -71,60 +76,7 @@ enum portpin {
  				| (p)==14 \
  )
 
-// TODO: find a way to use pin 10 (PC4) as software controlled SS
-#define PIN_SPI_SS    (PE5)	// 24
-#define PIN_SPI_MOSI  (PC6)	// 11
-#define PIN_SPI_MISO  (PC7)	// 12
-#define PIN_SPI_SCK   (PC5)	// 13
-
-/* SDCC workaround: These const variables wouldn't be replaced by hard
- * constant loads. So use defines instead.
-static const uint8_t SS   = PIN_SPI_SS;
-static const uint8_t MOSI = PIN_SPI_MOSI;
-static const uint8_t MISO = PIN_SPI_MISO;
-static const uint8_t SCK  = PIN_SPI_SCK;
-*/
-#define SS	PIN_SPI_SS
-#define	MOSI	PIN_SPI_MOSI
-#define	MISO	PIN_SPI_MISO
-#define	SCK	PIN_SPI_SCK
-
-#define PIN_WIRE_SDA        (PB5)	// 20
-#define PIN_WIRE_SCL        (PB4)	// 21
-
-/* SDCC workaround
-static const uint8_t SDA = PIN_WIRE_SDA;
-static const uint8_t SCL = PIN_WIRE_SCL;
-*/
-#define	SDA	PIN_WIRE_SDA
-#define	SCL	PIN_WIRE_SCL
-
-#define PIN_LED_BUILTIN (PC5)	// sduino: pin for the buildin LED, pin 13
-#define PIN_TX	(PD5)		// sduino: pin for TX line, pin 1
-#define PIN_RX	(PD6)		// sduino: pin for RX line, pin 0
-
 #define LED_BUILTIN (PC5)	// pin for the buildin LED, pin 13
-
-#define PIN_A0   (PB0)		// 14, Ain0
-#define PIN_A1   (PB1)		// 15, Ain1
-#define PIN_A2   (PB2)		// 16, Ain2
-#define PIN_A3   (PB3)		// 17, Ain3
-#define PIN_A4   (PB5)		// 18, Ain5
-#define PIN_A5   (PB4)		// 19, Ain4
-
-/* SDCC workaround
-static const uint8_t A0 = PIN_A0;
-static const uint8_t A1 = PIN_A1;
-static const uint8_t A2 = PIN_A2;
-static const uint8_t A3 = PIN_A3;
-static const uint8_t A4 = PIN_A4;
-*/
-#define	A0	PIN_A0
-#define	A1	PIN_A1
-#define	A2	PIN_A2
-#define	A3	PIN_A3
-#define	A4	PIN_A4
-#define	A5	PIN_A5
 
 //#define NO_ANALOG	0xff
 
@@ -190,139 +142,34 @@ static const uint8_t A4 = PIN_A4;
 // (PWM: always available as PWM)
 // (pwm: PWM as alternate function -- en-/disabled for all such pins at once)
 
-// these arrays map port names (e.g. port B) to the
-// appropriate addresses for various functions (e.g. reading
-// and writing)
-const uint16_t PROGMEM port_to_mode_PGM[] = {
-	NOT_A_PORT,
-	GPIOA_BaseAddress+2,
-	GPIOB_BaseAddress+2,
-	GPIOC_BaseAddress+2,
-	GPIOD_BaseAddress+2,
-	GPIOE_BaseAddress+2,
-	GPIOF_BaseAddress+2,
-/*
-	(uint16_t) &GPIOA->DDR,
-	(uint16_t) &GPIOB->DDR,
-	(uint16_t) &GPIOC->DDR,
-	(uint16_t) &GPIOD->DDR,
-*/
-};
-
-const uint16_t PROGMEM port_to_output_PGM[] = {
-	NOT_A_PORT,
-	GPIOA_BaseAddress,
-	GPIOB_BaseAddress,
-	GPIOC_BaseAddress,
-	GPIOD_BaseAddress,
-	GPIOE_BaseAddress,
-	GPIOF_BaseAddress,
-/*
-	(uint16_t) &GPIOA->ODR,
-	(uint16_t) &GPIOB->ODR,
-	(uint16_t) &GPIOC->ODR,
-	(uint16_t) &GPIOD->ODR,
-*/
-};
-
-const uint16_t PROGMEM port_to_input_PGM[] = {
-	NOT_A_PORT,
-	GPIOA_BaseAddress+1,
-	GPIOB_BaseAddress+1,
-	GPIOC_BaseAddress+1,
-	GPIOD_BaseAddress+1,
-	GPIOE_BaseAddress+1,
-	GPIOF_BaseAddress+1,
-/*
-	(uint16_t) &GPIOA->IDR,
-	(uint16_t) &GPIOB->IDR,
-	(uint16_t) &GPIOC->IDR,
-	(uint16_t) &GPIOD->IDR,
-*/
-};
-
-const uint8_t PROGMEM digital_pin_to_port_PGM[] = {
-	PD, /* 0 */
-	PD,
-	PD,
-	PD,
-	PD,
-	PD,
-	PD,
-	PD,
-	PC, /* 8 */
-	PC,
-	PC,
-	PC,
-	PC,
-	PC,
-	PB, /* 14 */
-	PB,
-	PB,
-	PB,
-	PB,
-	PB,
-	PB,
-	PB,
-	PF, /* 22 */
-	PC, /* 23 */
-	PE, /* 24 */
-};
-
-const uint8_t PROGMEM digital_pin_to_bit_mask_PGM[] = {
-	_BV(6), /* 0, port D */
-	_BV(5),
-	_BV(7),
-	_BV(2),
-	_BV(0),
-	_BV(4),
-	_BV(3),
-	_BV(1),
-	_BV(1), /* 8, port C */
-	_BV(3),
-	_BV(4),
-	_BV(6),
-	_BV(7),
-	_BV(5),
-	_BV(0), /* 14, port B */
-	_BV(1),
-	_BV(2),
-	_BV(3),
-	_BV(5),
-	_BV(4),
-	_BV(6),
-	_BV(7),
-	_BV(4), /* 22, port F */
-	_BV(2), /* 23, port C */
-	_BV(5), /* 24, port E */
-};
-
 const uint8_t PROGMEM digital_pin_to_timer_PGM[] = {
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	TIMER31,	// 3
-	TIMER32,	// 4
-	TIMER21,	// 5
-	TIMER22,	// 6
-	NOT_ON_TIMER,
-	TIMER11,	// 8
-	TIMER13,	// 9
-	TIMER14,	// 10
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	NOT_ON_TIMER,
-	TIMER12,	// 23
-	NOT_ON_TIMER,
+	NOT_ON_TIMER,  /* 0  PA1	*/
+	NOT_ON_TIMER,  /* 1  PA2	*/
+	NOT_ON_TIMER,  /* 2  PB0/AIN0 [TIM1_CH1N]	*/
+	NOT_ON_TIMER,  /* 3  PB1/AIN1 [TIM1_CH2N]	*/
+	NOT_ON_TIMER,  /* 4  PB2/AIN2 [TIM1_CH3N]	*/
+	NOT_ON_TIMER,  /* 5  PB3/AIN3 [TIM1_ETR]	*/
+	NOT_ON_TIMER,  /* 6  PB4/AIN4 [I2C_SCL]	*/
+	NOT_ON_TIMER,  /* 7  PB5/AIN5 [I2C_SDA]	*/
+	NOT_ON_TIMER,  /* 8  PB6 dumm*/
+	NOT_ON_TIMER,  /* 9  PB7 dumm*/
+	TIMER11,	   /* 10 PC1 (HS)/TIM1_CH1/UART2_CK */
+	TIMER12,	   /* 11 PC2 (HS)/TIM1_CH2	*/
+	TIMER13,	   /* 12 PC3 (HS)/TIM1_CH3	*/
+	TIMER14,	   /* 13 PC4 (HS)/TIM1_CH4	*/
+	NOT_ON_TIMER,  /* 14 PC5 (HS)/SPI_SCK	*/
+	NOT_ON_TIMER,  /* 15 PC6 (HS)/SPI_MOSI	*/
+	NOT_ON_TIMER,  /* 16 PC7 (HS)/SPI_MISO	*/
+	TIMER32,	   /* 17 PD0 (HS)/TIM3_CH2 [TIM1_BKIN]/[CLK_COO] */
+	NOT_ON_TIMER,  /* 18 PD1 (HS)/SWIM		*/
+	TIMER31,	   /* 19 PD2 (HS)/TIM3_CH1 [TIM2_CH3] */
+	TIMER22,	   /* 20 PD3 (HS)/TIM2_CH2/ADC_ETR */
+	TIMER21,	   /* 21 PD4 (HS)/TIM2_CH1 [BEEP] */
+	NOT_ON_TIMER,  /* 22 PD5/UART2_TX		*/
+	NOT_ON_TIMER,  /* 23 PD6/UART2_RX		*/
+	NOT_ON_TIMER,  /* 24 PD7/TLI [TIM1_CH4]	*/
+	NOT_ON_TIMER,  /* 25 PE5/SPI_NSS		*/
+	NOT_ON_TIMER,  /* 26 PF4/AIN12		*/
 };
 
 #endif

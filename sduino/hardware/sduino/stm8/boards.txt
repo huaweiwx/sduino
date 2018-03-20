@@ -1,158 +1,498 @@
 # See: http://code.google.com/p/arduino/wiki/Platforms
-# Modified 2 February 2018 for STM8L by huaweiwx 
+# Modified 2 February 2018 for STM8S/L by huaweiwx 
+#build.series: S003F3/S103F3
+#              S003K3/S103K3
+#              S105K4
+#              S005K6/105K6
+#              S005C6
+#              S105C4/6
+#              L152C/R 4/6/8
 
-########################## STM8S003F3 ####################################
-stm8s003f3p6.name=S003F3(Breakout Board)
+menu.subboard=Specific Board
+menu.startadr=Startup adr
+menu.clock_source=Clock source
+menu.osc_speed=OSC Speed(MHz)
+menu.cpu_speed=cpu Speed(MHz)
+menu.serial=Serial communication
+menu.jtag_swd=SwimPin
+menu.extern_lib=Extern lib
+menu.upload_method=Upload method
+menu.log=Debug Log_level
 
-stm8s003f3p6.upload.tool=stm8flash
-stm8s003f3p6.upload.protocol=stlinkv2
-stm8s003f3p6.upload.mcu=stm8s003?3
-stm8s003f3p6.upload.maximum_size=8192
-stm8s003f3p6.upload.maximum_data_size=1024
+########################## STM8S103/003F ####################################
+stm8s103f.name=S103F/S003F
 
-stm8s003f3p6.build.stdlibpre=STM8S
-stm8s003f3p6.build.mcu=STM8S003
-stm8s003f3p6.build.f_cpu=16000000L
-stm8s003f3p6.build.board=s003f3_breakout
-stm8s003f3p6.build.core=sduino
-stm8s003f3p6.build.variant=standard
+stm8s103f.upload.tool=stm8flash
+stm8s103f.upload.protocol=stlinkv2
+stm8s103f.upload.maximum_size=8192
+stm8s103f.upload.maximum_data_size=1024
 
-# meaningless variables just to keep the makefile happy
-stm8s003f3p6.upload.speed=1
+stm8s103f.build.stdlibpre=STM8S
+stm8s103f.build.f_cpu=16000000L
+stm8s103f.build.core=sduino
+stm8s103f.build.variant=stm8s103f
+stm8s103f.build.board=BREAKOUT
+
+stm8s103f.menu.subboard.S103=S103F3(Breakout Board)
+stm8s103f.menu.subboard.S103.build.series=-DSTM8S103F3 -DSTM8S
+stm8s103f.menu.subboard.S103.build.mcu=STM8S103
+stm8s103f.menu.subboard.S103.build.board=S103F3_BREAKOUT
+stm8s103f.menu.subboard.S103.upload.mcu=stm8s103?3
+
+stm8s103f.menu.subboard.S003=S003F3
+stm8s103f.menu.subboard.S003.build.series=-DSTM8S003F3 -DSTM8S
+stm8s103f.menu.subboard.S003.build.mcu=STM8S003
+stm8s103f.menu.subboard.S003.build.board=S003F3_BREAKOUT
+stm8s103f.menu.subboard.S003.upload.mcu=stm8s003?3
+
+stm8s103f.menu.clock_source.hsi=HSI(16M)
+stm8s103f.menu.clock_source.hsi.build.osc=-DHSI=16
+stm8s103f.menu.clock_source.lsi=LSI(128K) 
+stm8s103f.menu.clock_source.lsi.build.osc=-DLSI=128 
+stm8s103f.menu.clock_source.hse16=HSE(16M)
+stm8s103f.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
+stm8s103f.menu.clock_source.hse8=HSE(8M)
+stm8s103f.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
+
+stm8s103f.menu.cpu_speed.s16=16M
+stm8s103f.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
+stm8s103f.menu.cpu_speed.s08=8M
+stm8s103f.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
+stm8s103f.menu.cpu_speed.s04=4M
+stm8s103f.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
+stm8s103f.menu.cpu_speed.s02=2M
+stm8s103f.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
+stm8s103f.menu.cpu_speed.s01=1M
+stm8s103f.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
+stm8s103f.menu.cpu_speed.lsi=LSI_128K
+stm8s103f.menu.cpu_speed.lsi.build.f_cpu=128000L -DLSI=128
 
 
-########################## STM8S103F3 ####################################
-stm8sblue.name=S103F3(Breakout Board)
+stm8s103f.menu.jtag_swd.default=General_IO
+stm8s103f.menu.jtag_swd.default.build.extra_flags={build.series}
+stm8s103f.menu.jtag_swd.swim=Swim
+stm8s103f.menu.jtag_swd.swim.build.extra_flags=-{build.series} -DENABLE_SWIM
 
-stm8sblue.upload.tool=stm8flash
-stm8sblue.upload.protocol=stlinkv2
-stm8sblue.upload.mcu=stm8s103?3
-stm8sblue.upload.maximum_size=8192
-stm8sblue.upload.maximum_data_size=1024
+stm8s103f.menu.log.default=Release
 
-stm8sblue.build.stdlibpre=STM8S
-stm8sblue.build.mcu=STM8S103
-stm8sblue.build.f_cpu=16000000L
-stm8sblue.build.board=s103f3_breakout
-stm8sblue.build.core=sduino
-stm8sblue.build.variant=standard
-
-# meaningless variables just to keep the makefile happy
-stm8sblue.upload.speed=1
-
-########################## STM8S103K3 ####################################
-stm8s103k3t6.name=S103K3 (blue)
-
-stm8s103k3t6.upload.tool=stm8flash
-stm8s103k3t6.upload.protocol=stlinkv2
-stm8s103k3t6.upload.mcu=stm8s103?3
-stm8s103k3t6.upload.maximum_size=8192
-stm8s103k3t6.upload.maximum_data_size=1024
-
-stm8s103k3t6.build.stdlibpre=STM8S
-stm8s103k3t6.build.mcu=STM8S103
-stm8s103k3t6.build.f_cpu=16000000L
-stm8s103k3t6.build.board=s103k3_blue
-stm8s103k3t6.build.core=sduino
-stm8s103k3t6.build.variant=stm8s103k3t6
-
-# meaningless variables just to keep the makefile happy
-stm8s103k3t6.upload.speed=1
-
-########################## STM8S105K4  ####################################
-stm8s105k4t6.name=S105K4 (Breakout Board)
-
-stm8s105k4t6.upload.tool=stm8flash
-stm8s105k4t6.upload.protocol=stlinkv2
-stm8s105k4t6.upload.mcu=stm8s105?4
-stm8s105k4t6.upload.maximum_size=16384
-stm8s105k4t6.upload.maximum_data_size=2048
-
-stm8s105k4t6.build.stdlibpre=STM8S
-stm8s105k4t6.build.mcu=STM8S105
-stm8s105k4t6.build.f_cpu=16000000L
-stm8s105k4t6.build.board=s105k4_breakout
-stm8s105k4t6.build.core=sduino
-stm8s105k4t6.build.variant=stm8s105k4t6
-
-# meaningless variables just to keep the makefile happy
-stm8s105k4t6.upload.speed=1
-
-##############################################################
-s8uno.name=S105K6 (Breakout Board)
-
-s8uno.upload.tool=stm8flash
-s8uno.upload.protocol=stlinkv2
-s8uno.upload.mcu=stm8s105?6
-s8uno.upload.maximum_size=32768
-s8uno.upload.maximum_data_size=2048
-
-s8uno.build.stdlibpre=STM8S
-s8uno.build.mcu=STM8S105
-s8uno.build.f_cpu=16000000L
-s8uno.build.board=STM8S_UNO
-s8uno.build.core=sduino
-s8uno.build.variant=s8uno
+stm8s103f.menu.log.fatal=FATAL
+stm8s103f.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+stm8s103f.menu.log.error=ERROR
+stm8s103f.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+stm8s103f.menu.log.warning=WARNING
+stm8s103f.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+stm8s103f.menu.log.info=INFO
+stm8s103f.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+stm8s103f.menu.log.debug=DEBUG
+stm8s103f.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+stm8s103f.menu.log.trace=TRACE
+stm8s103f.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 # meaningless variables just to keep the makefile happy
-s8uno.upload.speed=1
+stm8s103f.upload.speed=1
+
+########################## STM8S103/003K ####################################
+stm8s103k.name=S103K/S003K
+
+stm8s103k.upload.tool=stm8flash
+stm8s103k.upload.protocol=stlinkv2
+stm8s103k.upload.maximum_size=8192
+stm8s103k.upload.maximum_data_size=1024
+
+stm8s103k.build.stdlibpre=STM8S
+stm8s103k.build.f_cpu=16000000L
+stm8s103k.build.core=sduino
+stm8s103k.build.variant=stm8s103k
+stm8s103k.build.board=K3T6_BLUE
+
+stm8s103k.menu.subboard.S103=S103K3T6(blue LED:PD7)
+stm8s103k.menu.subboard.S103.build.series=-DSTM8S103K3 -DSTM8S
+stm8s103k.menu.subboard.S103.build.mcu=STM8S103
+stm8s103k.menu.subboard.S103.build.board=S103K3_BLUE
+stm8s103k.menu.subboard.S103.upload.mcu=stm8s103?3
+
+stm8s103k.menu.subboard.S003=S003K3T6(LED:PD7)
+stm8s103k.menu.subboard.S003.build.series=-DSTM8S003K3 -DSTM8S
+stm8s103k.menu.subboard.S003.build.mcu=STM8S003
+stm8s103k.menu.subboard.S003.build.board=S003K3_BLUE
+stm8s103k.menu.subboard.S003.upload.mcu=stm8s003?3
+
+stm8s103k.menu.clock_source.hsi=HSI(16M)
+stm8s103k.menu.clock_source.hsi.build.osc=-DHSI=16
+stm8s103k.menu.clock_source.lsi=LSI(128K) 
+stm8s103k.menu.clock_source.lsi.build.osc=-DLSI=128 
+stm8s103k.menu.clock_source.hse16=HSE(16M)
+stm8s103k.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
+stm8s103k.menu.clock_source.hse8=HSE(8M)
+stm8s103k.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
+
+stm8s103k.menu.cpu_speed.s16=16M
+stm8s103k.menu.cpu_speed.s16.build.f_cpu=16000000L  {build.osc}
+stm8s103k.menu.cpu_speed.s08=8M
+stm8s103k.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
+stm8s103k.menu.cpu_speed.s04=4M
+stm8s103k.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
+stm8s103k.menu.cpu_speed.s02=2M
+stm8s103k.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
+stm8s103k.menu.cpu_speed.s01=1M
+stm8s103k.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
+stm8s103k.menu.cpu_speed.lsi=LSI_128K
+stm8s103k.menu.cpu_speed.lsi.build.f_cpu=128000L -DLSI=128
 
 
-########################## STM8S105C6  ####################################
-stm8sdisco.name=S105C6(Discovery)
+stm8s103k.menu.jtag_swd.default=General_IO
+stm8s103k.menu.jtag_swd.default.build.extra_flags={build.series}
+stm8s103k.menu.jtag_swd.swim=Swim
+stm8s103k.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
 
-stm8sdisco.upload.tool=stm8flash
-stm8sdisco.upload.protocol=stlink
-stm8sdisco.upload.mcu=stm8s105?6
-stm8sdisco.upload.maximum_size=32768
-stm8sdisco.upload.maximum_data_size=2048
+stm8s103k.menu.log.default=Release
 
-stm8sdisco.build.stdlibpre=STM8S
-stm8sdisco.build.mcu=STM8S105
-stm8sdisco.build.f_cpu=16000000L
-stm8sdisco.build.board=STM8S_DISCOVERY
-stm8sdisco.build.core=sduino
-stm8sdisco.build.variant=stm8sdisco
+stm8s103k.menu.log.fatal=FATAL
+stm8s103k.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+stm8s103k.menu.log.error=ERROR
+stm8s103k.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+stm8s103k.menu.log.warning=WARNING
+stm8s103k.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+stm8s103k.menu.log.info=INFO
+stm8s103k.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+stm8s103k.menu.log.debug=DEBUG
+stm8s103k.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+stm8s103k.menu.log.trace=TRACE
+stm8s103k.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 # meaningless variables just to keep the makefile happy
-stm8sdisco.upload.speed=1
+stm8s103k.upload.speed=1
 
-########################## STM8L152C8  ####################################
-STM8L152C8.name=L152C8T6
+############################# STM8S105/005K  #################################
+stm8s105k.name=S105K/S005K
 
-STM8L152C8.upload.tool=stm8flash
-STM8L152C8.upload.protocol=stlinkv2
-STM8L152C8.upload.mcu=stm8l152?8
-STM8L152C8.upload.maximum_size=32768
-STM8L152C8.upload.maximum_data_size=2048
+stm8s105k.upload.tool=stm8flash
+stm8s105k.upload.protocol=stlinkv2
+stm8s105k.upload.maximum_size=32768
+stm8s105k.upload.maximum_data_size=2048
 
-STM8L152C8.build.stdlibpre=STM8L15x
-STM8L152C8.build.mcu=STM8L15X_HD
-STM8L152C8.build.f_cpu=16000000L
-STM8L152C8.build.board=L152_BLOOD
-STM8L152C8.build.core=sduino
-STM8L152C8.build.variant=stm8l152c
+stm8s105k.build.stdlibpre=STM8S
+stm8s105k.build.f_cpu=16000000L
+stm8s105k.build.board=S105K4_BREAKOUT
+stm8s105k.build.core=sduino
+stm8s105k.build.variant=stm8s105k6
+
+stm8s105k.menu.subboard.S105K4=S105K4(BreakoutBoard LED:PE5)
+stm8s105k.menu.subboard.S105K4.build.series=-DSTM8S105K4 -DSTM8S -DLED_BUILTIN=PE5 
+stm8s105k.menu.subboard.S105K4.build.mcu=STM8S105
+stm8s105k.menu.subboard.S105K4.build.board=S105K4_BREAKOUT
+stm8s105k.menu.subboard.S105K4.build.variant=stm8s105k
+stm8s105k.menu.subboard.S105K4.upload.maximum_size=16384
+stm8s105k.menu.subboard.S105K4.upload.mcu=stm8s105?4
+
+stm8s105k.menu.subboard.S105K6=S105K6(BreakoutBoard LED:PB5)
+stm8s105k.menu.subboard.S105K6.build.series=-DSTM8S105K6 -DSTM8S
+stm8s105k.menu.subboard.S105K6.build.mcu=STM8S105
+stm8s105k.menu.subboard.S105K6.build.board=S105K6_BREAKOUT
+stm8s105k.menu.subboard.S105K6.build.variant=stm8s105k6
+stm8s105k.menu.subboard.S105K6.upload.mcu=stm8s105?6
+
+stm8s105k.menu.subboard.S005K6=S005K6(LED:PE5))
+stm8s105k.menu.subboard.S005K6.build.series=-DSTM8S005K6 -DSTM8S
+stm8s105k.menu.subboard.S005K6.build.mcu=STM8S005
+stm8s105k.menu.subboard.S005K6.build.board=S005K6
+stm8s105k.menu.subboard.S005K6.build.variant=stm8s105k
+stm8s105k.menu.subboard.S005K6.upload.mcu=stm8s005?6
+
+stm8s105k.menu.clock_source.hsi=HSI(16M)
+stm8s105k.menu.clock_source.hsi.build.osc=-DHSI=16
+stm8s105k.menu.clock_source.lsi=LSI(128K) 
+stm8s105k.menu.clock_source.lsi.build.osc=-DLSI=128 
+stm8s105k.menu.clock_source.hse16=HSE(16M)
+stm8s105k.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
+stm8s105k.menu.clock_source.hse8=HSE(8M)
+stm8s105k.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
+
+stm8s105k.menu.cpu_speed.s16=16M
+stm8s105k.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
+stm8s105k.menu.cpu_speed.s08=8M
+stm8s105k.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
+stm8s105k.menu.cpu_speed.s04=4M
+stm8s105k.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
+stm8s105k.menu.cpu_speed.s02=2M
+stm8s105k.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
+stm8s105k.menu.cpu_speed.s01=1M
+stm8s105k.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
+stm8s105k.menu.cpu_speed.lsi=LSI_128K
+stm8s105k.menu.cpu_speed.lsi.build.f_cpu=128000L -DLSI=128
+
+stm8s105k.menu.jtag_swd.default=General_IO
+stm8s105k.menu.jtag_swd.default.build.extra_flags={build.series}
+stm8s105k.menu.jtag_swd.swim=Swim
+stm8s105k.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
+
+stm8s105k.menu.log.default=Release
+
+stm8s105k.menu.log.fatal=FATAL
+stm8s105k.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+stm8s105k.menu.log.error=ERROR
+stm8s105k.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+stm8s105k.menu.log.warning=WARNING
+stm8s105k.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+stm8s105k.menu.log.info=INFO
+stm8s105k.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+stm8s105k.menu.log.debug=DEBUG
+stm8s105k.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+stm8s105k.menu.log.trace=TRACE
+stm8s105k.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 # meaningless variables just to keep the makefile happy
-STM8L152C8.upload.speed=1
+stm8s105k.upload.speed=1
 
-########################## STM8L152R8  ####################################
-STM8L152R8.name=L152R8T6
+########################## STM8S105/005C  ####################################
+stm8s105c.name=S105C/S005C
 
-STM8L152R8.upload.tool=stm8flash
-STM8L152R8.upload.protocol=stlinkv2
-STM8L152R8.upload.mcu=stm8l152?8
-STM8L152R8.upload.maximum_size=32768
-STM8L152R8.upload.maximum_data_size=2048
+stm8s105c.upload.tool=stm8flash
+stm8s105c.upload.protocol=stlink
+stm8s105c.upload.mcu=stm8s105?6
+stm8s105c.upload.maximum_size=32768
+stm8s105c.upload.maximum_data_size=2048
 
-STM8L152R8.build.stdlibpre=STM8L15x
-STM8L152R8.build.mcu=STM8L15X_HD
-STM8L152R8.build.f_cpu=16000000L
-STM8L152R8.build.board=L152_BLOOD
-STM8L152R8.build.core=sduino
-STM8L152R8.build.variant=stm8l152r
+stm8s105c.build.stdlibpre=STM8S
+stm8s105c.build.f_cpu=16000000L
+stm8s105c.build.board=STM8S_DISCOVERY
+stm8s105c.build.core=sduino
+stm8s105c.build.variant=stm8s105c
+
+stm8s105c.menu.subboard.S105disco=S105C6(Discovery)
+stm8s105c.menu.subboard.S105disco.build.variant=stm8s105c_disco
+stm8s105c.menu.subboard.S105disco.build.series=-DSTM8S105C6 -DSTM8S
+stm8s105c.menu.subboard.S105disco.build.mcu=STM8S105
+stm8s105c.menu.subboard.S105disco.upload.mcu=stm8s105?6
+
+stm8s105c.menu.subboard.S105=S105C6(generic)
+stm8s105c.menu.subboard.S105.build.series=-DSTM8S105C6 -DSTM8S
+stm8s105c.menu.subboard.S105.build.mcu=STM8S105
+stm8s105c.menu.subboard.S105.upload.mcu=stm8s105?6
+
+stm8s105c.menu.subboard.S105C4=S105C4(generic)
+stm8s105c.menu.subboard.S105C4.build.series=-DSTM8S105C4 -DSTM8S
+stm8s105c.menu.subboard.S105C4.build.mcu=STM8S105
+stm8s105c.menu.subboard.S105C4.build.variant=stm8s105c
+stm8s105c.menu.subboard.S105C4.upload.mcu=stm8s105?4
+stm8s105c.menu.subboard.S105C4.upload.maximum_size=16384
+
+stm8s105c.menu.subboard.S005=S005C6(generic)
+stm8s105c.menu.subboard.S005.build.series=-DSTM8S005C6 -DSTM8S
+stm8s105c.menu.subboard.S005.build.mcu=STM8S005
+stm8s105c.menu.subboard.S005.upload.mcu=stm8s005?6
+
+stm8s105c.menu.clock_source.hsi=HSI(16M)
+stm8s105c.menu.clock_source.hsi.build.osc=-DHSI=16
+stm8s105c.menu.clock_source.lsi=LSI(128K) 
+stm8s105c.menu.clock_source.lsi.build.osc=-DLSI=128 
+stm8s105c.menu.clock_source.hse16=HSE(16M)
+stm8s105c.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
+stm8s105c.menu.clock_source.hse8=HSE(8M)
+stm8s105c.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
+
+stm8s105c.menu.cpu_speed.s16=16M
+stm8s105c.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
+stm8s105c.menu.cpu_speed.s08=8M
+stm8s105c.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
+stm8s105c.menu.cpu_speed.s04=4M
+stm8s105c.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
+stm8s105c.menu.cpu_speed.s02=2M
+stm8s105c.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
+stm8s105c.menu.cpu_speed.s01=1M
+stm8s105c.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
+stm8s105c.menu.cpu_speed.lsi=LSI_128K
+stm8s105c.menu.cpu_speed.lsi.build.f_cpu=128000L -DLSI=128
+
+stm8s105c.menu.jtag_swd.default=General_IO
+stm8s105c.menu.jtag_swd.default.build.extra_flags={build.series}
+stm8s105c.menu.jtag_swd.swim=Swim
+stm8s105c.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
+
+stm8s105c.menu.log.default=Release
+stm8s105c.menu.log.fatal=FATAL
+stm8s105c.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+stm8s105c.menu.log.error=ERROR
+stm8s105c.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+stm8s105c.menu.log.warning=WARNING
+stm8s105c.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+stm8s105c.menu.log.info=INFO
+stm8s105c.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+stm8s105c.menu.log.debug=DEBUG
+stm8s105c.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+stm8s105c.menu.log.trace=TRACE
+stm8s105c.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 # meaningless variables just to keep the makefile happy
-STM8L152R8.upload.speed=1
+stm8s105c.upload.speed=1
+
+########################## STM8L152C  ####################################
+STM8L152C.name=L152C
+
+STM8L152C.upload.tool=stm8flash
+STM8L152C.upload.protocol=stlinkv2
+STM8L152C.upload.mcu=stm8l152?8
+STM8L152C.upload.maximum_size=32768
+STM8L152C.upload.maximum_data_size=2048
+
+STM8L152C.build.stdlibpre=STM8L
+STM8L152C.build.series=-DSTM8L152C -DSTM8L
+STM8L152C.build.mcu=STM8L15X_MD
+STM8L152C.build.f_cpu=16000000L
+STM8L152C.build.board=L152_BLOOD
+STM8L152C.build.core=sduino
+STM8L152C.build.variant=stm8l152c
+
+STM8L152C.menu.subboard.L152C8=L152C8
+STM8L152C.menu.subboard.L152C8.build.series=-DSTM8L152C -DSTM8L
+STM8L152C.menu.subboard.L152C8.build.mcu=STM8L15X_HD
+STM8L152C.menu.subboard.L152C8.upload.mcu=stm8l152?8
+STM8L152C.menu.subboard.L152C8.upload.maximum_size=65536
+STM8L152R.menu.subboard.L152C8.upload.maximum_data_size=4096
+
+
+STM8L152C.menu.subboard.L152C6=L152C6 (UDA)
+STM8L152C.menu.subboard.L152C6.build.series=-DSTM8L152C -DSTM8L
+STM8L152C.menu.subboard.L152C6.build.mcu=STM8L15X_MD
+STM8L152C.menu.subboard.L152C6.upload.mcu=stm8l152?6
+STM8L152C.menu.subboard.L152C6.upload.maximum_size=32768
+
+STM8L152C.menu.subboard.L152C4=L152C4
+STM8L152C.menu.subboard.L152C4.build.series=-DSTM8L152C -DSTM8L
+STM8L152C.menu.subboard.L152C4.build.mcu=STM8L15X_MD
+STM8L152C.menu.subboard.L152C4.upload.mcu=stm8l152?4
+STM8L152C.menu.subboard.L152C4.upload.maximum_size=16384
+
+STM8L152C.menu.clock_source.hsi=HSI(16M)
+STM8L152C.menu.clock_source.hsi.build.osc=-DHSI=16
+STM8L152C.menu.clock_source.hse16=HSE(16M)
+STM8L152C.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
+STM8L152C.menu.clock_source.hse8=HSE(8M)
+STM8L152C.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
+STM8L152C.menu.clock_source.lsi=LSI(38K) 
+STM8L152C.menu.clock_source.lsi.build.osc=-DLSI=38 
+STM8L152C.menu.clock_source.lse=LSE(32.768K)
+STM8L152C.menu.clock_source.lse.build.osc=-DLSE=32
+
+STM8L152C.menu.cpu_speed.s16=16M
+STM8L152C.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
+STM8L152C.menu.cpu_speed.s08=8M
+STM8L152C.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
+STM8L152C.menu.cpu_speed.s04=4M
+STM8L152C.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
+STM8L152C.menu.cpu_speed.s02=2M
+STM8L152C.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
+STM8L152C.menu.cpu_speed.s01=1M
+STM8L152C.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
+STM8L152C.menu.cpu_speed.lsi=LSI_38K
+STM8L152C.menu.cpu_speed.lsi.build.f_cpu=38000L -DLSI=38
+STM8L152C.menu.cpu_speed.lse=LSE_32.768K
+STM8L152C.menu.cpu_speed.lse.build.f_cpu=32768L -DLSE=32768
+
+STM8L152C.menu.jtag_swd.default=General_IO
+STM8L152C.menu.jtag_swd.default.build.extra_flags={build.series}
+STM8L152C.menu.jtag_swd.swim=Swim
+STM8L152C.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
+
+STM8L152C.menu.log.default=Release
+STM8L152C.menu.log.fatal=FATAL
+STM8L152C.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+STM8L152C.menu.log.error=ERROR
+STM8L152C.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+STM8L152C.menu.log.warning=WARNING
+STM8L152C.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+STM8L152C.menu.log.info=INFO
+STM8L152C.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+STM8L152C.menu.log.debug=DEBUG
+STM8L152C.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+STM8L152C.menu.log.trace=TRACE
+STM8L152C.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
+
+# meaningless variables just to keep the makefile happy
+STM8L152C.upload.speed=1
+
+########################## STM8L152R  ####################################
+STM8L152R.name=L152R
+
+STM8L152R.upload.tool=stm8flash
+STM8L152R.upload.protocol=stlinkv2
+STM8L152R.upload.mcu=stm8l152?8
+STM8L152R.upload.maximum_size=32768
+STM8L152R.upload.maximum_data_size=2048
+
+STM8L152R.build.stdlibpre=STM8L
+STM8L152R.build.series=-DSTM8L152R -DSTM8L
+STM8L152R.build.mcu=STM8L15X_MD
+STM8L152R.build.f_cpu=16000000L
+STM8L152R.build.board=L152R8
+STM8L152R.build.core=sduino
+STM8L152R.build.variant=stm8l152r
+
+STM8L152R.menu.subboard.L152R8=L152R8(5D1 LED:PG2)
+STM8L152R.menu.subboard.L152R8.build.series=-DSTM8L152R -DSTM8L -DLED_BUILTIN=PG2
+STM8L152R.menu.subboard.L152R8.build.mcu=STM8L15X_HD
+STM8L152R.menu.subboard.L152R8.upload.mcu=stm8l152?8
+STM8L152R.menu.subboard.L152R8.upload.maximum_size=65536
+STM8L152R.menu.subboard.L152R8.upload.maximum_data_size=4096
+
+STM8L152R.menu.subboard.L152R6=L152R6
+STM8L152R.menu.subboard.L152R6.build.series=-DSTM8L152R -DSTM8L
+STM8L152R.menu.subboard.L152R6.build.mcu=STM8L15X_MDP
+STM8L152R.menu.subboard.L152R6.upload.mcu=stm8l152?6
+STM8L152R.menu.subboard.L152R6.upload.maximum_size=32768
+
+STM8L152R.menu.subboard.L152R4=L152R4
+STM8L152R.menu.subboard.L152R4.build.series=-DSTM8L152R -DSTM8L
+STM8L152R.menu.subboard.L152R4.build.mcu=STM8L15X_MD
+STM8L152R.menu.subboard.L152R4.upload.mcu=stm8l152?4
+STM8L152R.menu.subboard.L152R4.upload.maximum_size=16384
+
+STM8L152R.menu.clock_source.hsi=HSI(16M)
+STM8L152R.menu.clock_source.hsi.build.osc=-DHSI=16
+STM8L152R.menu.clock_source.hse16=HSE(16M)
+STM8L152R.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
+STM8L152R.menu.clock_source.hse8=HSE(8M)
+STM8L152R.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
+STM8L152R.menu.clock_source.lsi=LSI(38K) 
+STM8L152R.menu.clock_source.lsi.build.osc=-DLSI=38 
+STM8L152R.menu.clock_source.lse=LSE(32.768K)
+STM8L152R.menu.clock_source.lse.build.osc=-DLSE=32
+
+STM8L152R.menu.cpu_speed.s16=16M
+STM8L152R.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
+STM8L152R.menu.cpu_speed.s08=8M
+STM8L152R.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
+STM8L152R.menu.cpu_speed.s04=4M
+STM8L152R.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
+STM8L152R.menu.cpu_speed.s02=2M
+STM8L152R.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
+STM8L152R.menu.cpu_speed.s01=1M
+STM8L152R.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
+STM8L152R.menu.cpu_speed.lsi=LSI_38K
+STM8L152R.menu.cpu_speed.lsi.build.f_cpu=38000L -DLSI=38
+STM8L152R.menu.cpu_speed.lse=LSE_32.768K
+STM8L152R.menu.cpu_speed.lse.build.f_cpu=32768L -DLSE=32
+
+STM8L152R.menu.jtag_swd.default=General_IO
+STM8L152R.menu.jtag_swd.default.build.extra_flags={build.series}
+STM8L152R.menu.jtag_swd.swim=Swim
+STM8L152R.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
+
+STM8L152R.menu.log.default=Release
+STM8L152R.menu.log.fatal=FATAL
+STM8L152R.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+STM8L152R.menu.log.error=ERROR
+STM8L152R.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+STM8L152R.menu.log.warning=WARNING
+STM8L152R.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+STM8L152R.menu.log.info=INFO
+STM8L152R.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+STM8L152R.menu.log.debug=DEBUG
+STM8L152R.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+STM8L152R.menu.log.trace=TRACE
+STM8L152R.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
+
+# meaningless variables just to keep the makefile happy
+STM8L152R.upload.speed=1
 
 ######################### The end  ####################################

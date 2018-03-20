@@ -14,7 +14,7 @@ version=1.8.5
 # For Board Manager installs these variables are already predefined and will
 # not be overwritten. This assignment is done only for manual installs.
 runtime.tools.sdcc.path={runtime.hardware.path}/tools/sdcc
-runtime.tools.STM8Tools.path={runtime.hardware.path}/tools/STM8Tools
+runtime.tools.sduino.path={runtime.hardware.path}/tools/STM8Tools
 
 
 # STM8 compile variables
@@ -28,14 +28,14 @@ compiler.warning_flags.all=-Wp-Wall -V
 
 # Default "compiler.path" is correct, change only if you want to override the initial value
 compiler.path={runtime.tools.sdcc.path}/bin
-compiler.wrapper.path={runtime.tools.STM8Tools.path}/wrapper
-compiler.wrapper.path.windows={runtime.tools.STM8Tools.path}/win/bash" "{runtime.tools.STM8Tools.path}/wrapper
+compiler.wrapper.path={runtime.tools.sduino.path}/wrapper
+compiler.wrapper.path.windows={runtime.tools.sduino.path}/win/bash" "{runtime.tools.sduino.path}/wrapper
 compiler.tools.path={runtime.tools.avr-gcc.path}/bin
 
 compiler.c.cmd=sdcc
 compiler.c.wrapper=sdcc.sh
 #compiler.c.flags=-MMD -c -Ddouble=float -D__PROG_TYPES_COMPAT__ --opt-code-size {compiler.warning_flags}
-compiler.c.flags=-MMD -c -Ddouble=float -D__PROG_TYPES_COMPAT__ {compiler.warning_flags}
+compiler.c.flags=-MMD -c --std-sdcc11 -Ddouble=float -D__PROG_TYPES_COMPAT__ {compiler.warning_flags}
 compiler.c.elf.flags=--code-size {upload.maximum_size} --iram-size {upload.maximum_data_size}
 
 compiler.c.elf.cmd=sdcc
@@ -44,7 +44,7 @@ compiler.S.flags=-c -g -x assembler-with-cpp -flto
 
 compiler.cpp.cmd=sdcc
 compiler.cpp.wrapper=sdcc.sh
-compiler.cpp.flags=-MMD -c -Ddouble=float -D__PROG_TYPES_COMPAT__ {compiler.warning_flags}
+compiler.cpp.flags={compiler.c.flags}
 
 compiler.ar.cmd=sdar
 compiler.ar.wrapper=sdar.sh
@@ -59,16 +59,18 @@ compiler.elf2hex.flags=-O ihex -R DATA -R INITIALIZED -R SSEG
 
 compiler.syslibs.stdlib.path={runtime.tools.sdcc.path}/share/sdcc
 compiler.syslibs.stdlib.path.windows={runtime.tools.sdcc.path}
-compiler.syslibs.spl.path={runtime.platform.path}/{build.stdlibpre}_StdPeriph_Driver
+#compiler.syslibs.spl.path={runtime.platform.path}/{build.stdlibpre}_StdPeriph_Driver
+compiler.syslibs.spl.path={build.system.path}/{build.stdlibpre}_StdPeriph_Driver
 
 compiler.ldflags=
 
 compiler.size.cmd=avr-size
 
-compiler.systemincludes="-I{compiler.syslibs.spl.path}/inc" "-I{compiler.syslibs.stdlib.path}/include"
+compiler.systemincludes="-I{build.path}/sketch" "-I{build.system.path}/stm8chips" "-I{compiler.syslibs.spl.path}/inc" "-I{compiler.syslibs.stdlib.path}/include"
 
 # This can be overridden in boards.txt
 build.extra_flags=
+build.log_level=
 
 # These can be overridden in platform.local.txt
 compiler.c.extra_flags=
@@ -83,13 +85,13 @@ compiler.elf2hex.extra_flags=
 # --------------------
 
 ## Compile c files (re1)
-recipe.c.o.pattern="{compiler.wrapper.path}/{compiler.c.wrapper}" "{compiler.path}/{compiler.c.cmd}" "{source_file}" "{object_file}" re1 {compiler.c.flags} -mstm8 -D{build.mcu} -D{build.stdlibpre} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {includes} {compiler.systemincludes}
+recipe.c.o.pattern="{compiler.wrapper.path}/{compiler.c.wrapper}" "{compiler.path}/{compiler.c.cmd}" "{source_file}" "{object_file}" re1 {compiler.c.flags} -mstm8 -D{build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {build.log_level} {includes} {compiler.systemincludes}
 
 ## Compile c++ files (re2)
-recipe.cpp.o.pattern="{compiler.wrapper.path}/{compiler.cpp.wrapper}" "{compiler.path}/{compiler.cpp.cmd}" "{source_file}" "{object_file}" re2 {compiler.cpp.flags} -mstm8 -D{build.mcu} -D{build.stdlibpre} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} {compiler.systemincludes}
+recipe.cpp.o.pattern="{compiler.wrapper.path}/{compiler.cpp.wrapper}" "{compiler.path}/{compiler.cpp.cmd}" "{source_file}" "{object_file}" re2 {compiler.cpp.flags} -mstm8 -D{build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {build.log_level} {includes} {compiler.systemincludes}
 
 ##FIXME Compile S files (re3)
-recipe.S.o.pattern="{compiler.path}/{compiler.c.cmd}" re3 {compiler.S.flags} -mstm8 -D{build.mcu} -D{build.stdlibpre} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
+recipe.S.o.pattern="{compiler.path}/{compiler.c.cmd}" re3 {compiler.S.flags} -mstm8 -D{build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.S.extra_flags} {build.extra_flags} {build.log_level} {includes} "{source_file}" -o "{object_file}"
 
 ## Create archives (re4)
 # archive_file_path is needed for backwards compatibility with IDE 1.6.5 or older, IDE 1.6.6 or newer overrides this value
