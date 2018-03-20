@@ -944,7 +944,7 @@ IN_RAM(void FLASH_EraseBlock(uint16_t BlockNum, FLASH_MemType_TypeDef FLASH_MemT
  #ifndef _SDCC_ 
     uint32_t PointerAttr  *pwFlash;
  #else
-	uint32_t pwFlash; 
+	uint32_t flashAdr; 
  #endif	 
 
 #elif defined (STM8L15X_HD) || defined (STM8L05X_HD_VL)

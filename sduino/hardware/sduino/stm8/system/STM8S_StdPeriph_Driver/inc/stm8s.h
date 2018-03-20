@@ -104,14 +104,14 @@
    Tip: To avoid modifying this file each time you need to use different HSE, you
         can define the HSE value in your toolchain compiler preprocessor.
   */
-#if !defined  HSE_Value
+#if !defined  HSE_VALUE
  #if defined (STM8S208) || defined (STM8S207) || defined (STM8S007) || defined (STM8AF52Ax) || \
      defined (STM8AF62Ax) || defined (STM8AF622x)
   #define HSE_VALUE ((uint32_t)24000000) /* Value of the External oscillator in Hz*/
  #else
   #define HSE_VALUE ((uint32_t)16000000) /* Value of the External oscillator in Hz*/
  #endif /* STM8S208 || STM8S207 || STM8S007 || STM8AF62Ax || STM8AF52Ax || STM8AF622x */
-#endif /* HSE_Value */
+#endif /* HSE_VALUE */
 
 /**
   * @brief  Definition of Device on-chip RC oscillator frequencies
@@ -2753,6 +2753,7 @@ CFG_TypeDef;
  #define nop()                 __asm__("nop")    /* No Operation */
  #define trap()                __asm__("trap")   /* Trap (soft IT) */
  #define wfi()                 __asm__("wfi")    /* Wait For Interrupt */
+ #define wfe()                 __asm__("wfe")    /* Wait For event */
  #define halt()                __asm__("halt")   /* Halt */
 #else /*_IAR_*/
  #include <intrinsics.h>
