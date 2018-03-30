@@ -56,6 +56,14 @@
 #define MASK_STOPBITS	0x20
 #define MASK_DATABITS	0x10
 
+#define SERIAL_BUFFER_SIZE 16
+
+typedef struct ring_buffer
+{
+  unsigned char buffer[SERIAL_BUFFER_SIZE];
+  volatile uint8_t head;
+  volatile uint8_t tail;
+} ring_buffer;
 
 // Public Methods //////////////////////////////////////////////////////////////
 
@@ -69,7 +77,6 @@ size_t HardwareSerial_write(uint8_t c);
 void HardwareSerial_flush(void);
 
 void HardwareSerial_end(void);
-
 
 // Alias Definitions for a more Arduino-like look ////////////////////////////
 

@@ -47,14 +47,61 @@
 
 #define GPIO_SETMODE_IN(p,n)		(GPIO##p->DDR &= ~_BV(n))
 #define GPIO_SETMODE_OUT(p,n)	    (GPIO##p->DDR |=  _BV(n))
-#define GPIO_SETMODE_INPUT(p,n)		((GPIO##p->CR2 &= ~_BV(n)), (GPIO##p->CR1 &= ~_BV(n)), (GPIO##p->DDR &= ~_BV(n)))
-#define GPIO_SETMODE_INPUT_I(p,n)	((GPIO##p->DDR &= ~_BV(n)), (GPIO##p->CR1 &= ~_BV(n)), (GPIO##p->CR2 |=  _BV(n)))
-#define GPIO_SETMODE_INPUT_UP(p,n)	((GPIO##p->CR2 &= ~_BV(n)), (GPIO##p->DDR &= ~_BV(n)), (GPIO##p->CR1 |=  _BV(n)))
-#define GPIO_SETMODE_INPUT_UPI(p,n)	((GPIO##p->DDR &= ~_BV(n)), (GPIO##p->CR1 |=  _BV(n)), (GPIO##p->CR2 |=  _BV(n)))
-#define GPIO_SETMODE_OUTPUT(p,n)	((GPIO##p->CR1 |=  _BV(n)), (GPIO##p->CR2 &= ~_BV(n)), (GPIO##p->DDR |=  _BV(n)))
-#define GPIO_SETMODE_OUTPUT_OD(p,n)	((GPIO##p->CR1 &= ~_BV(n)), (GPIO##p->CR2 &= ~_BV(n)), (GPIO##p->DDR |=  _BV(n)))
-#define GPIO_SETMODE_OUTPUT_ODI(p,n)((GPIO##p->CR1 &= ~_BV(n)), (GPIO##p->DDR |=  _BV(n)), (GPIO##p->CR2 |=  _BV(n)))
-#define GPIO_SETMODE_OUTPUT_PPI(p,n)((GPIO##p->DDR |=  _BV(n)), (GPIO##p->CR1 |=  _BV(n)), (GPIO##p->CR2 |=  _BV(n)))
+#define GPIO_SETMODE_INPUT(p,n)	do\
+{\
+  GPIO##p->CR2 &= ~_BV(n);\
+  GPIO##p->CR1 &= ~_BV(n));\
+  GPIO##p->DDR &= ~_BV(n));\
+}while(0)
+
+#define GPIO_SETMODE_INPUT_I(p,n) do\
+{\
+	GPIO##p->DDR &= ~_BV(n);\
+	GPIO##p->CR1 &= ~_BV(n));\
+	GPIO##p->CR2 |=  _BV(n);\
+}while(0)
+
+#define GPIO_SETMODE_INPUT_UP(p,n)	do\
+{\
+	GPIO##p->CR2 &= ~_BV(n);\
+	GPIO##p->DDR &= ~_BV(n);\
+	GPIO##p->CR1 |=  _BV(n));\
+}while(0)
+	
+#define GPIO_SETMODE_INPUT_UPI(p,n)	do\
+{\
+	GPIO##p->DDR &= ~_BV(n);\
+	GPIO##p->CR1 |=  _BV(n);\
+	GPIO##p->CR2 |=  _BV(n);\
+}while(0)
+
+#define GPIO_SETMODE_OUTPUT(p,n) do\
+{\
+	GPIO##p->CR1 |=  _BV(n);\
+	GPIO##p->CR2 &= ~_BV(n);\
+	GPIO##p->DDR |=  _BV(n);\
+}while(0)
+	
+#define GPIO_SETMODE_OUTPUT_OD(p,n)	do\
+{\
+	GPIO##p->CR1 &= ~_BV(n);\
+	GPIO##p->CR2 &= ~_BV(n);\
+	GPIO##p->DDR |=  _BV(n);\
+}while(0)
+	
+#define GPIO_SETMODE_OUTPUT_ODI(p,n) do\
+{\
+	GPIO##p->CR1 &= ~_BV(n);\
+	GPIO##p->DDR |=  _BV(n);\
+	GPIO##p->CR2 |=  _BV(n);\
+}while(0)
+
+#define GPIO_SETMODE_OUTPUT_PPI(p,n) do\
+{\
+	GPIO##p->DDR |=  _BV(n);\
+	GPIO##p->CR1 |=  _BV(n);\
+	GPIO##p->CR2 |=  _BV(n);\
+}while(0)
 
 #define STM8_GPIO_ASSIGN(A, C) \
 static  void   P##A##C##_Set(void)            {GPIO##A->ODR |=  _BV( C);}\

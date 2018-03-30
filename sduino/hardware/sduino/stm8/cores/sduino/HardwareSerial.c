@@ -50,10 +50,9 @@
 # define UARTx_FLAG_PE		UART1_FLAG_PE
 # define UARTx_FLAG_TC		UART1_FLAG_TC
 # define UARTx_DeInit		UART1_DeInit
-# ifdef USE_SPL
 #  define UARTx_ReceiveData8	UART1_ReceiveData8
 #  define UARTx_GetFlagStatus	UART1_GetFlagStatus
-#  define UARTx_ITConfig	UART1_ITConfig
+#  define UARTx_ITConfig	    UART1_ITConfig
 #  define UARTx_Init		UART1_Init
 #  define UARTx_IT_TXE		UART1_IT_TXE
 #  define UARTx_IT_RXNE		UART1_IT_RXNE
@@ -69,7 +68,6 @@
 #  define UARTx_StopBits_TypeDef	UART1_StopBits_TypeDef
 #  define UARTx_Parity_TypeDef	UART1_Parity_TypeDef
 #  define UARTx_WordLength_TypeDef	UART1_WordLength_TypeDef
-# endif
 #elif defined(UART2)
 #warning "using uart2 for HardwareSerial"
 # define UARTx			UART2
@@ -84,7 +82,6 @@
 # define UARTx_FLAG_PE		UART2_FLAG_PE
 # define UARTx_FLAG_TC		UART2_FLAG_TC
 # define UARTx_DeInit		UART2_DeInit
-# ifdef USE_SPL
 #  define UARTx_ReceiveData8	UART2_ReceiveData8
 #  define UARTx_GetFlagStatus	UART2_GetFlagStatus
 #  define UARTx_ITConfig	UART2_ITConfig
@@ -103,27 +100,32 @@
 #  define UARTx_StopBits_TypeDef	UART2_StopBits_TypeDef
 #  define UARTx_Parity_TypeDef	UART2_Parity_TypeDef
 #  define UARTx_WordLength_TypeDef	UART2_WordLength_TypeDef
-# endif
+
 #elif defined(USART1)
 #warning "using usart1 for HardwareSerial"
 # define UARTx			USART1
-
- #if defined(STM8L15X_HD)||defined(STM8L15X_MDP)||defined (STM8L05X_HD_VL)  /*huaweiwx*/
-# define UARTx_RX_IRQHandler	USART1_RX_IRQHandler
-# define ITC_IRQ_UARTx_RX	    USART1_RX_TIM5_CC_IRQn
-# define UARTx_TX_IRQHandler	USART1_TX_IRQHandler
-# define ITC_IRQ_UARTx_TX	    USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQn
-#elif defined(STM8L15X_MD)||defined (STM8L05X_MD_VL)||defined (STM8AL31_L_MD)
+#if defined(STM8L15X_MD)||defined (STM8L05X_MD_VL)||defined (STM8AL31_L_MD)
 # define UARTx_RX_IRQHandler	USART1_RX_IRQHandler
 # define ITC_IRQ_UARTx_RX	    USART1_RX_IRQn
+
 # define UARTx_TX_IRQHandler	USART1_TX_IRQHandler
 # define ITC_IRQ_UARTx_TX		USART1_TX_IRQn
+
 #elif defined (STM8L15X_LD) || defined (STM8L05X_LD_VL)
 # define UARTx_RX_IRQHandler	USART1_RX_IRQHandler
 # define ITC_IRQ_UARTx_RX	    USART1_RX_IRQn
+
 # define UARTx_TX_IRQHandler	USART1_TX_IRQHandler
 # define ITC_IRQ_UARTx_TX		USART1_TX_IRQn
+
+#elif defined(STM8L15X_HD)||defined(STM8L15X_MDP)||defined (STM8L05X_HD_VL)  /*huaweiwx*/
+# define UARTx_RX_IRQHandler	USART1_RX_TIM5_CC_IRQHandler
+# define ITC_IRQ_UARTx_RX	    USART1_RX_TIM5_CC_IRQn
+
+# define UARTx_TX_IRQHandler	USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQHandler
+# define ITC_IRQ_UARTx_TX	    USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQn
 #endif
+
 # define UARTx_CR2_TIEN		USART_CR2_TIEN
 # define UARTx_CR2_RIEN		USART_CR2_RIEN
 # define UARTx_CR2_TEN		USART_CR2_TEN
@@ -131,43 +133,24 @@
 # define UARTx_FLAG_PE		USART_FLAG_PE
 # define UARTx_FLAG_TC		USART_FLAG_TC
 # define UARTx_DeInit()		USART_DeInit(USART1)
+
 #else
 # error "no UART definition found."
 #endif
 
-
-#ifdef NO_SERIAL
-/*
- * empty default IRQ functions to make the linker happy if the
- * respective module is not to linked.
- */
-
-void UARTx_TX_IRQHandler(void) __interrupt(ITC_IRQ_UARTx_TX){}
-void UARTx_RX_IRQHandler(void) __interrupt(ITC_IRQ_UARTx_RX){}
-#else // ifdef NO_SERIAL
-
-
 // private data //////////////////////////////////////////////////////////////
 
-#define SERIAL_BUFFER_SIZE 16
-typedef struct ring_buffer
-{
-  unsigned char buffer[SERIAL_BUFFER_SIZE];
-  volatile unsigned int head;
-  volatile unsigned int tail;
-} ring_buffer;
+static ring_buffer rx_buffer; // = { { 0 }, 0, 0};
+static ring_buffer tx_buffer; // = { { 0 }, 0, 0};
 
-static ring_buffer rx_buffer;// = { { 0 }, 0, 0};
-static ring_buffer tx_buffer;// = { { 0 }, 0, 0};
-
-static volatile char	transmitting;//=0;
-static unsigned char initialized;//=0 internal status. Returned on HardwareSerial()
+static volatile char	transmitting; //=0;
+static unsigned char    initialized;  //=0 internal status. Returned on HardwareSerial()
 
 // private functions  ////////////////////////////////////////////////////////
 
-static void store_char(unsigned char c, ring_buffer *buffer)
 //inline void store_char(unsigned char c, ring_buffer *buffer)
-{
+static void store_char(unsigned char c, ring_buffer *buffer){
+
   int i = (unsigned int)(buffer->head + 1) % SERIAL_BUFFER_SIZE;
 
   // if we should be storing the received character into the location
@@ -181,42 +164,41 @@ static void store_char(unsigned char c, ring_buffer *buffer)
   }
 }
 
+
 // Interrupt handler ///////////////////////////////////////////////////////////
 
-void UARTx_RX_IRQHandler(void) __interrupt(ITC_IRQ_UARTx_RX) /* UART1/2 RX */
+INTERRUPT_HANDLER(UARTx_RX_IRQHandler,ITC_IRQ_UARTx_RX)
 {
     unsigned char c;
-
-#ifdef USE_SPL
-    c = UARTx_ReceiveData8();
+#ifdef STM8L
+    c = USART_ReceiveData8(UARTx);
     // check for parity error
-    if (!UARTx_GetFlagStatus(UARTx_FLAG_PE)) {
+    if (!USART_GetFlagStatus(UARTx,USART_FLAG_FE))  store_char(c, &rx_buffer);  // no parity error, so store the data
+    USART_ClearITPendingBit(UARTx, USART_IT_TC);
 #else
     c = UARTx->DR;
     // check for parity error
-    if (!(UARTx->SR & UARTx_FLAG_PE)) {
+    if (!(UARTx->SR & UARTx_FLAG_PE)) store_char(c, &rx_buffer);// no parity error, so store the data
 #endif
-        // no parity error, so store the data
-        store_char(c, &rx_buffer);
-    };
 }
 
 
-void UARTx_TX_IRQHandler(void) __interrupt(ITC_IRQ_UARTx_TX) /* UART1/2 TX */
+INTERRUPT_HANDLER(UARTx_TX_IRQHandler,ITC_IRQ_UARTx_TX)
 {
-#ifdef USE_SPL
-  if (tx_buffer.head == tx_buffer.tail) {
-	// Buffer empty, so disable interrupts
-        transmitting = 0;
-        UARTx_ITConfig(UARTx_IT_TXE, DISABLE);
-  }
-  else {
+//    UART_TX_callback(, &);
+#ifdef STM8L
     // There is more data in the output buffer. Send the next byte
     unsigned char c = tx_buffer.buffer[tx_buffer.tail];
-    tx_buffer.tail = (tx_buffer.tail + 1) % SERIAL_BUFFER_SIZE;
-	
-    UARTx_SendData8(c);
+  if (tx_buffer.head == tx_buffer.tail) {
+	// Buffer empty, so disable interrupts
+     transmitting = 0;
+     USART_ITConfig(UARTx, USART_IT_TXE, DISABLE);
+     USART_ClearITPendingBit(UARTx, USART_IT_TXE);
+  }else{
+	tx_buffer.tail = (tx_buffer.tail + 1) % SERIAL_BUFFER_SIZE;
+    USART_SendData8(UARTx,c);
   }
+
 #else
   if (tx_buffer.head == tx_buffer.tail) {
 	// Buffer empty, so disable interrupts
@@ -243,9 +225,44 @@ uint8_t HardwareSerial(void)
 
 void HardwareSerial_begin(unsigned long baud)
 {
+#ifdef STM8L	
+
+	USART_DeInit_M(USART1);
+    CLK_PeripheralClockConfig(CLK_Peripheral_USART1,ENABLE);
+
+#if (TX == PA2)  /*to PA2,PA3*/
+	SYSCFG_REMAPPinConfig(REMAP_Pin_USART1TxRxPortA, ENABLE);
+    /* Configure USART Tx as alternate function push-pull  (software pull up)*/
+    GPIO_ExternalPullUpConfig(GPIOA, GPIO_Pin_2 | GPIO_Pin_3, ENABLE);
+#elif (TX == PC5) /*to PC5,PC6*/
+	SYSCFG_REMAPPinConfig(REMAP_Pin_USART1TxRxPortC, ENABLE);
+    GPIO_ExternalPullUpConfig(GPIOC, GPIO_Pin_5 | GPIO_Pin_6, ENABLE);
+#else 
+	/*PC3,PC2*/
+    GPIO_ExternalPullUpConfig(GPIOC, GPIO_Pin_2 | GPIO_Pin_3, ENABLE);
+#endif
+	
+  //set the data bits, parity, and stop bits
+    USART_Init(USART1, baud,
+       USART_WordLength_8b,  USART_StopBits_1, 
+	   USART_Parity_No, (USART_Mode_Tx | USART_Mode_Rx));
+
+//	UARTx->CR2 = UARTx_CR2_RIEN | UARTx_CR2_TEN | UARTx_CR2_REN;
+    USART_ITConfig(USART1,USART_IT_RXNE, ENABLE);	// enable RXNE interrupt
+//    USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
+  /* Enable the USART Transmit complete interrupt: this interrupt is generated when the USART
+    transmit Shift Register is empty */
+//    USART_ITConfig(USART1, USART_IT_TC, ENABLE);
+
+  /* Enable USART */
+    USART_Cmd(USART1, ENABLE);
+
+#else
+	uint16_t divider;
 
 #ifdef USE_SPL
   //move from wiring.c to here
+	
 	UARTx_DeInit();
 	
   //set the data bits, parity, and stop bits
@@ -253,9 +270,8 @@ void HardwareSerial_begin(unsigned long baud)
        UARTx_WORDLENGTH_8D, UARTx_STOPBITS_1, UARTx_PARITY_NO,
        UARTx_SYNCMODE_CLOCK_DISABLE, UARTx_MODE_TXRX_ENABLE);
 
-    UARTx_ITConfig(UARTx_IT_RXNE, ENABLE);	// enable RXNE interrupt
+//    UARTx_ITConfig(UARTx_IT_RXNE, ENABLE);	// enable RXNE interrupt
 #else
-	uint16_t divider;
 
   //move from wiring.c to here
 	UARTx_DeInit();
@@ -273,9 +289,12 @@ void HardwareSerial_begin(unsigned long baud)
 	UARTx->CR3 = 0;			// one stop bit
 	// enable RXNE interrupt, enable transmitter, enable receiver
 	UARTx->CR2 = UARTx_CR2_RIEN | UARTx_CR2_TEN | UARTx_CR2_REN;
-#endif
-  initialized = 1;
-  runSerialEvent = 0;
+#endif //SPL
+
+	
+#endif //STM8S
+   initialized = 1;
+   runSerialEvent = 0;
 }
 
 
@@ -379,17 +398,15 @@ void HardwareSerial_flush(void)
 
 size_t HardwareSerial_write(uint8_t c)
 {
-  int i = (tx_buffer.head + 1) % SERIAL_BUFFER_SIZE;
+  unsigned int  i = (tx_buffer.head + 1) % SERIAL_BUFFER_SIZE;
 	
   // If the output buffer is full, there's nothing for it other than to 
   // wait for the interrupt handler to empty it a bit
   // ???: return 0 here instead?
-  while (i == tx_buffer.tail)
-    ;
+  while (i == tx_buffer.tail);
 	
   tx_buffer.buffer[tx_buffer.head] = c;
   tx_buffer.head = i;
-
 #ifdef USE_SPL
   UARTx_ITConfig(UARTx_IT_TXE, ENABLE);		// enable TXE interrupt
 #else
@@ -404,7 +421,5 @@ size_t HardwareSerial_write(uint8_t c)
   return 1;
 }
 
-#endif // ifdef NO_SERIAL
 
 /*weak function. move here from file:weak_initVariant.c*/
-void serialEvent(void) {} 

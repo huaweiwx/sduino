@@ -5,8 +5,7 @@
  * bit shifting, but we want to be independent from possible irregular
  * definitions for the chose CPU type.
  */
-#if defined(TIM4_FREE)
-
+#if 0
 #if (F_CPU == 16000000UL)	  
 #define DELAY_COUNT (uint16_t)2000
 #elif (F_CPU == 8000000UL)	
@@ -61,7 +60,7 @@ void delay(uint16_t ms) /*LSI/LSE count*/
        __asm__("nop\n");
 }
 
-#else //TIM4_FREE
+#else // 0
 
  
 #if (clockCyclesPerMillisecond() < 256)
@@ -424,7 +423,7 @@ void delayMicroseconds(unsigned int us)
 #endif
 }
 
-#endif //TIM4_FREE
+#endif //0
 
 
 #if  defined(HSI)  
@@ -563,7 +562,6 @@ void init()
 //	UART2_DeInit();
 //  #endif
 
-#ifndef TIM4_FREE
 	TIM4_DeInit();
 	// set timer 4 prescale factor and period (typ. @16MHz: 64*250=1ms)
 	TIM4_TimeBaseInit((uint8_t)T4PRESCALER, (uint8_t) T4PERIOD-1);
@@ -573,7 +571,7 @@ void init()
 	TIM4_ITConfig(TIM4_IT_UPDATE, ENABLE);	// TIM4->IER |= (uint8_t)TIM4_IT;
 	/* Enable TIM4 */
 	TIM4_Cmd(ENABLE);	// TIM4->CR1 |= TIM4_CR1_CEN;
-#endif
+	
 	// timers 1 and 2 are used for phase-correct hardware pwm
 	// this is better for motors as it ensures an even waveform
 	// note, however, that fast pwm mode can achieve a frequency of up

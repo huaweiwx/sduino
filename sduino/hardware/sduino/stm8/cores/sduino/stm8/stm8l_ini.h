@@ -1,7 +1,5 @@
 //#include "stm8l_tim4.h"
 
-#ifdef  TIM4_FREE
-
 #if (F_CPU == 16000000UL)	  
 #define DELAY_COUNT (uint16_t)2000
 #elif (F_CPU == 8000000UL)	
@@ -16,22 +14,15 @@
 
 void delay(uint16_t ms)
 {
-#ifdef DELAY_COUNT
-  uint16_t i;
-  if ((CLK_GetSYSCLKSource() == CLK_SYSCLKSource_LSE) || (CLK_GetSYSCLKSource() == CLK_SYSCLKSource_LSI)){
-	 for(;ms>0;ms--)
-       __asm__("nop\n");
- 
-  }else{
-     for(;ms>0;ms--)
-        for(i=DELAY_COUNT;i>0;i--)
-           __asm__("nop\n");__asm__("nop\n");__asm__("nop\n");__asm__("nop\n");__asm__("nop\n");
-
+uint16_t i;
+#ifndef DELAY_COUNT
+  for(;ms>0;ms--){
+        __asm__("nop\n");__asm__("nop\n");__asm__("nop\n");__asm__("nop\n");__asm__("nop\n");
   }
 #else
-     for(;ms>0;ms--)
-        for(i=DELAY_COUNT;i>0;i--)
-           __asm__("nop\n");__asm__("nop\n");__asm__("nop\n");__asm__("nop\n");__asm__("nop\n");
+  for(;ms>0;ms--)
+      for(i=DELAY_COUNT;i>0;i--)
+          __asm__("nop\n");
 #endif
 }
 
@@ -50,12 +41,7 @@ void delayMicroseconds(unsigned int us) /*lse/lsi */
 #endif
 }
 
-#else //TIM4_FREE
-
-#include "stm8_tim4.h"
-
-#endif //TIM4_FREE
-
+//#include "stm8_tim4.h"
 
 #if  defined(HSI)  
    #if (F_CPU == 16000000UL)
@@ -109,17 +95,18 @@ void delayMicroseconds(unsigned int us) /*lse/lsi */
 	  #error !This HSE please add me!	
 #endif
 
+#include "stm8/stm8_tim4.h"
 
 void init()
 {
-
 #ifndef ENABLE_SWIM  /*selected in menu term Swin*/
 	CFG->GCR = CFG_GCR_SWD;// free the SWIM pin to be used as a general I/O-Pin
 #endif
-
+    
+	SYSCFG_REMAPDeInit_M(); /*Deinitializes the Remapping registers to their default reset values.*/
 
 // set the clock
-    CLK_SYSCLKDivConfig(CLK_SYSCLKDiv);
+    CLK_SYSCLKDivConfig_M(CLK_SYSCLKDiv);
 
 #if defined(HSE)
   /* Select HSE as system clock source */
@@ -138,21 +125,8 @@ void init()
     while (CLK_GetSYSCLKSource() != CLK_SYSCLKSource_LSE) {}
 #endif
 
-#ifndef  TIM4_FREE
-    CLK_PeripheralClockConfig(CLK_Peripheral_TIM4, ENABLE);//STM8L 外设时钟默认关闭，需打开
-	TIM4_DeInit();
-	// set timer 4 prescale factor and period (typ. @16MHz: 64*250=1ms)
-	TIM4_TimeBaseInit(T4PRESCALER, (uint8_t) T4PERIOD-1);
-	/* Clear TIM4 update flag */
-	TIM4_ClearFlag(TIM4_FLAG_UPDATE);	// TIM4->SR1 = (uint8_t)(~0x01);
-	/* Enable update interrupt */
-	TIM4_ITConfig(TIM4_IT_UPDATE, ENABLE);	// TIM4->IER |= (uint8_t)TIM4_IT;
-	/* Enable TIM4 */
-	TIM4_Cmd(ENABLE);	// TIM4->CR1 |= TIM4_CR1_CEN;
-    CLK_PeripheralClockConfig(CLK_Peripheral_USART1,ENABLE);
-#endif
-
-	enableInterrupts();
+    TIME4_int(T4PERIOD-1);
+    enableInterrupts();
 }
 
    
