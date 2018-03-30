@@ -98,12 +98,12 @@
 //  void LCD_IRQHandler(void)  __interrupt(LCD_IRQn); /* LCD */
   void EXTIB_IRQHandler(void)  __interrupt(EXTIB_IRQn); /* EXTI PORTB / EXTI PORTG */
   void EXTID_IRQHandler(void)  __interrupt(EXTID_IRQn); /* EXTI PORTD / EXTI PORTH*/
-  void TIM2_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(TIM2_UPD_OVF_TRG_BRK_IRQn); /* TIM2 UPD/OVF/TRG/BRK / USART2 TX */
-  void TIM2_CC_IRQHandler(void)  __interrupt(TIM2_CC_IRQn); /* TIM2 CAP / USART2 RX */
-  void TIM3_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(TIM3_UPD_OVF_TRG_BRK_IRQn); /* TIM3 UPD/OVF/TRG/BRK /USART3 TX*/
-  void TIM3_CC_IRQHandler(void)  __interrupt(TIM3_CC_IRQn); /* TIM3 CAP/ USART3 RX */
-  void TIM1_UPD_OVF_TRG_IRQHandler(void)  __interrupt(TIM1_UPD_OVF_TRG_IRQn);/* TIM1 UPD/OVF/TRG/COM */
-  void TIM1_CC_IRQHandler(void)  __interrupt(TIM1_CC_IRQn);/* TIM1 CAP*/
+//  void TIM2_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(TIM2_UPD_OVF_TRG_BRK_IRQn); /* TIM2 UPD/OVF/TRG/BRK / USART2 TX */
+//  void TIM2_CC_IRQHandler(void)  __interrupt(TIM2_CC_IRQn); /* TIM2 CAP / USART2 RX */
+//  void TIM3_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(TIM3_UPD_OVF_TRG_BRK_IRQn); /* TIM3 UPD/OVF/TRG/BRK /USART3 TX*/
+//  void TIM3_CC_IRQHandler(void)  __interrupt(TIM3_CC_IRQn); /* TIM3 CAP/ USART3 RX */
+//  void TIM1_UPD_OVF_TRG_IRQHandler(void)  __interrupt(TIM1_UPD_OVF_TRG_IRQn);/* TIM1 UPD/OVF/TRG/COM */
+//  void TIM1_CC_IRQHandler(void)  __interrupt(TIM1_CC_IRQn);/* TIM1 CAP*/
   void USART1_TX_IRQHandler(void)  __interrupt(USART1_TX_IRQn); /* USART1 TX / TIM5 UPD/OVF/TRG/BRK */
   void USART1_RX_IRQHandler(void)  __interrupt(USART1_RX_IRQn); /* USART1 RX / TIM5 CAP */
 //  void I2C1_IRQHandler(void)  __interrupt(I2C1_IRQn); /* I2C
@@ -112,10 +112,10 @@
 //  void SWITCH_CSS_IRQHandler(void)  __interrupt(SWITCH_CSS_IRQn); /* Switch CLK/CSS/TIM1 Break/DAC */
   void EXTIB_IRQHandler(void)  __interrupt(EXTIB_IRQn); /* EXTI PORTB / EXTI PORTG */
   void EXTID_IRQHandler(void)  __interrupt(EXTID_IRQn); /* EXTI PORTD / EXTI PORTH*/
-  void TIM2_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(TIM2_UPD_OVF_TRG_BRK_IRQn); /* TIM2 UPD/OVF/TRG/BRK / USART2 TX */
-  void TIM2_CC_IRQHandler(void)  __interrupt(TIM2_CC_IRQn); /* TIM2 CAP / USART2 RX */
-  void TIM3_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(TIM3_UPD_OVF_TRG_BRK_IRQn); /* TIM3 UPD/OVF/TRG/BRK /USART3 TX*/
-  void TIM3_CC_IRQHandler(void)  __interrupt(TIM3_CC_IRQn); /* TIM3 CAP/ USART3 RX */
+//  void TIM2_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(TIM2_UPD_OVF_TRG_BRK_IRQn); /* TIM2 UPD/OVF/TRG/BRK / USART2 TX */
+//  void TIM2_CC_IRQHandler(void)  __interrupt(TIM2_CC_IRQn); /* TIM2 CAP / USART2 RX */
+//  void TIM3_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(TIM3_UPD_OVF_TRG_BRK_IRQn); /* TIM3 UPD/OVF/TRG/BRK /USART3 TX*/
+//  void TIM3_CC_IRQHandler(void)  __interrupt(TIM3_CC_IRQn); /* TIM3 CAP/ USART3 RX */
   void USART1_TX_IRQHandler(void)  __interrupt(USART1_TX_IRQn); /* USART1 TX / TIM5 UPD/OVF/TRG/BRK */
   void USART1_RX_IRQHandler(void)  __interrupt(USART1_RX_IRQn); /* USART1 RX / TIM5 CAP */
 //  void I2C1_IRQHandler(void)  __interrupt(I2C1_IRQn); /* I2C
@@ -125,12 +125,12 @@
 //  void LCD_AES_IRQHandler(void)  __interrupt(LCD_AES_IRQn); /* LCD /AES */
   void EXTIB_G_IRQHandler(void)  __interrupt(EXTIB_G_IRQn); /* EXTI PORTB / EXTI PORTG */
   void EXTID_H_IRQHandler(void)  __interrupt(EXTID_H_IRQn); /* EXTI PORTD / EXTI PORTH*/
-  void TIM2_UPD_OVF_TRG_BRK_USART2_TX_IRQHandler(void)  __interrupt(TIM2_UPD_OVF_TRG_BRK_USART2_TX_IRQn); /* TIM2 UPD/OVF/TRG/BRK / USART2 TX */
-  void TIM2_CC_USART2_RX_IRQHandler(void)  __interrupt(TIM2_CC_USART2_RX_IRQn); /* TIM2 CAP / USART2 RX */
-  void TIM3_UPD_OVF_TRG_BRK_USART3_TX_IRQHandler(void)  __interrupt(TIM3_UPD_OVF_TRG_BRK_USART3_TX_IRQn); /* TIM3 UPD/OVF/TRG/BRK /USART3 TX*/
-  void TIM3_CC_USART3_RX_IRQHandler(void)  __interrupt(TIM3_CC_USART3_RX_IRQn); /* TIM3 CAP/ USART3 RX */
-  void TIM1_UPD_OVF_TRG_IRQHandler(void)  __interrupt(TIM1_UPD_OVF_TRG_IRQn);/* TIM1 UPD/OVF/TRG/COM */
-  void TIM1_CC_IRQHandler(void)  __interrupt(TIM1_CC_IRQn);/* TIM1 CAP*/
+//  void TIM2_UPD_OVF_TRG_BRK_USART2_TX_IRQHandler(void)  __interrupt(TIM2_UPD_OVF_TRG_BRK_USART2_TX_IRQn); /* TIM2 UPD/OVF/TRG/BRK / USART2 TX */
+//  void TIM2_CC_USART2_RX_IRQHandler(void)  __interrupt(TIM2_CC_USART2_RX_IRQn); /* TIM2 CAP / USART2 RX */
+//  void TIM3_UPD_OVF_TRG_BRK_USART3_TX_IRQHandler(void)  __interrupt(TIM3_UPD_OVF_TRG_BRK_USART3_TX_IRQn); /* TIM3 UPD/OVF/TRG/BRK /USART3 TX*/
+//  void TIM3_CC_USART3_RX_IRQHandler(void)  __interrupt(TIM3_CC_USART3_RX_IRQn); /* TIM3 CAP/ USART3 RX */
+//  void TIM1_UPD_OVF_TRG_IRQHandler(void)  __interrupt(TIM1_UPD_OVF_TRG_IRQn);/* TIM1 UPD/OVF/TRG/COM */
+//  void TIM1_CC_IRQHandler(void)  __interrupt(TIM1_CC_IRQn);/* TIM1 CAP*/
   void USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQHandler(void)  __interrupt(USART1_TX_TIM5_UPD_OVF_TRG_BRK_IRQn); /* USART1 TX / TIM5 UPD/OVF/TRG/BRK */
   void USART1_RX_TIM5_CC_IRQHandler(void)  __interrupt(USART1_RX_TIM5_CC_IRQn); /* USART1 RX / TIM5 CAP */
 //  void I2C1_SPI2_IRQHandler(void)  __interrupt(I2C1_SPI2_IRQn); /* I2C1 / SPI2 */

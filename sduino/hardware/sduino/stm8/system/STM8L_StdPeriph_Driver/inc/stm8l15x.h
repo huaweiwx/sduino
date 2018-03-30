@@ -85,7 +85,7 @@
 /* Check the used compiler */
 #if defined(__CSMC__)
  #define _COSMIC_
-#elif defined(__RCSTM8__)
+#elif defined(__RCST7__)
  #define _RAISONANCE_
 #elif defined(__ICCSTM8__)
  #define _IAR_
@@ -142,19 +142,18 @@
  #define TINY page0
  #define EEPROM eeprom
  #define CONST  code
- #if defined (STM8L15X_MD) || defined (STM8L15X_MDP) || defined (STM8L05X_MD_VL) || \
- defined (STM8AL31_L_MD)
-  /*!< Used with memory Models for code less than 64K */
-  #define MEMCPY memcpy
- #elif defined (STM8L15X_HD) || defined (STM8L05X_HD_VL)
+ #if defined (STM8L15X_HD) || defined (STM8L05X_HD_VL)
    /*!< Used with memory Models for code higher than 64K */
   #define MEMCPY fmemcpy
+ #else	/* defined (STM8L15X_MD) || defined (STM8L15X_MDP) || defined (STM8L05X_MD_VL) || defined (STM8AL31_L_MD) */
+  /*!< Used with memory Models for code less than 64K */
+  #define MEMCPY memcpy
  #endif /* STM8L15X_MD or STM8L15X_MDP or STM8L05X_MD_VL or STM8AL31_L_MD*/ 
 #elif defined (_SDCC_)   
- #define FAR  __far  
+ #define FAR 
  #define NEAR // hack - SDCC gets confused by __near  
- #define TINY __tiny  
- #define EEPROM __eeprom  
+ #define TINY 
+ #define EEPROM
  #define CONST  const  
 #else /*_IAR_*/
  #define FAR  __far
@@ -2995,6 +2994,9 @@ AES_TypeDef;
  #define INTERRUPT @far @interrupt
 #elif defined(_IAR_)
  #define INTERRUPT __interrupt
+#elif defined(_SDCC_)     // SDCC patch: doesn't work, yet :-(
+  #define INTERRUPT __interrupt
+  #include "stm8l15x_it.h"   // assert inclusion in main.c
 #endif /* _COSMIC_ */
  
 /*============================== Handling bits ====================================*/
