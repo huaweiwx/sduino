@@ -30,6 +30,5 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  digitalToggle(LED_BUILTIN);   // turn the LED on/off
-  delay(1000);                  // wait for a second
+ delay(1000);                  // wait for a second
 }
