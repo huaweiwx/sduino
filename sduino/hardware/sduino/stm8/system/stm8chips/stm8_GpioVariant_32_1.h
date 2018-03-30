@@ -89,32 +89,16 @@ PIN(F,4),
 #include "utils/fastIO.h"
 
 //default define can be overloader by variat.h
-#ifndef SS1
 #define SS1	    (PA3)
-#endif
-#ifndef MOSI1
 #define	MOSI1	(PC6)
-#endif
-#ifndef MISO1
 #define	MISO1	(PC7)
-#endif
-#ifndef SCK1
 #define	SCK1 (PC5)
-#endif
 
-#ifndef SDA1
 #define	SDA1	(PB5)
-#endif
-#ifndef SCL1
 #define	SCL1	(PB4)
-#endif
 
-#ifndef TX1
-#define TX1	(PD5)
-#endif
-#ifndef RX1
-#define RX1	(PD6)
-#endif
+#define TX1	PD5
+#define RX1	PD6
 
 #ifndef SS
 #define SS	SS1

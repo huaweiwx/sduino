@@ -100,11 +100,11 @@
 #endif
 
 #ifndef TX1
-#define TX1	(PA3)
+#define TX1	PIN(A,3)
 #endif
 
 #ifndef RX1
-#define RX1	(PF4)
+#define RX1	PIN(F,4)
 #endif
 
 #ifndef TX2

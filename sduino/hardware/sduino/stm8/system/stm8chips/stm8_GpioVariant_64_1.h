@@ -123,11 +123,11 @@
 #define	SDA1	(PB5)
 #define	SCL1	(PB4)
 
-#define TX1	(PA4)
-#define RX1	(PA5)
+#define TX1	PA4
+#define RX1	PA5
 
-#define TX3	(PD5)
-#define RX3	(PDR)
+#define TX3	PD5
+#define RX3	PD6
 
 #ifndef SS
 #define SS	SS1

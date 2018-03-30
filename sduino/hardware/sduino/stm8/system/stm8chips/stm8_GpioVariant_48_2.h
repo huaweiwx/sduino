@@ -110,11 +110,11 @@ PIN(F,0),\
 #endif
 
 #ifndef TX1
-#define TX1	(PD5)
+#define TX1	PD5
 #endif
 
 #ifndef RX1
-#define RX1	(PD6)
+#define RX1	PD6
 #endif
 
 #ifndef SS
@@ -135,11 +135,12 @@ PIN(F,0),\
 #ifndef SCL
 #define	SCL	SCL1
 #endif
+
 #ifndef TX
-#define TX	TX1
+#define TX TX1
 #endif
 #ifndef RX
-#define RX	RX1
+#define RX RX1
 #endif
 
 #endif //_STM8_GPIO_VARINAT48_1_h

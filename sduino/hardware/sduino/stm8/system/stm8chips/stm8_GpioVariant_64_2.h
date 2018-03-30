@@ -139,14 +139,14 @@
 #define	SDA1	(PC0)
 #define	SCL1	(PC1)
 
-#define TX1	(PA2)
-#define RX1	(PA3)
+#define TX1	PA2
+#define RX1	PA3
 
-#define TX2	(PE4)
-#define RX2	(PE3)
+#define TX2	PE4
+#define RX2	PE3
 
-#define TX3	(PG1)
-#define RX3	(PG2)
+#define TX3	PG1
+#define RX3	PG2
 
 #define DAC1 (PF0)
 #define DAC2 (PB4)

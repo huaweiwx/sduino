@@ -96,10 +96,10 @@ PIN(D,6),
 #endif
 
 #ifndef TX1
-#define TX1	(PD5)
+#define TX1	PD
 #endif
 #ifndef RX1
-#define RX1	(PD6)
+#define RX1	PD
 #endif
 
 #ifndef SS

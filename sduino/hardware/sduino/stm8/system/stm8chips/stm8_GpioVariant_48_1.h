@@ -132,7 +132,7 @@ PIN(G,1),
 #define	MISO1	(PC7)
 #endif
 #ifndef SCK1
-#define	SCK1		(PC5)
+#define	SCK1	(PC5)
 #endif
 
 #ifndef SDA1
@@ -143,11 +143,10 @@ PIN(G,1),
 #endif
 
 #ifndef TX1
-#define TX1	(PD5)
+#define TX1	PD5
 #endif
-
 #ifndef RX1
-#define RX1	(PD6)
+#define RX1	PD6
 #endif
 
 #ifndef SS

@@ -1,5 +1,4 @@
 //variant32_4.h
-//STM8L152C4/6/8 32pins
 
 
 #ifndef _STM8_GPIO_VARINAT32_4_h
@@ -94,34 +93,17 @@
 #include "utils/fastIO.h"
 
 //default define can be overloader by variat.h
-#ifndef SS1
-#define SS1	    (PB4)
-#endif
-
-#ifndef MOSI1
+#define SS1	  (PB4)
 #define	MOSI1 (PB6)
-#endif
-#ifndef MISO1
 #define	MISO1 (PB7)
-#endif
-#ifndef SCK1
-#define	SCK1	 (PB5)
-#endif
+#define	SCK1  (PB5)
 
-#ifndef SDA1
+
 #define	SDA1	(PC0)
-#endif
-#ifndef SCL1
 #define	SCL1	(PC1)
-#endif
 
-#ifndef TX1
-#define TX1	(PC3)
-#endif
-
-#ifndef RX1
-#define RX1	(PC2)
-#endif
+#define TX1	PIN(C,3)
+#define RX1	PIN(C,2)
 
 #ifndef SS
 #define SS	SS1
@@ -142,10 +124,10 @@
 #define	SCL	SCL1
 #endif
 #ifndef TX
-#define TX	TX1
+#define TX   TX1
 #endif
 #ifndef RX
-#define RX	RX1
+#define RX  RX1
 #endif
 
 #endif //_STM8_GPIO_VARINAT32_4_h
