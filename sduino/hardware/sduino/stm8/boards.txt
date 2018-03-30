@@ -9,7 +9,6 @@
 #              L152C/R 4/6/8
 
 menu.subboard=Specific Board
-menu.startadr=Startup adr
 menu.clock_source=Clock source
 menu.osc_speed=OSC Speed(MHz)
 menu.cpu_speed=cpu Speed(MHz)
@@ -326,173 +325,180 @@ stm8s105c.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 # meaningless variables just to keep the makefile happy
 stm8s105c.upload.speed=1
 
-########################## STM8L152C  ####################################
-STM8L152C.name=L152C
+########################## STM8L151/2C  ####################################
+stm8l15xc.name=L152C/L151C
 
-STM8L152C.upload.tool=stm8flash
-STM8L152C.upload.protocol=stlinkv2
-STM8L152C.upload.mcu=stm8l152?8
-STM8L152C.upload.maximum_size=32768
-STM8L152C.upload.maximum_data_size=2048
+stm8l15xc.upload.tool=stm8flash
+stm8l15xc.upload.protocol=stlinkv2
+stm8l15xc.upload.mcu=stm8l152?8
+stm8l15xc.upload.maximum_size=32768
+stm8l15xc.upload.maximum_data_size=2048
 
-STM8L152C.build.stdlibpre=STM8L
-STM8L152C.build.series=-DSTM8L152C -DSTM8L
-STM8L152C.build.mcu=STM8L15X_MD
-STM8L152C.build.f_cpu=16000000L
-STM8L152C.build.board=L152_BLOOD
-STM8L152C.build.core=sduino
-STM8L152C.build.variant=stm8l152c
+stm8l15xc.build.stdlibpre=STM8L
+stm8l15xc.build.series=-DSTM8L152C -DSTM8L
+stm8l15xc.build.mcu=STM8L15X_MD
+stm8l15xc.build.f_cpu=16000000L
+stm8l15xc.build.board=L152_BLOOD
+stm8l15xc.build.core=sduino
+stm8l15xc.build.variant=stm8l152c
 
-STM8L152C.menu.subboard.L152C8=L152C8
-STM8L152C.menu.subboard.L152C8.build.series=-DSTM8L152C -DSTM8L
-STM8L152C.menu.subboard.L152C8.build.mcu=STM8L15X_HD
-STM8L152C.menu.subboard.L152C8.upload.mcu=stm8l152?8
-STM8L152C.menu.subboard.L152C8.upload.maximum_size=65536
-STM8L152R.menu.subboard.L152C8.upload.maximum_data_size=4096
+stm8l15xc.menu.subboard.L152C8=L152C8
+stm8l15xc.menu.subboard.L152C8.build.series=-DSTM8L152C -DSTM8L
+stm8l15xc.menu.subboard.L152C8.build.mcu=STM8L15X_HD
+stm8l15xc.menu.subboard.L152C8.upload.mcu=stm8l152?8
+stm8l15xc.menu.subboard.L152C8.upload.maximum_size=65536
+stm8l15xc.menu.subboard.L152C8.upload.maximum_data_size=4096
 
 
-STM8L152C.menu.subboard.L152C6=L152C6 (UDA)
-STM8L152C.menu.subboard.L152C6.build.series=-DSTM8L152C -DSTM8L
-STM8L152C.menu.subboard.L152C6.build.mcu=STM8L15X_MD
-STM8L152C.menu.subboard.L152C6.upload.mcu=stm8l152?6
-STM8L152C.menu.subboard.L152C6.upload.maximum_size=32768
+stm8l15xc.menu.subboard.L152C6=L152C6 (UDA LED:PA7)
+stm8l15xc.menu.subboard.L152C6.build.series=-DSTM8L152C -DSTM8L
+stm8l15xc.menu.subboard.L152C6.build.mcu=STM8L15X_MD
+stm8l15xc.menu.subboard.L152C6.upload.mcu=stm8l152?6
+stm8l15xc.menu.subboard.L152C6.upload.maximum_size=32768
 
-STM8L152C.menu.subboard.L152C4=L152C4
-STM8L152C.menu.subboard.L152C4.build.series=-DSTM8L152C -DSTM8L
-STM8L152C.menu.subboard.L152C4.build.mcu=STM8L15X_MD
-STM8L152C.menu.subboard.L152C4.upload.mcu=stm8l152?4
-STM8L152C.menu.subboard.L152C4.upload.maximum_size=16384
+stm8l15xc.menu.subboard.L152C4=L152C4
+stm8l15xc.menu.subboard.L152C4.build.series=-DSTM8L152C -DSTM8L
+stm8l15xc.menu.subboard.L152C4.build.mcu=STM8L15X_MD
+stm8l15xc.menu.subboard.L152C4.upload.mcu=stm8l152?4
+stm8l15xc.menu.subboard.L152C4.upload.maximum_size=16384
 
-STM8L152C.menu.clock_source.hsi=HSI(16M)
-STM8L152C.menu.clock_source.hsi.build.osc=-DHSI=16
-STM8L152C.menu.clock_source.hse16=HSE(16M)
-STM8L152C.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
-STM8L152C.menu.clock_source.hse8=HSE(8M)
-STM8L152C.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
-STM8L152C.menu.clock_source.lsi=LSI(38K) 
-STM8L152C.menu.clock_source.lsi.build.osc=-DLSI=38 
-STM8L152C.menu.clock_source.lse=LSE(32.768K)
-STM8L152C.menu.clock_source.lse.build.osc=-DLSE=32
+stm8l15xc.menu.subboard.L151C3=L151C3
+stm8l15xc.menu.subboard.L151C3.build.series=-DSTM8L151C -DSTM8L
+stm8l15xc.menu.subboard.L151C3.build.mcu=STM8L15X_LD
+stm8l15xc.menu.subboard.L151C3.upload.mcu=stm8l151?3
+stm8l15xc.menu.subboard.L151C3.upload.maximum_size=8192
+stm8l15xc.menu.subboard.L151C3.upload.maximum_data_size=2048
 
-STM8L152C.menu.cpu_speed.s16=16M
-STM8L152C.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
-STM8L152C.menu.cpu_speed.s08=8M
-STM8L152C.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
-STM8L152C.menu.cpu_speed.s04=4M
-STM8L152C.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
-STM8L152C.menu.cpu_speed.s02=2M
-STM8L152C.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
-STM8L152C.menu.cpu_speed.s01=1M
-STM8L152C.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
-STM8L152C.menu.cpu_speed.lsi=LSI_38K
-STM8L152C.menu.cpu_speed.lsi.build.f_cpu=38000L -DLSI=38
-STM8L152C.menu.cpu_speed.lse=LSE_32.768K
-STM8L152C.menu.cpu_speed.lse.build.f_cpu=32768L -DLSE=32768
+stm8l15xc.menu.clock_source.hsi=HSI(16M)
+stm8l15xc.menu.clock_source.hsi.build.osc=-DHSI=16
+stm8l15xc.menu.clock_source.hse16=HSE(16M)
+stm8l15xc.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
+stm8l15xc.menu.clock_source.hse8=HSE(8M)
+stm8l15xc.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
+stm8l15xc.menu.clock_source.lsi=LSI(38K) 
+stm8l15xc.menu.clock_source.lsi.build.osc=-DLSI=38 
+stm8l15xc.menu.clock_source.lse=LSE(32.768K)
+stm8l15xc.menu.clock_source.lse.build.osc=-DLSE=32
 
-STM8L152C.menu.jtag_swd.default=General_IO
-STM8L152C.menu.jtag_swd.default.build.extra_flags={build.series}
-STM8L152C.menu.jtag_swd.swim=Swim
-STM8L152C.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
+stm8l15xc.menu.cpu_speed.s16=16M
+stm8l15xc.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
+stm8l15xc.menu.cpu_speed.s08=8M
+stm8l15xc.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
+stm8l15xc.menu.cpu_speed.s04=4M
+stm8l15xc.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
+stm8l15xc.menu.cpu_speed.s02=2M
+stm8l15xc.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
+stm8l15xc.menu.cpu_speed.s01=1M
+stm8l15xc.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
+stm8l15xc.menu.cpu_speed.lsi=LSI_38K
+stm8l15xc.menu.cpu_speed.lsi.build.f_cpu=38000L -DLSI=38
+stm8l15xc.menu.cpu_speed.lse=LSE_32.768K
+stm8l15xc.menu.cpu_speed.lse.build.f_cpu=32768L -DLSE=32768
 
-STM8L152C.menu.log.default=Release
-STM8L152C.menu.log.fatal=FATAL
-STM8L152C.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
-STM8L152C.menu.log.error=ERROR
-STM8L152C.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
-STM8L152C.menu.log.warning=WARNING
-STM8L152C.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
-STM8L152C.menu.log.info=INFO
-STM8L152C.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
-STM8L152C.menu.log.debug=DEBUG
-STM8L152C.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
-STM8L152C.menu.log.trace=TRACE
-STM8L152C.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
+stm8l15xc.menu.jtag_swd.default=General_IO
+stm8l15xc.menu.jtag_swd.default.build.extra_flags={build.series}
+stm8l15xc.menu.jtag_swd.swim=Swim
+stm8l15xc.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
 
-# meaningless variables just to keep the makefile happy
-STM8L152C.upload.speed=1
-
-########################## STM8L152R  ####################################
-STM8L152R.name=L152R
-
-STM8L152R.upload.tool=stm8flash
-STM8L152R.upload.protocol=stlinkv2
-STM8L152R.upload.mcu=stm8l152?8
-STM8L152R.upload.maximum_size=32768
-STM8L152R.upload.maximum_data_size=2048
-
-STM8L152R.build.stdlibpre=STM8L
-STM8L152R.build.series=-DSTM8L152R -DSTM8L
-STM8L152R.build.mcu=STM8L15X_MD
-STM8L152R.build.f_cpu=16000000L
-STM8L152R.build.board=L152R8
-STM8L152R.build.core=sduino
-STM8L152R.build.variant=stm8l152r
-
-STM8L152R.menu.subboard.L152R8=L152R8(5D1 LED:PG2)
-STM8L152R.menu.subboard.L152R8.build.series=-DSTM8L152R -DSTM8L -DLED_BUILTIN=PG2
-STM8L152R.menu.subboard.L152R8.build.mcu=STM8L15X_HD
-STM8L152R.menu.subboard.L152R8.upload.mcu=stm8l152?8
-STM8L152R.menu.subboard.L152R8.upload.maximum_size=65536
-STM8L152R.menu.subboard.L152R8.upload.maximum_data_size=4096
-
-STM8L152R.menu.subboard.L152R6=L152R6
-STM8L152R.menu.subboard.L152R6.build.series=-DSTM8L152R -DSTM8L
-STM8L152R.menu.subboard.L152R6.build.mcu=STM8L15X_MDP
-STM8L152R.menu.subboard.L152R6.upload.mcu=stm8l152?6
-STM8L152R.menu.subboard.L152R6.upload.maximum_size=32768
-
-STM8L152R.menu.subboard.L152R4=L152R4
-STM8L152R.menu.subboard.L152R4.build.series=-DSTM8L152R -DSTM8L
-STM8L152R.menu.subboard.L152R4.build.mcu=STM8L15X_MD
-STM8L152R.menu.subboard.L152R4.upload.mcu=stm8l152?4
-STM8L152R.menu.subboard.L152R4.upload.maximum_size=16384
-
-STM8L152R.menu.clock_source.hsi=HSI(16M)
-STM8L152R.menu.clock_source.hsi.build.osc=-DHSI=16
-STM8L152R.menu.clock_source.hse16=HSE(16M)
-STM8L152R.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
-STM8L152R.menu.clock_source.hse8=HSE(8M)
-STM8L152R.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
-STM8L152R.menu.clock_source.lsi=LSI(38K) 
-STM8L152R.menu.clock_source.lsi.build.osc=-DLSI=38 
-STM8L152R.menu.clock_source.lse=LSE(32.768K)
-STM8L152R.menu.clock_source.lse.build.osc=-DLSE=32
-
-STM8L152R.menu.cpu_speed.s16=16M
-STM8L152R.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
-STM8L152R.menu.cpu_speed.s08=8M
-STM8L152R.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
-STM8L152R.menu.cpu_speed.s04=4M
-STM8L152R.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
-STM8L152R.menu.cpu_speed.s02=2M
-STM8L152R.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
-STM8L152R.menu.cpu_speed.s01=1M
-STM8L152R.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
-STM8L152R.menu.cpu_speed.lsi=LSI_38K
-STM8L152R.menu.cpu_speed.lsi.build.f_cpu=38000L -DLSI=38
-STM8L152R.menu.cpu_speed.lse=LSE_32.768K
-STM8L152R.menu.cpu_speed.lse.build.f_cpu=32768L -DLSE=32
-
-STM8L152R.menu.jtag_swd.default=General_IO
-STM8L152R.menu.jtag_swd.default.build.extra_flags={build.series}
-STM8L152R.menu.jtag_swd.swim=Swim
-STM8L152R.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
-
-STM8L152R.menu.log.default=Release
-STM8L152R.menu.log.fatal=FATAL
-STM8L152R.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
-STM8L152R.menu.log.error=ERROR
-STM8L152R.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
-STM8L152R.menu.log.warning=WARNING
-STM8L152R.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
-STM8L152R.menu.log.info=INFO
-STM8L152R.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
-STM8L152R.menu.log.debug=DEBUG
-STM8L152R.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
-STM8L152R.menu.log.trace=TRACE
-STM8L152R.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
+stm8l15xc.menu.log.default=Release
+stm8l15xc.menu.log.fatal=FATAL
+stm8l15xc.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+stm8l15xc.menu.log.error=ERROR
+stm8l15xc.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+stm8l15xc.menu.log.warning=WARNING
+stm8l15xc.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+stm8l15xc.menu.log.info=INFO
+stm8l15xc.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+stm8l15xc.menu.log.debug=DEBUG
+stm8l15xc.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+stm8l15xc.menu.log.trace=TRACE
+stm8l15xc.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
 
 # meaningless variables just to keep the makefile happy
-STM8L152R.upload.speed=1
+stm8l15xc.upload.speed=1
+
+########################## STM8L151/2R  ####################################
+stm8l15xr.name=L152R/L151R
+
+stm8l15xr.upload.tool=stm8flash
+stm8l15xr.upload.protocol=stlinkv2
+stm8l15xr.upload.mcu=stm8l152?8
+stm8l15xr.upload.maximum_size=32768
+stm8l15xr.upload.maximum_data_size=2048
+
+stm8l15xr.build.stdlibpre=STM8L
+stm8l15xr.build.series=-DSTM8L152R -DSTM8L
+stm8l15xr.build.mcu=STM8L15X_MD
+stm8l15xr.build.f_cpu=16000000L
+stm8l15xr.build.board=L152R8
+stm8l15xr.build.core=sduino
+stm8l15xr.build.variant=stm8l152r
+
+stm8l15xr.menu.subboard.L152R8=L152R8(5D1 LED:PG2)
+stm8l15xr.menu.subboard.L152R8.build.series=-DSTM8L152R -DSTM8L -DLED_BUILTIN=PG2
+stm8l15xr.menu.subboard.L152R8.build.mcu=STM8L15X_HD
+stm8l15xr.menu.subboard.L152R8.upload.mcu=stm8l152?8
+stm8l15xr.menu.subboard.L152R8.upload.maximum_size=65536
+stm8l15xr.menu.subboard.L152R8.upload.maximum_data_size=4096
+
+stm8l15xr.menu.subboard.L152R6=L152R6
+stm8l15xr.menu.subboard.L152R6.build.series=-DSTM8L152R -DSTM8L
+stm8l15xr.menu.subboard.L152R6.build.mcu=STM8L15X_MDP
+stm8l15xr.menu.subboard.L152R6.upload.mcu=stm8l152?6
+stm8l15xr.menu.subboard.L152R6.upload.maximum_size=32768
+
+stm8l15xr.menu.subboard.L152R4=L152R4
+stm8l15xr.menu.subboard.L152R4.build.series=-DSTM8L152R -DSTM8L
+stm8l15xr.menu.subboard.L152R4.build.mcu=STM8L15X_MD
+stm8l15xr.menu.subboard.L152R4.upload.mcu=stm8l152?4
+stm8l15xr.menu.subboard.L152R4.upload.maximum_size=16384
+
+stm8l15xr.menu.clock_source.hsi=HSI(16M)
+stm8l15xr.menu.clock_source.hsi.build.osc=-DHSI=16
+stm8l15xr.menu.clock_source.hse16=HSE(16M)
+stm8l15xr.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
+stm8l15xr.menu.clock_source.hse8=HSE(8M)
+stm8l15xr.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
+stm8l15xr.menu.clock_source.lsi=LSI(38K) 
+stm8l15xr.menu.clock_source.lsi.build.osc=-DLSI=38 
+stm8l15xr.menu.clock_source.lse=LSE(32.768K)
+stm8l15xr.menu.clock_source.lse.build.osc=-DLSE=32
+
+stm8l15xr.menu.cpu_speed.s16=16M
+stm8l15xr.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
+stm8l15xr.menu.cpu_speed.s08=8M
+stm8l15xr.menu.cpu_speed.s08.build.f_cpu=8000000L {build.osc}
+stm8l15xr.menu.cpu_speed.s04=4M
+stm8l15xr.menu.cpu_speed.s04.build.f_cpu=4000000L {build.osc}
+stm8l15xr.menu.cpu_speed.s02=2M
+stm8l15xr.menu.cpu_speed.s02.build.f_cpu=2000000L {build.osc}
+stm8l15xr.menu.cpu_speed.s01=1M
+stm8l15xr.menu.cpu_speed.s01.build.f_cpu=1000000L {build.osc}
+stm8l15xr.menu.cpu_speed.lsi=LSI_38K
+stm8l15xr.menu.cpu_speed.lsi.build.f_cpu=38000L -DLSI=38
+stm8l15xr.menu.cpu_speed.lse=LSE_32.768K
+stm8l15xr.menu.cpu_speed.lse.build.f_cpu=32768L -DLSE=32
+
+stm8l15xr.menu.jtag_swd.default=General_IO
+stm8l15xr.menu.jtag_swd.default.build.extra_flags={build.series}
+stm8l15xr.menu.jtag_swd.swim=Swim
+stm8l15xr.menu.jtag_swd.swim.build.extra_flags={build.series} -DENABLE_SWIM
+
+stm8l15xr.menu.log.default=Release
+stm8l15xr.menu.log.fatal=FATAL
+stm8l15xr.menu.log.fatal.build.log_level=-D__LOG_LEVEL=1 -DUSE_FULL_ASSERT
+stm8l15xr.menu.log.error=ERROR
+stm8l15xr.menu.log.error.build.log_level=-D__LOG_LEVEL=2 -DUSE_FULL_ASSERT
+stm8l15xr.menu.log.warning=WARNING
+stm8l15xr.menu.log.warning.build.log_level=-D__LOG_LEVEL=3 -DUSE_FULL_ASSERT
+stm8l15xr.menu.log.info=INFO
+stm8l15xr.menu.log.info.build.log_level=-D__LOG_LEVEL=4 -DUSE_FULL_ASSERT
+stm8l15xr.menu.log.debug=DEBUG
+stm8l15xr.menu.log.debug.build.log_level=-D__LOG_LEVEL=5 -DUSE_FULL_ASSERT
+stm8l15xr.menu.log.trace=TRACE
+stm8l15xr.menu.log.trace.build.log_level=-D__LOG_LEVEL=6 -DUSE_FULL_ASSERT
+
+# meaningless variables just to keep the makefile happy
+stm8l15xr.upload.speed=1
 
 ######################### The end  ####################################
