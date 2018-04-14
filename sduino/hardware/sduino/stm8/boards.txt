@@ -35,19 +35,31 @@ stm8s103f.build.board=BREAKOUT
 stm8s103f.menu.subboard.S103=S103F3(Breakout Board)
 stm8s103f.menu.subboard.S103.build.series=-DSTM8S103F3 -DSTM8S
 stm8s103f.menu.subboard.S103.build.mcu=STM8S103
-stm8s103f.menu.subboard.S103.build.board=S103F3_BREAKOUT
+stm8s103f.menu.subboard.S103.build.board=BREAKOUT
 stm8s103f.menu.subboard.S103.upload.mcu=stm8s103?3
 
-stm8s103f.menu.subboard.S003=S003F3
+stm8s103f.menu.subboard.S003=S003F3(Breakout Board)
 stm8s103f.menu.subboard.S003.build.series=-DSTM8S003F3 -DSTM8S
 stm8s103f.menu.subboard.S003.build.mcu=STM8S003
-stm8s103f.menu.subboard.S003.build.board=S003F3_BREAKOUT
+stm8s103f.menu.subboard.S003.build.board=BREAKOUT
 stm8s103f.menu.subboard.S003.upload.mcu=stm8s003?3
+
+stm8s103f.menu.subboard.vmeter=3DigsVolt
+stm8s103f.menu.subboard.vmeter.build.series=-DSTM8S003F3 -DSTM8S
+stm8s103f.menu.subboard.vmeter.build.mcu=STM8S003
+stm8s103f.menu.subboard.vmeter.build.board=vmeter
+stm8s103f.menu.subboard.vmeter.build.variant=s003_vmeter
+stm8s103f.menu.subboard.vmeter.upload.mcu=stm8s003?3
+
+stm8s103f.menu.subboard.vc288=VCMeter(VC288)
+stm8s103f.menu.subboard.vc288.build.series=-DSTM8S003F3 -DSTM8S
+stm8s103f.menu.subboard.vc288.build.mcu=STM8S003
+stm8s103f.menu.subboard.vc288.build.board=VC288
+stm8s103f.menu.subboard.vc288.build.variant=s003_vc288
+stm8s103f.menu.subboard.vc288.upload.mcu=stm8s003?3
 
 stm8s103f.menu.clock_source.hsi=HSI(16M)
 stm8s103f.menu.clock_source.hsi.build.osc=-DHSI=16
-stm8s103f.menu.clock_source.lsi=LSI(128K) 
-stm8s103f.menu.clock_source.lsi.build.osc=-DLSI=128 
 stm8s103f.menu.clock_source.hse16=HSE(16M)
 stm8s103f.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
 stm8s103f.menu.clock_source.hse8=HSE(8M)
@@ -118,8 +130,6 @@ stm8s103k.menu.subboard.S003.upload.mcu=stm8s003?3
 
 stm8s103k.menu.clock_source.hsi=HSI(16M)
 stm8s103k.menu.clock_source.hsi.build.osc=-DHSI=16
-stm8s103k.menu.clock_source.lsi=LSI(128K) 
-stm8s103k.menu.clock_source.lsi.build.osc=-DLSI=128 
 stm8s103k.menu.clock_source.hse16=HSE(16M)
 stm8s103k.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
 stm8s103k.menu.clock_source.hse8=HSE(8M)
@@ -200,8 +210,6 @@ stm8s105k.menu.subboard.S005K6.upload.mcu=stm8s005?6
 
 stm8s105k.menu.clock_source.hsi=HSI(16M)
 stm8s105k.menu.clock_source.hsi.build.osc=-DHSI=16
-stm8s105k.menu.clock_source.lsi=LSI(128K) 
-stm8s105k.menu.clock_source.lsi.build.osc=-DLSI=128 
 stm8s105k.menu.clock_source.hse16=HSE(16M)
 stm8s105k.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
 stm8s105k.menu.clock_source.hse8=HSE(8M)
@@ -283,8 +291,6 @@ stm8s105c.menu.subboard.S005.upload.mcu=stm8s005?6
 
 stm8s105c.menu.clock_source.hsi=HSI(16M)
 stm8s105c.menu.clock_source.hsi.build.osc=-DHSI=16
-stm8s105c.menu.clock_source.lsi=LSI(128K) 
-stm8s105c.menu.clock_source.lsi.build.osc=-DLSI=128 
 stm8s105c.menu.clock_source.hse16=HSE(16M)
 stm8s105c.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
 stm8s105c.menu.clock_source.hse8=HSE(8M)
@@ -338,7 +344,7 @@ stm8l15xc.build.stdlibpre=STM8L
 stm8l15xc.build.series=-DSTM8L152C -DSTM8L
 stm8l15xc.build.mcu=STM8L15X_MD
 stm8l15xc.build.f_cpu=16000000L
-stm8l15xc.build.board=L152_BLOOD
+stm8l15xc.build.board=L152
 stm8l15xc.build.core=sduino
 stm8l15xc.build.variant=stm8l152c
 
@@ -353,6 +359,8 @@ stm8l15xc.menu.subboard.L152C8.upload.maximum_data_size=4096
 stm8l15xc.menu.subboard.L152C6=L152C6 (UDA LED:PA7)
 stm8l15xc.menu.subboard.L152C6.build.series=-DSTM8L152C -DSTM8L
 stm8l15xc.menu.subboard.L152C6.build.mcu=STM8L15X_MD
+stm8l15xc.menu.subboard.L152C6.build.variant=l152c6t6_uda
+stm8l15xc.menu.subboard.L152C6.build.board=L152C6_UDA
 stm8l15xc.menu.subboard.L152C6.upload.mcu=stm8l152?6
 stm8l15xc.menu.subboard.L152C6.upload.maximum_size=32768
 
@@ -375,10 +383,6 @@ stm8l15xc.menu.clock_source.hse16=HSE(16M)
 stm8l15xc.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
 stm8l15xc.menu.clock_source.hse8=HSE(8M)
 stm8l15xc.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
-stm8l15xc.menu.clock_source.lsi=LSI(38K) 
-stm8l15xc.menu.clock_source.lsi.build.osc=-DLSI=38 
-stm8l15xc.menu.clock_source.lse=LSE(32.768K)
-stm8l15xc.menu.clock_source.lse.build.osc=-DLSE=32
 
 stm8l15xc.menu.cpu_speed.s16=16M
 stm8l15xc.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}
@@ -435,8 +439,10 @@ stm8l15xr.build.core=sduino
 stm8l15xr.build.variant=stm8l152r
 
 stm8l15xr.menu.subboard.L152R8=L152R8(5D1 LED:PG2)
-stm8l15xr.menu.subboard.L152R8.build.series=-DSTM8L152R -DSTM8L -DLED_BUILTIN=PG2
+stm8l15xr.menu.subboard.L152R8.build.series=-DSTM8L152R -DSTM8L
 stm8l15xr.menu.subboard.L152R8.build.mcu=STM8L15X_HD
+stm8l15xr.menu.subboard.L152R8.build.variant=l152r8t6_5d1
+stm8l15xr.menu.subboard.L152R8.build.board=STM8L152_5D1
 stm8l15xr.menu.subboard.L152R8.upload.mcu=stm8l152?8
 stm8l15xr.menu.subboard.L152R8.upload.maximum_size=65536
 stm8l15xr.menu.subboard.L152R8.upload.maximum_data_size=4096
@@ -459,10 +465,6 @@ stm8l15xr.menu.clock_source.hse16=HSE(16M)
 stm8l15xr.menu.clock_source.hse16.build.osc=-DHSE=16 -DHSE_VALUE=((uint32_t)16000000)
 stm8l15xr.menu.clock_source.hse8=HSE(8M)
 stm8l15xr.menu.clock_source.hse8.build.osc=-DHSE=8 -DHSE_VALUE=((uint32_t)8000000)
-stm8l15xr.menu.clock_source.lsi=LSI(38K) 
-stm8l15xr.menu.clock_source.lsi.build.osc=-DLSI=38 
-stm8l15xr.menu.clock_source.lse=LSE(32.768K)
-stm8l15xr.menu.clock_source.lse.build.osc=-DLSE=32
 
 stm8l15xr.menu.cpu_speed.s16=16M
 stm8l15xr.menu.cpu_speed.s16.build.f_cpu=16000000L {build.osc}

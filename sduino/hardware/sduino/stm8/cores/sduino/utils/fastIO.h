@@ -39,10 +39,10 @@
 #  error !STM8 only!  other add me here 
 #endif
 
-#define FASTIO_PORTPIN			    STM8_GPIO_ASSIGN
-#define FASTIO_PORTPIN_POLARITY		STM8_GPIO_ASSIGN_POLARITY
-#define FASTIO			STM8_GNAME_ASSIGN
-#define FASTIO_POLARITY	STM8_GNAME_ASSIGN_POLARITY
+#define GPIO_ASSIGN			    	STM8_GPIO_ASSIGN
+#define GPIO_ASSIGN_POLARITY		STM8_GPIO_ASSIGN_POLARITY
+#define GPIO_ALIAS_ASSIGN			STM8_ALIAS_ASSIGN
+#define GPIO_ALIAS_ASSIGN_POLARITY	STM8_ALIAS_ASSIGN_POLARITY
 
 
 #define GPIO_SETMODE_IN(p,n)		(GPIO##p->DDR &= ~_BV(n))
@@ -137,7 +137,7 @@ static  void     P##A##C##_Off(void)          {(!X)?(P##A##C##_Set()):(P##A##C##
 static  uint8_t  P##A##C##_IsOn(void)         {return  (X)?P##A##C##_IsOutHigh():P##A##C##_IsOutLow();}\
 static  uint8_t  P##A##C##_IsOff(void)        {return (!X)?P##A##C##_IsOutHigh():P##A##C##_IsOutLow();}
 
-#define STM8_GNAME_ASSIGN(N, A, C) \
+#define STM8_ALIAS_ASSIGN(N, A, C) \
 static  void   N##_Set(void)            {GPIO##A->ODR |=  _BV( C);}\
 static  void   N##_Clr(void)            {GPIO##A->ODR &= ~_BV( C);}\
 static  void   N##_Toggle(void)         {GPIO##A->ODR ^=  _BV( C);}\
@@ -164,8 +164,8 @@ static  uint8_t  N##_IsOutHigh(void)    {return N##_ReadOut();}\
 static  uint8_t  N##_IsOutLow(void)     {return !N##_ReadOut();}
 
 
-#define STM8_GNAME_ASSIGN_POLARITY(N, A, C, X) \
-STM8_GNAME_ASSIGN(N, A, C) \
+#define STM8_ALIAS_ASSIGN_POLARITY(N, A, C, X) \
+STM8_ALIAS_ASSIGN(N, A, C) \
 static  void     N##_On(void)           { (X)?(N##_Set()):(N##_Clr());}\
 static  void     N##_Off(void)          { (X)?(N##_Clr()):(N##_Set());}\
 static  uint8_t  N##_IsOn(void)         {return (X)?N##_IsOutHigh():N##_IsOutLow(); }\

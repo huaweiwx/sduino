@@ -16,5 +16,4 @@
 #define SERIAL_PORT_MONITOR   Serial
 #define SERIAL_PORT_HARDWARE  Serial
 
-#define TIM4_FREE  1
 #endif
