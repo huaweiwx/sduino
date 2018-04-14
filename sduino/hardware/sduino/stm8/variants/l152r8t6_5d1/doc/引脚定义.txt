@@ -1,0 +1,72 @@
+芯片        STM8L152R8 QFP64               
+引脚号        标识        功能        备注
+1        PA0        SWIM,BEEP        调试时断开BEEP焊点
+2        PA1        NRST        外接复位阻容
+3        PA2               
+4        PA3               
+5        PA4        COM0       
+6        PA5        COM1       
+7        PA6        COM2       
+8        PA7               
+9        VSSA/VREF-        GND       
+10        VSS        GND       
+11        VDD        VCC       
+12        VDDA        VCC       
+13        VREF+        VCC       
+14        PG0        输出高        运放供电,低使能
+15        PG1        输出低        外接运放
+16        PG2        TD1测试点       
+17        PG3        SEG31       
+18        VLCD               
+19        PE0        SEG1       
+20        PE1        SEG2       
+21        PE2        SEG3       
+22        PE3        SEG4       
+23        PE4        SEG5       
+24        PE5        SEG6       
+25        PD0        SEG7       
+26        PD1        COM3       
+27        PD2               
+28        PD3               
+29        VDD        VCC       
+30        VSS        GND       
+31        PB0        SEG10       
+32        PB1        SEG11       
+33        PB2        SEG12       
+34        PB3        SEG13       
+35        PB4        SEG14       
+36        PB5        SEG15       
+37        PB6        SEG16       
+38        PB7               
+39        PF0        输出低        外接运放
+40        PF1               
+41        PF4        KEY0        内上拉
+42        PF5        KEY1        内上拉
+43        PF6        输出低        外接插座第2脚
+44        PF7               
+45        PD4               
+46        PD5        SEG19       
+47        PD6        SEG20       
+48        PD7        SEG21       
+49        PG4        SEG32       
+50        PG5        SEG33       
+51        PG6        SEG34       
+52        PG7        SEG35       
+53        PC0               
+54        PC1               
+55        VDD        VCC       
+56        VSS        GND       
+57        PC2        输出低        外接运放
+58        PC3        SEG23       
+59        PC4        SEG24       
+60        PC5        OSC32        外接32768晶振
+61        PC6        OSC32        外接32768晶振
+62        PC7               
+63        PE6               
+64        PE7        SEG27       
+
+注:未标识功能的IO为空置状态  ,为了方便当开发板使用,去掉运放部分的功能,大家把接运放的脚都输出低,运放供电脚输出高(不供电)即可.
+
+这款开发板可用资源: 段码屏, 内部RTC,  内部温度传感,  2个KEY ,  BEEP[调试状态不可用]
+
+各位有写出测试代码的请分享一下,谢谢了.

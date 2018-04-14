@@ -1,5 +1,6 @@
-//tim48_2.h
-//STM8L151/2C 48pins
+//  tim48_2.h
+//  STM8L151/2C 48pins
+//  huaweiwx@sina.com 2018.4.08
 
 #ifndef _STM8_TIM_h
 #define _STM8_TIM_h

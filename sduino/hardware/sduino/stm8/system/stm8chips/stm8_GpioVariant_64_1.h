@@ -1,5 +1,6 @@
-//variant64_1.h
-//STM8S207/208R 6/8/BTx 64pins
+//  variant64_1.h
+//  STM8S207/208R 6/8/BTx 64pins
+//  huaweiwx@sina.com 2018.4.08
 
 #ifndef _STM8_GPIO_VARINAT64_1_h
 #define _STM8_GPIO_VARINAT64_1_h
@@ -109,7 +110,12 @@
 									(p==8)?PE7:(\
 									(p==9)?PE6:-1))))
 
-#define analogPinToChannel(p) (p)
+#define analogPinToChannel(p)(\
+ (((p)>= PB0)||((p)<=PB7))?(p)-PB0:(\
+ ((p)== PE7)?8:(\
+ ((p)== PE6)?9:(\
+ ((p)== PF0)?10:(\
+ (((p)>= PF3)||((p)<=PF7))?(p)-PF3:(P))))))
 
 #endif   //SDUINOPINS_DEF
 

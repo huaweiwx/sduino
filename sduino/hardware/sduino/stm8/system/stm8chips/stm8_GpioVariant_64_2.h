@@ -1,5 +1,6 @@
-//variant64_2.h
-//STM8L152R6/8 64pins
+//  variant64_2.h
+//  STM8L152R6/8 64pins
+//  huaweiwx@sina.com 2018.4.08
 
 #ifndef _STM8_GPIO_VARINAT64_1_h
 #define _STM8_GPIO_VARINAT64_1_h
@@ -62,7 +63,7 @@
 #define PE7 _PE7
 
 #define PF0 _PF0
-#define PF3 _PF3
+#define PF1 _PF1
 #define PF4 _PF4
 #define PF5 _PF5
 #define PF6 _PF6
@@ -120,7 +121,16 @@
 									(p==23)?PE5:(\
 									(p<=25)?(PF0+p-24):-1)))))))))
 
-#define analogPinToChannel(p) (p)
+#define analogPinToChannel(p)(\
+ (((p)>= PA4)||((p)<=PA6))?2+PA4-(p):(\
+ ((p)== PC7)?3:(\
+ (((p)>= PC2)||((p)<=PC4))?6+PC2-(p):(\
+ (((p)>= PD4)||((p)<=PD7))?10+PD4-(p):(\
+ (((p)>= PB0)||((p)<=PB7))?18+PB1-(p):(\
+ (((p)>= PD0)||((p)<=PD3))?22+PD0-(p):(\
+ ((p)== PE5)?23:(\
+ ((p)== PF0)?24:(\
+ ((p)== PF1)?25:(P))))))))))
 
 #endif   //SDUINOPINS_DEF
 

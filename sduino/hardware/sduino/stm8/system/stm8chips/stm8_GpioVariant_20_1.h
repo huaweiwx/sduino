@@ -1,6 +1,7 @@
-//variant20_1.h
-//STM8S003F3Px/Ux    20 pins
-//STM8S103F3Px/Mx/Ux 20pins
+//  variant20_1.h
+//  STM8S003F3Px/Ux    20 pins
+//  STM8S103F3Px/Mx/Ux 20pins
+//  huaweiwx@sina.com 2018.4.08
  
 
 #ifndef _STM8_GPIO_VARINAT20_1_h
@@ -68,7 +69,12 @@ PIN(D,6),
 ((p)<=4)?(PD2+(p)-3):(\
 ((p)<=6)?(PD5+(p)-5):0xff))))
 
-#define analogPinToChannel(p) (p)
+#define analogPinToChannel(P) (\
+  (P)==PC4 ? 2 : ( \
+  (P)==PD2 ? 3 : ( \
+  (P)==PD3 ? 4 : ( \
+  (P)==PD5 ? 5 : ( \
+  (P)==PD6 ? 6 : (P))))))
 
 #endif   //SDUINOPINS_DEF
 

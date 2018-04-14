@@ -1,4 +1,5 @@
-//variant32_4.h
+//  variant32_4.h
+//  huaweiwx@sina.com 2018.4.08
 
 
 #ifndef _STM8_GPIO_VARINAT32_4_h
@@ -86,7 +87,12 @@
 									(p<=10)?(PD4-p+10) :(\
 									(p<=18)?(PB0-p+18) :(\
 									(p<=21)?(PD1-p+21) :-1)))))))
-#define analogPinToChannel(p) (p)
+#define analogPinToChannel(p)(\
+ (((p)>= PA4)||((p)<=PA6))?2+PA4-(p):(\
+ (((p)>= PC2)||((p)<=PC4))?6+PC2-(p):(\
+ (((p)>= PD4)||((p)<=PD7))?10+PD4-(p):(\
+ (((p)>= PB0)||((p)<=PB7))?18+PB0-(p):(\
+ (((p)>= PD1)||((p)<=PD3))?21+PD1-(p):(P))))))
 
 #endif   //SDUINOPINS_DEF
 

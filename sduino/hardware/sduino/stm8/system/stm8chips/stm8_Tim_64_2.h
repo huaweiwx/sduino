@@ -1,5 +1,6 @@
-//tim64_2.h
-//STM8L152R6/8 64pins
+//  tim64_2.h
+//  STM8L152R6/8 64pins
+//  huaweiwx@sina.com 2018.4.08
 
 #ifndef _STM8_TIM_h
 #define _STM8_TIM_h

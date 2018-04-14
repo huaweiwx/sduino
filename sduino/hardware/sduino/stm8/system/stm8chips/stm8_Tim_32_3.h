@@ -1,5 +1,6 @@
-//tim_32_3.h
-//STM8S903K3B/T/Ux 32PINS
+//  tim_32_3.h
+//  STM8S903K3B/T/Ux 32PINS
+//  huaweiwx@sina.com 2018.4.08
  
 
 #ifndef _STM8_TIM32_3_h

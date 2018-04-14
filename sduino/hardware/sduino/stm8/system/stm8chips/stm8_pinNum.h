@@ -1,3 +1,4 @@
+//huaweiwx@sina.com 2018.4.08
 #ifndef _STM8PINSNUM_H_
 #define _STM8PINSNUM_H_
 

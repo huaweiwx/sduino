@@ -1,6 +1,7 @@
-//tim_32_1.h
-//STM8S003K3Tx        32 pins
-//STM8S103K3Bx/Tx/Ux  32pins
+//  tim_32_1.h
+//  STM8S003K3Tx        32 pins
+//  STM8S103K3Bx/Tx/Ux  32pins
+//  huaweiwx@sina.com 2018.4.08
  
 
 #ifndef _STM8_TIM32_1_h

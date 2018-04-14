@@ -1,6 +1,7 @@
-//tim_20_1.h
-//STM8S003F3Px/Ux    20 pins
-//STM8S103F3Px/Mx/Ux 20pins
+//  tim_20_1.h
+//  STM8S003F3Px/Ux    20 pins
+//  STM8S103F3Px/Mx/Ux 20pins
+//  huaweiwx@sina.com 2018.4.08
  
 
 #ifndef _STM8_TIM20_1_h

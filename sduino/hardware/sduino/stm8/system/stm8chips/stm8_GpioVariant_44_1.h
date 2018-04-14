@@ -1,6 +1,7 @@
-//variant48_1.h
-//STM8S005C6Tx 48pins
-//STM8S105C6 48pins
+//  variant48_1.h
+//  STM8S005C6Tx 48pins
+//  STM8S105C6 48pins
+//  huaweiwx@sina.com 2018.4.08
 
 #ifndef _STM8_GPIO_VARINAT48_1_h
 #define _STM8_GPIO_VARINAT48_1_h
@@ -108,7 +109,10 @@ PIN(G,1),
 									(p<=7)?(PB0+p):(\
 									(p==8)?PE7:(\
 									(p==9)?PE6:-1))))
-#define analogPinToChannel(p) (p)
+#define analogPinToChannel(p)(\
+ (((p)>= PB0)||((p)<=PB7))?(p)-PB0:(\
+ ((p)== PE7)?8:(\
+ ((p)== PE6)?9:(P))))
 
 #endif   //SDUINOPINS_DEF
 

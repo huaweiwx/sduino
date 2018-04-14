@@ -1,7 +1,8 @@
-//variant32_2.h
-//STM8S005K6Tx       32pins
-//STM8S105K6Bx/Tx/Ux 32pins
-//STM8S105K4Bx/Tx/Ux 32pins
+//  variant32_2.h
+//  STM8S005K6Tx       32pins
+//  STM8S105K6Bx/Tx/Ux 32pins
+//  STM8S105K4Bx/Tx/Ux 32pins
+//  huaweiwx@sina.com 2018.4.08
  
 
 #ifndef _STM8_GPIO_VARINAT32_2_h
@@ -84,7 +85,10 @@ PIN(F,4),
 									(p<=3)?(PB0+p):(\
 									(p==4)?PB5    :(\
 									(p==5)?PF4    :-1))))
-#define analogPinToChannel(p) (p)
+#define analogPinToChannel(p)(\
+ (((p)>= PB0)||((p)<=PB3))?(p)-PB0:(\
+ ((p)==PB5)?4:(\
+ ((p)==PF4)?5:(p))))
 
 #endif   //SDUINOPINS_DEF
 
