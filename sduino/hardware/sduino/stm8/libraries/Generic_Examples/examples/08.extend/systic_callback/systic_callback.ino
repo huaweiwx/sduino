@@ -2,6 +2,7 @@
  * systic_callback.ino:  TIM4(timebase) interrupt callback demo;
  * 2018.3.22  huaweiwx@sina.com 
 */
+
 // the setup routine runs once when you press reset:
 void setup() {
   // initialize serial communication at 115200 bits per second:
@@ -12,7 +13,8 @@ void setup() {
 void loop() {
 }
 
-/*TIM4 ms interrupt callback func: void systic_callback() */
+
+/*TIM4 1ms interrupt callback func: void systic_callback() */
 uint16_t count = 0;
 void systic_callback(void)
 {

@@ -1,5 +1,6 @@
 /*
   Blink use fastIO macro PorPin demo
+  huaweiwx@sina.com 2018.4.08
 
   fastIO macro list:(Pxx  as  PA2/PB/2/PC3//PD4/PE5/PF2..)
      pinMode_Pxx(mode)
