@@ -112,8 +112,8 @@ size_t SevenSegment_write(uint8_t);
 	X2Method1	(SevenSegment,instance,showFloat,float) \
 	X2Method1	(SevenSegment,instance,showHEX,uint32_t) \
 	X2Method1	(SevenSegment,instance,setLine,uint8_t) \
-	X2Method1	(SevenSegment,instance,setpoint,uint8_t) \
-	X2Method1	(SevenSegment,instance,setpos,uint8_t) \
+	X2Method1	(SevenSegment,instance,setPoint,uint8_t) \
+	X2Method1	(SevenSegment,instance,setPos,uint8_t) \
 	X2Method0	(SevenSegment,instance,display) \
 	X2Method1return (SevenSegment,instance,size_t,write,uint8_t) \
 	\
