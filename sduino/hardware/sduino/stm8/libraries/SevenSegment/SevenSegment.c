@@ -139,7 +139,7 @@ void SevenSegment_begin(uint8_t inv){
 	}
 } 
 
-void SevenSegment_show(uint8_t c,uint8_t i){
+void SevenSegment_showChar(uint8_t c,uint8_t i){
 	showBuf[i+line*4] = c;
 }
 
@@ -153,18 +153,18 @@ void SevenSegment_showErr(void)
   }
 }
 
-void SevenSegment_setline(uint8_t l){
+void SevenSegment_setLine(uint8_t l){
   if(lines){
     if(l) line = 1;
 	else line = 0;
   }
 }
 
-void SevenSegment_setpoint(uint8_t p){
+void SevenSegment_setPoint(uint8_t p){
 	point[line]=p;
 }
 
-void SevenSegment_setpos(uint8_t i){
+void SevenSegment_setPos(uint8_t i){
 	pos[line]=i;
 }
 

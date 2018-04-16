@@ -57,7 +57,7 @@ void loop() {
   //用整数显示，快速资源占用少
   seg7d3_showDEC(vin / Vk); //显示整数,会清小数点显示,需重设
  
-  seg7d3_setpoint(1);          // 重设显示小数点
+  seg7d3_setPoint(1);          // 重设显示小数点
 #endif
 }
 

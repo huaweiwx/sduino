@@ -39,7 +39,7 @@ void SevenSegment_showFloat(float num);
 void SevenSegment_showHEX(uint32_t num);
 void SevenSegment_display(void);
 
-void SevenSegment_setline(uint8_t l);
+void SevenSegment_setLine(uint8_t l);
 void SevenSegment_setpoint(uint8_t p);
 void SevenSegment_setpos(uint8_t i);
 
@@ -111,7 +111,7 @@ size_t SevenSegment_write(uint8_t);
 	X2Method1	(SevenSegment,instance,showDEC,int16_t) \
 	X2Method1	(SevenSegment,instance,showFloat,float) \
 	X2Method1	(SevenSegment,instance,showHEX,uint32_t) \
-	X2Method1	(SevenSegment,instance,setline,uint8_t) \
+	X2Method1	(SevenSegment,instance,setLine,uint8_t) \
 	X2Method1	(SevenSegment,instance,setpoint,uint8_t) \
 	X2Method1	(SevenSegment,instance,setpos,uint8_t) \
 	X2Method0	(SevenSegment,instance,display) \

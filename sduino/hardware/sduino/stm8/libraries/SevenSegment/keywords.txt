@@ -19,69 +19,63 @@ seg7d4i	 KEYWORD1	SevenSegment
 seg7d4v	 KEYWORD1	SevenSegment
 
 seg7d3_begin	 KEYWORD2	SevenSegment
-seg7d3_beginInv	 KEYWORD2	SevenSegment
-seg7d3_show	KEYWORD2	SevenSegment
+seg7d3_showChar	KEYWORD2	SevenSegment
 seg7d3_showHEX	KEYWORD2	SevenSegment
 seg7d3_showDEC	KEYWORD2	SevenSegment
-seg7d3_pos	KEYWORD2	SevenSegment
-seg7d3_setpoint	KEYWORD2	SevenSegment
+seg7d3_setPos	KEYWORD2	SevenSegment
+seg7d3_setPoint	KEYWORD2	SevenSegment
 seg7d3_display	KEYWORD2	SevenSegment
-seg7d3_clear    KEYWORD2	SevenSegment
+seg7d3_setLine	KEYWORD2	SevenSegment
 seg7d3_write    KEYWORD2	SevenSegment
 
 seg7d3i_begin	 KEYWORD2	SevenSegment
-seg7d3i_beginInv	 KEYWORD2	SevenSegment
-seg7d3i_show	KEYWORD2	SevenSegment
+seg7d3i_showChar	KEYWORD2	SevenSegment
 seg7d3i_showHEX	KEYWORD2	SevenSegment
 seg7d3i_showDEC	KEYWORD2	SevenSegment
-seg7d3i_pos	KEYWORD2	SevenSegment
-seg7d3i_setpoint	KEYWORD2	SevenSegment
+seg7d3i_setPos	KEYWORD2	SevenSegment
+seg7d3i_setPoint	KEYWORD2	SevenSegment
 seg7d3i_display	KEYWORD2	SevenSegment
-seg7d3i_clear    KEYWORD2	SevenSegment
+seg7d3i_setLine	KEYWORD2	SevenSegment
 seg7d3i_write    KEYWORD2	SevenSegment
 
 seg7d3v_begin	 KEYWORD2	SevenSegment
-seg7d3v_beginInv	 KEYWORD2	SevenSegment
-seg7d3v_show	KEYWORD2	SevenSegment
+seg7d3v_showChar	KEYWORD2	SevenSegment
 seg7d3v_showHEX KEYWORD2	SevenSegment
 seg7d3v_showDEC	KEYWORD2	SevenSegment
-seg7d3v_pos	KEYWORD2	SevenSegment
-seg7d3v_setpoint	KEYWORD2	SevenSegment
+seg7d3v_setPos	KEYWORD2	SevenSegment
+seg7d3v_setPoint	KEYWORD2	SevenSegment
 seg7d3v_display	KEYWORD2	SevenSegment
-seg7d3v_clear    KEYWORD2	SevenSegment
+seg7d3v_setLine	KEYWORD2	SevenSegment
 seg7d3v_write    KEYWORD2	SevenSegment
 
 seg7d4_begin	 KEYWORD2	SevenSegment
-seg7d4_beginInv	 KEYWORD2	SevenSegment
-seg7d4_show	KEYWORD2	SevenSegment
+seg7d4_showChar	KEYWORD2	SevenSegment
 seg7d4_showHEX KEYWORD2	SevenSegment
 seg7d4_showDEC KEYWORD2	SevenSegment
-seg7d4_pos	KEYWORD2	SevenSegment
-seg7d4_setpoint	KEYWORD2	SevenSegment
+seg7d4_setPos	KEYWORD2	SevenSegment
+seg7d4_setPoint	KEYWORD2	SevenSegment
 seg7d4_display  KEYWORD2	SevenSegment
-seg7d4_clear    KEYWORD2	SevenSegment
+seg7d4_setLine	KEYWORD2	SevenSegment
 seg7d4_write    KEYWORD2	SevenSegment
 
 seg7d4i_begin	 KEYWORD2	SevenSegment
-seg7d4i_beginInv	 KEYWORD2	SevenSegment
-seg7d4i_show	KEYWORD2	SevenSegment
+seg7d4i_showChar	KEYWORD2	SevenSegment
 seg7d4i_showHEX KEYWORD2	SevenSegment
 seg7d4i_showDEC KEYWORD2	SevenSegment
-seg7d4i_pos	KEYWORD2	SevenSegment
-seg7d4i_setpoint	KEYWORD2	SevenSegment
+seg7d4i_setPos	KEYWORD2	SevenSegment
+seg7d4i_setPoint	KEYWORD2	SevenSegment
 seg7d4i_display  KEYWORD2	SevenSegment
-seg7d4i_clear    KEYWORD2	SevenSegment
+seg7d4i_setLine	KEYWORD2	SevenSegment
 seg7d4i_write    KEYWORD2	SevenSegment
 
 seg7d4v_begin	 KEYWORD2	SevenSegment
-seg7d4v_beginInv	 KEYWORD2	SevenSegment
-seg7d4v_show	KEYWORD2	SevenSegment
+seg7d4v_showChar	KEYWORD2	SevenSegment
 seg7d4v_showHEX KEYWORD2	SevenSegment
 seg7d4v_showDEC KEYWORD2	SevenSegment
-seg7d4v_pos	KEYWORD2	SevenSegment
-seg7d4v_setpoint	KEYWORD2	SevenSegment
+seg7d4v_setPos	KEYWORD2	SevenSegment
+seg7d4v_setPoint	KEYWORD2	SevenSegment
 seg7d4v_display  KEYWORD2	SevenSegment
-seg7d4v_clear    KEYWORD2	SevenSegment
+seg7d4v_setLine	KEYWORD2	SevenSegment
 seg7d4v_write    KEYWORD2	SevenSegment
 
 #######################################

@@ -22,18 +22,18 @@
 //	SevenSegment (instancename,da,  db,  dc,  dd,  de,  df,  dg,  dp,  d01,  d02, d03, d04, d11, d12, d13, d14); // 2*4
 
 //	SevenSegment (instancename,da,  db,  dc,  dd,  de,  df,  dg,  dp,  d01,  d02, d03, d11, d12, d13); 		       // 2*3
-SevenSegment(seg7d,     PD1, PA3, PC3, PC6, PC7, PC4, PA2, PC5, PD4 , PD6, PD5, PB5, PB4, PA1);   /*VC288 board use 2*3 digits*/
+SevenSegment(seg7d3,     PD1, PA3, PC3, PC6, PC7, PC4, PA2, PC5, PD4 , PD6, PD5, PB5, PB4, PA1);   /*VC288 board use 2*3 digits*/
 
 //	SevenSegment (instancename,da,  db,  dc,  dd,  de,  df,  dg,  dp,  d1,   d2,  d3,  d4); 					           // 1*4
 //	SevenSegment (instancename,da,  db,  dc,  dd,  de,  df,  dg,  dp,  d1,   d2,  d3); 						               // 1*3
-//    SevenSegment(seg7d,     PC4, PB5, PC7, PD1, PD3, PC3, PB4, PD2, PC6 , PC5, PA3);   /*3DigitsVolt board use 1*3 digits*/
+//    SevenSegment(seg7d3,     PC4, PB5, PC7, PD1, PD3, PC3, PB4, PD2, PC6 , PC5, PA3);   /*3DigitsVolt board use 1*3 digits*/
 
 //#define VPIN PD6  //3DigitsVolt PD6(电压检测输入脚 PD2/3/5/6 之一)
 #define VPIN PD3  //VC288     PD3
 #define IPIN PD2  //VC288     PD2
 
 void setup() {
-  seg7d_begin(1);  //0/1 共阳/阴7段数码管初始化
+  seg7d3_begin(1);  //0/1 共阳/阴7段数码管初始化
   pinMode(VPIN, INPUT);
   pinMode(IPIN, INPUT);
 }
@@ -49,16 +49,16 @@ void loop() {
   for (uint8_t i = 0; i < 32; i++) {
     v_in += analogRead(VPIN);
     c_in += analogRead(VPIN);
-    for (uint8_t j = 0; j < 5; j++) seg7d_display(); //刷新 5 次
+    for (uint8_t j = 0; j < 5; j++) seg7d3_display(); //刷新 5 次
   }
 
 
 #if 0                       // 首次设置为1:显示校准值,并修改Vk 和 Ik /　然后再改为0: 正常工作状态, 显示 电压电流
-  SevenSegment_setline(0);
-  seg7d_showDEC(v_in / 32); // 校准值Vk/10V(30V 档）
+  seg7d3_setLine(0);
+  seg7d3_showDEC(v_in / 32); // 校准值Vk/10V(30V 档）
 
-  SevenSegment_setline(1);
-  seg7d_showDEC(c_in / 32); // 校准值Ik/1A(10A 档）
+  seg7d3_setLine(1);
+  seg7d3_showDEC(c_in / 32); // 校准值Ik/1A(10A 档）
 
 #else
   v_in *= 100;
@@ -66,13 +66,13 @@ void loop() {
 
   //可用seg7d3_showFloat 直接显示浮点数，但计算慢，占内存
   //用整数显示，快速资源占用少
-  SevenSegment_setline(0);    //第 0 行 电压
-  seg7d_showDEC(v_in / Vk);   //显示整数,会清小数点显示,需重设
-  seg7d_setpoint(1);          // 重设显示小数点
+  seg7d3_setLine(0);    //第 0 行 电压
+  seg7d3_showDEC(v_in / Vk);   //显示整数,会清小数点显示,需重设
+  seg7d3_setPoint(1);          // 重设显示小数点
 
-  SevenSegment_setline(1);    //第 1行 电流
-  seg7d_showDEC(c_in / Ik);
-  seg7d_setpoint(1);
+  seg7d3_setLine(1);    //第 1行 电流
+  seg7d3_showDEC(c_in / Ik);
+  seg7d3_setPoint(1);
 #endif
 }
 
