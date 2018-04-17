@@ -40,8 +40,8 @@ void SevenSegment_showHEX(uint32_t num);
 void SevenSegment_display(void);
 
 void SevenSegment_setLine(uint8_t l);
-void SevenSegment_setpoint(uint8_t p);
-void SevenSegment_setpos(uint8_t i);
+void SevenSegment_setPoint(uint8_t p);
+void SevenSegment_setPos(uint8_t i);
 
 void SevenSegment_showChar(uint8_t c,uint8_t pos);
 size_t SevenSegment_write(uint8_t);

@@ -280,7 +280,7 @@ void SevenSegment_display(void)
 
 size_t SevenSegment_write(uint8_t num){
 	
-	SevenSegment_show(num,--pos[line]);
+	SevenSegment_showChar(num,--pos[line]);
 	if(pos[line]==0) pos[line] = digits;
 	return 1;
 }
